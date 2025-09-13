@@ -24,64 +24,65 @@ import {
   Smartphone,
   Mail,
   Calendar,
-  FileText
+  FileText,
+  Github
 } from "lucide-react";
 
 export function FeaturesSection() {
   const coreFeatures = [
     {
       icon: <Building2 className="h-6 w-6" />,
-      title: "Multi-Tenant Architecture",
-      description: "Complete data isolation with secure tenant management for enterprises and resellers.",
-      benefits: ["Data Security", "Scalable Infrastructure", "Tenant Management"]
+      title: "Single-Tenant Architecture",
+      description: "Simplified architecture perfect for individual businesses and organizations.",
+      benefits: ["Data Security", "Easy Setup", "Full Control"]
     },
     {
       icon: <Users className="h-6 w-6" />,
-      title: "Role-Based Access Control",
-      description: "Granular permissions and user management with advanced security controls.",
-      benefits: ["Secure Access", "Custom Roles", "Audit Trails"]
+      title: "User Management",
+      description: "Simple user management with role-based access control for your team.",
+      benefits: ["Secure Access", "Custom Roles", "User Permissions"]
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
-      title: "Advanced Analytics",
-      description: "AI-powered business intelligence with real-time reporting and insights.",
-      benefits: ["Predictive Analytics", "Custom Dashboards", "Export Reports"]
+      title: "Business Analytics",
+      description: "Comprehensive reporting and analytics for business insights.",
+      benefits: ["Custom Reports", "Data Visualization", "Export Options"]
     },
     {
       icon: <Shield className="h-6 w-6" />,
-      title: "Enterprise Security",
-      description: "Bank-grade security with encryption, compliance, and monitoring.",
-      benefits: ["SOC 2 Compliance", "Data Encryption", "Security Monitoring"]
+      title: "Data Security",
+      description: "Strong security with encryption and secure data handling.",
+      benefits: ["Data Encryption", "Secure Storage", "Privacy Control"]
     },
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "API-First Design",
-      description: "Comprehensive REST APIs with SDKs for seamless integrations.",
-      benefits: ["REST APIs", "Webhooks", "SDKs Available"]
+      title: "API Integration",
+      description: "RESTful APIs for connecting with your favorite business tools.",
+      benefits: ["REST APIs", "Webhooks", "Easy Integration"]
     },
     {
       icon: <Globe className="h-6 w-6" />,
-      title: "White-Label Branding",
-      description: "Custom branding options for resellers and enterprise customers.",
-      benefits: ["Custom Domains", "Brand Colors", "Logo Upload"]
+      title: "Custom Branding",
+      description: "Customize the interface to match your brand and preferences.",
+      benefits: ["Custom Themes", "Brand Colors", "Logo Upload"]
     }
   ];
 
-  const enterpriseFeatures = [
+  const communityFeatures = [
     {
       icon: <Palette className="h-5 w-5" />,
       title: "Custom Theming",
       description: "Complete brand customization with custom CSS and themes."
     },
     {
-      icon: <Award className="h-5 w-5" />,
-      title: "Partner Program",
-      description: "Comprehensive reseller and dealer management with commission tracking."
+      icon: <Code className="h-5 w-5" />,
+      title: "Open Source",
+      description: "Full source code available with MIT license for complete freedom."
     },
     {
-      icon: <DollarSign className="h-5 w-5" />,
-      title: "Revenue Sharing",
-      description: "Automated commission calculations and payment tracking."
+      icon: <Shield className="h-5 w-5" />,
+      title: "Data Privacy",
+      description: "Complete control over your data with self-hosted deployment."
     },
     {
       icon: <TrendingUp className="h-5 w-5" />,
@@ -90,8 +91,8 @@ export function FeaturesSection() {
     },
     {
       icon: <Network className="h-5 w-5" />,
-      title: "Third-Party Integrations",
-      description: "Connect with 100+ popular business tools and services."
+      title: "API Integration",
+      description: "RESTful APIs for connecting with your favorite business tools."
     },
     {
       icon: <Database className="h-5 w-5" />,
@@ -101,12 +102,12 @@ export function FeaturesSection() {
     {
       icon: <Smartphone className="h-5 w-5" />,
       title: "Mobile Access",
-      description: "Responsive design with mobile app for iOS and Android."
+      description: "Responsive design that works perfectly on all devices."
     },
     {
-      icon: <Headphones className="h-5 w-5" />,
-      title: "24/7 Support",
-      description: "Dedicated support team with SLA guarantees and priority assistance."
+      icon: <Users className="h-5 w-5" />,
+      title: "Community Support",
+      description: "Active community support through Discord and GitHub discussions."
     }
   ];
 
@@ -116,14 +117,14 @@ export function FeaturesSection() {
         <div className="text-center space-y-4 mb-16">
           <Badge variant="secondary" className="w-fit mx-auto">
             <Zap className="h-3 w-3 mr-1" />
-            Commercial Features
+            Community Features
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold">
-            Built for Enterprise Scale & Partner Success
+            Built for Developers & Small Businesses
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our commercial ERP platform delivers enterprise-grade features with 
-            white-label solutions, partner management, and unlimited scalability for resellers and enterprises.
+            Our open-source ERP platform delivers powerful features with 
+            complete data control, self-hosting capabilities, and community-driven development.
           </p>
         </div>
 
@@ -158,18 +159,18 @@ export function FeaturesSection() {
           ))}
         </div>
 
-        {/* Enterprise Features */}
+        {/* Community Features */}
         <div className="bg-card border rounded-lg p-8">
           <div className="text-center space-y-4 mb-8">
-            <h3 className="text-2xl font-bold">Partner & Reseller Features</h3>
+            <h3 className="text-2xl font-bold">Community Edition Features</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Advanced capabilities designed specifically for resellers, dealers, and enterprise partners 
-              who need white-label solutions and revenue sharing opportunities.
+              Powerful features designed for developers, small businesses, and grant foundations 
+              who need complete control over their ERP system.
             </p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {enterpriseFeatures.map((feature, index) => (
+            {communityFeatures.map((feature, index) => (
               <div key={index} className="text-center space-y-3">
                 <div className="mx-auto p-3 rounded-lg bg-primary/10 text-primary w-fit">
                   {feature.icon}
@@ -187,9 +188,9 @@ export function FeaturesSection() {
             <div className="mx-auto p-4 rounded-full bg-primary/10 text-primary w-fit">
               <Server className="h-8 w-8" />
             </div>
-            <h4 className="text-xl font-semibold">Cloud Infrastructure</h4>
+            <h4 className="text-xl font-semibold">Self-Hosted</h4>
             <p className="text-muted-foreground">
-              Enterprise-grade cloud hosting with 99.9% uptime guarantee and global CDN.
+              Deploy on your own infrastructure with complete control over your data and privacy.
             </p>
           </div>
           
@@ -197,9 +198,9 @@ export function FeaturesSection() {
             <div className="mx-auto p-4 rounded-full bg-success/10 text-success w-fit">
               <Lock className="h-8 w-8" />
             </div>
-            <h4 className="text-xl font-semibold">Security First</h4>
+            <h4 className="text-xl font-semibold">Privacy First</h4>
             <p className="text-muted-foreground">
-              End-to-end encryption, SOC 2 compliance, and advanced threat protection.
+              Your data stays on your servers with strong encryption and privacy controls.
             </p>
           </div>
           
@@ -207,9 +208,9 @@ export function FeaturesSection() {
             <div className="mx-auto p-4 rounded-full bg-warning/10 text-warning w-fit">
               <Settings className="h-8 w-8" />
             </div>
-            <h4 className="text-xl font-semibold">Customizable</h4>
+            <h4 className="text-xl font-semibold">Fully Customizable</h4>
             <p className="text-muted-foreground">
-              White-label options, custom integrations, and flexible configuration.
+              Open source code allows complete customization and integration with your tools.
             </p>
           </div>
         </div>
@@ -217,19 +218,23 @@ export function FeaturesSection() {
         {/* CTA Section */}
         <div className="mt-16 text-center">
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold">Ready to Accelerate Your Business Growth?</h3>
+            <h3 className="text-2xl font-bold">Ready to Get Started?</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Join 500+ active partners using iNEAT-ERP to scale operations, 
-              expand market reach, and increase revenue through white-label solutions.
+              Join the community of developers and small businesses using iNeat Community Edition 
+              to manage their operations with complete data control and privacy.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">
-                <Calendar className="h-4 w-4 mr-2" />
-                Request Demo
+              <Button size="lg" asChild>
+                <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                  <Github className="h-4 w-4 mr-2" />
+                  Get on GitHub
+                </a>
               </Button>
-              <Button size="lg" variant="outline">
-                <FileText className="h-4 w-4 mr-2" />
-                Download Partner Kit
+              <Button size="lg" variant="outline" asChild>
+                <a href="https://docs.ineat.io/community-edition/installation" target="_blank" rel="noopener noreferrer">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Installation Guide
+                </a>
               </Button>
             </div>
           </div>

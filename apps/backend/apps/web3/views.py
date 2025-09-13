@@ -419,8 +419,7 @@ class DecentralizedIdentityViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter DIDs by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return DecentralizedIdentity.objects.filter(organization__in=user_orgs)
+                return DecentralizedIdentity.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -463,8 +462,7 @@ class OnChainAnchorViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter anchors by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return OnChainAnchor.objects.filter(organization__in=user_orgs)
+                return OnChainAnchor.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -509,8 +507,7 @@ class SmartContractModuleViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter modules by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return SmartContractModule.objects.filter(organization__in=user_orgs)
+                return SmartContractModule.objects
     
     @action(detail=True, methods=['post'])
     def deploy(self, request, pk=None):
@@ -557,8 +554,7 @@ class DAOGovernanceViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter governance by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return DAOGovernance.objects.filter(organization__in=user_orgs)
+                return DAOGovernance.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -638,8 +634,7 @@ class TokenizedRewardViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter rewards by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return TokenizedReward.objects.filter(organization__in=user_orgs)
+                return TokenizedReward.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -692,8 +687,7 @@ class DecentralizedStorageViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter storage by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return DecentralizedStorage.objects.filter(organization__in=user_orgs)
+                return DecentralizedStorage.objects
     
     @action(detail=True, methods=['post'])
     def upload_to_ipfs(self, request, pk=None):
@@ -736,8 +730,7 @@ class BlockchainAuditLogViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         """Filter audit logs by user's organization."""
-        user_orgs = self.request.user.organization_memberships.values_list('organization', flat=True)
-        return BlockchainAuditLog.objects.filter(organization__in=user_orgs)
+                return BlockchainAuditLog.objects
     
     @action(detail=False, methods=['get'])
     def security_events(self, request):
@@ -765,21 +758,20 @@ class Web3DashboardView(APIView):
     
     def get(self, request):
         """Get Web3 dashboard data."""
-        user_orgs = request.user.organization_memberships.values_list('organization', flat=True)
-        
+                
         # Get Web3 statistics
         stats = {
             'total_wallets': Wallet.objects.filter(user=request.user).count(),
             'verified_wallets': Wallet.objects.filter(user=request.user, is_verified=True).count(),
             'total_transactions': BlockchainTransaction.objects.filter(user=request.user).count(),
             'pending_transactions': BlockchainTransaction.objects.filter(user=request.user, status='pending').count(),
-            'total_dids': DecentralizedIdentity.objects.filter(organization__in=user_orgs).count(),
-            'active_dids': DecentralizedIdentity.objects.filter(organization__in=user_orgs, status='active').count(),
-            'total_anchors': OnChainAnchor.objects.filter(organization__in=user_orgs).count(),
-            'anchored_data': OnChainAnchor.objects.filter(organization__in=user_orgs, status='anchored').count(),
-            'active_proposals': DAOGovernance.objects.filter(organization__in=user_orgs, status='active').count(),
-            'total_rewards': TokenizedReward.objects.filter(organization__in=user_orgs).count(),
-            'paid_rewards': TokenizedReward.objects.filter(organization__in=user_orgs, status='paid').count(),
+            'total_dids': DecentralizedIdentity.objects.count(),
+            'active_dids': DecentralizedIdentity.objects.count(),
+            'total_anchors': OnChainAnchor.objects.count(),
+            'anchored_data': OnChainAnchor.objects.count(),
+            'active_proposals': DAOGovernance.objects.count(),
+            'total_rewards': TokenizedReward.objects.count(),
+            'paid_rewards': TokenizedReward.objects.count(),
         }
         
         # Get recent activity
@@ -788,11 +780,11 @@ class Web3DashboardView(APIView):
         ).order_by('-created_at')[:10]
         
         recent_anchors = OnChainAnchor.objects.filter(
-            organization__in=user_orgs
+            
         ).order_by('-created_at')[:10]
         
         recent_proposals = DAOGovernance.objects.filter(
-            organization__in=user_orgs
+            
         ).order_by('-created_at')[:5]
         
         return Response({

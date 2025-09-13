@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 
 User = get_user_model()
 
@@ -15,7 +14,6 @@ class Department(BaseModel):
     """
     Department model for organizational structure.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='hr_departments')
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=20, blank=True)
     description = models.TextField(blank=True)
@@ -48,18 +46,17 @@ class Department(BaseModel):
     class Meta:
         verbose_name = 'Department'
         verbose_name_plural = 'Departments'
-        unique_together = ['organization', 'name']
+        unique_together = ['name']
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} - {self.organization.name}"
+        return self.name
 
 
 class Position(BaseModel):
     """
     Job position model.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='positions')
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=20, blank=True)
     description = models.TextField(blank=True)
@@ -119,7 +116,7 @@ class Position(BaseModel):
     class Meta:
         verbose_name = 'Position'
         verbose_name_plural = 'Positions'
-        unique_together = ['organization', 'title', 'department']
+        unique_together = ['title', 'department']
         ordering = ['title']
     
     def __str__(self):
@@ -131,7 +128,6 @@ class Employee(BaseModel):
     Employee model extending the base User model.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='employee_profile')
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='employees')
     
     # Employee identification
     employee_id = models.CharField(max_length=50, unique=True)
@@ -317,7 +313,6 @@ class LeaveType(BaseModel):
     """
     Leave type model for different types of leave.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='leave_types')
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=20, blank=True)
     description = models.TextField(blank=True)
@@ -340,7 +335,7 @@ class LeaveType(BaseModel):
     class Meta:
         verbose_name = 'Leave Type'
         verbose_name_plural = 'Leave Types'
-        unique_together = ['organization', 'name']
+        unique_together = ['name']
         ordering = ['name']
     
     def __str__(self):
@@ -404,7 +399,6 @@ class PayrollPeriod(BaseModel):
     """
     Payroll period model.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_periods')
     name = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -447,7 +441,7 @@ class PayrollPeriod(BaseModel):
     class Meta:
         verbose_name = 'Payroll Period'
         verbose_name_plural = 'Payroll Periods'
-        unique_together = ['organization', 'name']
+        unique_together = ['name']
         ordering = ['-start_date']
     
     def __str__(self):
@@ -600,7 +594,6 @@ class Training(BaseModel):
     """
     Training and development model.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='trainings')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
@@ -767,7 +760,6 @@ class Policy(BaseModel):
     """
     HR policy model.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='hr_policies')
     title = models.CharField(max_length=200)
     policy_type = models.CharField(
         max_length=30,

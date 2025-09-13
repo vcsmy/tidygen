@@ -12,7 +12,6 @@ from .models import (
     PayrollNotification
 )
 from apps.hr.models import Employee, PayrollPeriod, Payroll
-from apps.organizations.models import Organization
 
 
 # ==================== PAYROLL CONFIGURATION SERIALIZERS ====================

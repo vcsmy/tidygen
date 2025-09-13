@@ -2,7 +2,7 @@
 Core views for iNEAT ERP platform.
 """
 
-from rest_framework import generics, status, permissions
+from rest_framework import generics, status, permissions, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,6 +25,22 @@ from .serializers import (
 )
 from .permissions import IsOwnerOrReadOnly, IsSystemAdmin
 from .filters import UserFilter, RoleFilter, AuditLogFilter
+
+
+class BaseModelViewSet(viewsets.ModelViewSet):
+    """
+    Base ViewSet for all ERP modules with common functionality.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    ordering = ['-created']
+    
+    def get_queryset(self):
+        """
+        Override to add organization filtering for single-tenant setup.
+        In community edition, all data belongs to the same organization context.
+        """
+        return super().get_queryset()
 
 
 class UserListCreateView(generics.ListCreateAPIView):

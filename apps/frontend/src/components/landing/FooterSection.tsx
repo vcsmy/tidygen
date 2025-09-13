@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
-  Github, 
   Mail, 
   Phone, 
   MapPin, 
@@ -17,31 +16,31 @@ export function FooterSection() {
   const footerLinks = {
     product: [
       { name: "Features", href: "#features" },
-      { name: "Pricing", href: "#pricing" },
-      { name: "Partner Portal", href: "/partner/login" },
-      { name: "API Documentation", href: "#" },
-      { name: "Integrations", href: "#" }
+      { name: "Deploy", href: "#deploy" },
+      { name: "GitHub", href: "https://github.com/ineat/ineat-erp-community" },
+      { name: "API Documentation", href: "https://docs.ineat.io/api" },
+      { name: "Self-Hosting Guide", href: "https://docs.ineat.io/community-edition/self-hosting" }
     ],
-    company: [
-      { name: "About Us", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Press", href: "#" },
-      { name: "Contact Sales", href: "#" }
+    community: [
+      { name: "Discord", href: "https://discord.gg/ineat-community" },
+      { name: "GitHub Discussions", href: "https://github.com/ineat/ineat-erp-community/discussions" },
+      { name: "Contributing", href: "https://github.com/ineat/ineat-erp-community/blob/main/CONTRIBUTING.md" },
+      { name: "Bug Reports", href: "https://github.com/ineat/ineat-erp-community/issues" },
+      { name: "Feature Requests", href: "https://github.com/ineat/ineat-erp-community/issues" }
     ],
     resources: [
-      { name: "Documentation", href: "#" },
-      { name: "Help Center", href: "#" },
-      { name: "Training", href: "#" },
-      { name: "Support", href: "#" },
-      { name: "Status Page", href: "#" }
+      { name: "Documentation", href: "https://docs.ineat.io/community-edition" },
+      { name: "Installation Guide", href: "https://docs.ineat.io/community-edition/installation" },
+      { name: "Configuration", href: "https://docs.ineat.io/community-edition/configuration" },
+      { name: "Troubleshooting", href: "https://docs.ineat.io/community-edition/troubleshooting" },
+      { name: "FAQ", href: "https://docs.ineat.io/community-edition/faq" }
     ],
     legal: [
+      { name: "License", href: "https://github.com/ineat/ineat-erp-community/blob/main/LICENSE" },
       { name: "Privacy Policy", href: "#" },
       { name: "Terms of Service", href: "#" },
-      { name: "Cookie Policy", href: "#" },
-      { name: "GDPR", href: "#" },
-      { name: "Security", href: "#" }
+      { name: "Security", href: "https://github.com/ineat/ineat-erp-community/security" },
+      { name: "Code of Conduct", href: "https://github.com/ineat/ineat-erp-community/blob/main/CODE_OF_CONDUCT.md" }
     ]
   };
 
@@ -92,8 +91,8 @@ export function FooterSection() {
                 <span className="text-xl font-bold">iNEAT-ERP</span>
               </div>
               <p className="text-sm text-muted-foreground max-w-xs">
-                Enterprise-grade multi-tenant ERP platform for businesses, dealers, and resellers. 
-                Scale your operations with advanced analytics and white-label capabilities.
+                Free, open-source, self-hosted ERP system perfect for developers, small businesses, 
+                and grant foundations. Full control over your data with Web3 alignment.
               </p>
               <div className="flex space-x-4">
                 {socialLinks.map((social) => (
@@ -128,15 +127,17 @@ export function FooterSection() {
               </ul>
             </div>
 
-            {/* Company Links */}
+            {/* Community Links */}
             <div className="space-y-4">
-              <h4 className="font-semibold">Company</h4>
+              <h4 className="font-semibold">Community</h4>
               <ul className="space-y-2">
-                {footerLinks.company.map((link) => (
+                {footerLinks.community.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       {link.name}
                     </a>
@@ -212,18 +213,18 @@ export function FooterSection() {
         <div className="py-6 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              © 2024 iNEAT-ERP. All rights reserved.
+              © 2024 iNeat Community Edition. Open source under MIT License.
             </div>
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <span>Enterprise-grade ERP solution</span>
+              <span>Free & open-source ERP solution</span>
               <a
-                href="https://github.com/ineat/ineat-erp-community"
+                href="https://ineat.io"
                 className="flex items-center space-x-1 hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="h-4 w-4" />
-                <span>Prefer open-source? See our Community Edition</span>
+                <span>Need multi-tenant SaaS? Visit the Commercial Edition →</span>
               </a>
             </div>
           </div>

@@ -56,7 +56,7 @@ class PurchaseOrderViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     def perform_create(self, serializer):
@@ -265,7 +265,7 @@ class ProcurementRequestViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     def perform_create(self, serializer):
@@ -382,7 +382,7 @@ class SupplierPerformanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     def perform_create(self, serializer):
@@ -427,7 +427,7 @@ class PurchaseAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     @action(detail=False, methods=['get'])

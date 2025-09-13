@@ -9,7 +9,6 @@ from decimal import Decimal
 from datetime import date, timedelta
 
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 from apps.hr.models import Employee, PayrollPeriod, Payroll
 
 User = get_user_model()
@@ -19,7 +18,6 @@ User = get_user_model()
 
 class PayrollConfiguration(BaseModel):
     """Payroll configuration for organization."""
-    organization = models.OneToOneField(Organization, on_delete=models.CASCADE, related_name='payroll_config')
     
     # Basic settings
     currency = models.CharField(max_length=3, default='USD')
@@ -79,7 +77,6 @@ class PayrollConfiguration(BaseModel):
 
 class PayrollComponent(BaseModel):
     """Payroll components (allowances, deductions, etc.)."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_components')
     
     name = models.CharField(max_length=100)
     component_type = models.CharField(
@@ -201,7 +198,6 @@ class EmployeePayrollProfile(BaseModel):
 
 class PayrollRun(BaseModel):
     """Payroll run for processing multiple employees."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_runs')
     payroll_period = models.ForeignKey(PayrollPeriod, on_delete=models.CASCADE, related_name='payroll_runs')
     
     # Run details
@@ -344,7 +340,6 @@ class PayrollAdjustment(BaseModel):
 
 class TaxYear(BaseModel):
     """Tax year configuration."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tax_years')
     year = models.IntegerField(unique=True)
     
     # Tax rates
@@ -427,7 +422,6 @@ class EmployeeTaxInfo(BaseModel):
 
 class PayrollReport(BaseModel):
     """Payroll reports and analytics."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_reports')
     
     # Report details
     report_name = models.CharField(max_length=100)
@@ -483,7 +477,6 @@ class PayrollReport(BaseModel):
 
 class PayrollAnalytics(BaseModel):
     """Payroll analytics and metrics."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_analytics')
     
     # Time period
     period_start = models.DateField()
@@ -523,7 +516,7 @@ class PayrollAnalytics(BaseModel):
         verbose_name = 'Payroll Analytics'
         verbose_name_plural = 'Payroll Analytics'
         ordering = ['-period_start']
-        unique_together = ['organization', 'period_start', 'period_end', 'period_type']
+        unique_together = ['period_start', 'period_end', 'period_type']
     
     def __str__(self):
         return f"Payroll Analytics - {self.period_start} to {self.period_end}"
@@ -533,7 +526,6 @@ class PayrollAnalytics(BaseModel):
 
 class PayrollIntegration(BaseModel):
     """Payroll system integrations."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_integrations')
     
     # Integration details
     integration_name = models.CharField(max_length=100)
@@ -588,7 +580,6 @@ class PayrollIntegration(BaseModel):
 
 class PayrollWebhook(BaseModel):
     """Payroll webhooks for external integrations."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_webhooks')
     integration = models.ForeignKey(PayrollIntegration, on_delete=models.CASCADE, related_name='webhooks')
     
     # Webhook details
@@ -618,7 +609,6 @@ class PayrollWebhook(BaseModel):
 
 class PayrollNotification(BaseModel):
     """Payroll notifications and alerts."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payroll_notifications')
     
     # Notification details
     notification_type = models.CharField(

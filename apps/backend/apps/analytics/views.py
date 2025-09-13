@@ -203,7 +203,7 @@ class KPIViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     def perform_create(self, serializer):
@@ -545,7 +545,7 @@ class DataSourceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     def perform_create(self, serializer):
@@ -648,7 +648,7 @@ class AnalyticsEventViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
 
 
@@ -670,7 +670,7 @@ class AlertViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if hasattr(user, 'organization'):
-            return self.queryset.filter(organization=user.organization)
+            return self.queryset
         return self.queryset.none()
     
     @action(detail=True, methods=['post'])
@@ -781,8 +781,8 @@ class AnalyticsDashboardView(APIView):
         # Get summary statistics
         summary = {
             'reports': {
-                'total': Report.objects.filter(organization=organization).count(),
-                'scheduled': Report.objects.filter(organization=organization, is_scheduled=True).count(),
+                'total': Report.objects.count(),
+                'scheduled': Report.objects.count(),
                 'completed_today': Report.objects.filter(
                     organization=organization,
                     status='completed',
@@ -790,20 +790,20 @@ class AnalyticsDashboardView(APIView):
                 ).count()
             },
             'kpis': {
-                'total': KPI.objects.filter(organization=organization).count(),
-                'active': KPI.objects.filter(organization=organization, is_active=True).count(),
+                'total': KPI.objects.count(),
+                'active': KPI.objects.count(),
                 'with_alerts': KPI.objects.filter(
                     organization=organization,
                     alerts__status='active'
                 ).distinct().count()
             },
             'dashboards': {
-                'total': Dashboard.objects.filter(organization=organization).count(),
-                'active': Dashboard.objects.filter(organization=organization, is_active=True).count(),
-                'public': Dashboard.objects.filter(organization=organization, is_public=True).count()
+                'total': Dashboard.objects.count(),
+                'active': Dashboard.objects.count(),
+                'public': Dashboard.objects.count()
             },
             'alerts': {
-                'active': Alert.objects.filter(organization=organization, status='active').count(),
+                'active': Alert.objects.count(),
                 'critical': Alert.objects.filter(
                     organization=organization,
                     status='active',

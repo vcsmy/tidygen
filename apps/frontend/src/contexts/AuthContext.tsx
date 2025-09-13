@@ -3,26 +3,10 @@
  */
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { authApi, apiClient, ApiError } from '@/lib/api';
+import { authApi, apiClient } from '@/lib/api';
+import type { ApiError, User } from '@/lib/types';
 
-export interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  is_active: boolean;
-  is_staff: boolean;
-  is_superuser: boolean;
-  organization?: {
-    id: number;
-    name: string;
-  };
-  profile?: {
-    phone?: string;
-    avatar?: string;
-    timezone?: string;
-  };
-}
+// User interface is imported from @/lib/types
 
 export interface AuthTokens {
   access: string;

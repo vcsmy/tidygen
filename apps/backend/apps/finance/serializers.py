@@ -7,7 +7,6 @@ from apps.finance.models import (
     Account, Customer, Vendor, Invoice, InvoiceItem, Payment, Expense,
     Budget, BudgetItem, FinancialReport, TaxRate, RecurringInvoice, RecurringInvoiceItem
 )
-from apps.organizations.models import Organization
 
 User = get_user_model()
 

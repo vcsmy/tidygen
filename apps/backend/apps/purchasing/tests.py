@@ -20,7 +20,6 @@ from apps.purchasing.models import (
     ProcurementRequest, ProcurementRequestItem, SupplierPerformance, PurchaseAnalytics
 )
 from apps.inventory.models import Product, Supplier, Category
-from apps.organizations.models import Organization
 
 User = get_user_model()
 

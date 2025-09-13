@@ -15,7 +15,6 @@ from apps.sales.models import (
     ClientDocument, ClientTag, ClientTagAssignment, ClientInteraction,
     ClientSegment, ClientSegmentAssignment
 )
-from apps.organizations.models import Organization
 
 User = get_user_model()
 

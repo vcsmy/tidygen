@@ -9,7 +9,6 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 from decimal import Decimal
 import uuid
 import json
@@ -49,7 +48,6 @@ class Report(BaseModel):
     ]
     
     report_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='reports')
     name = models.CharField(max_length=200, help_text="Report name")
     description = models.TextField(blank=True, help_text="Report description")
     report_type = models.CharField(max_length=20, choices=REPORT_TYPE_CHOICES)
@@ -120,7 +118,6 @@ class KPI(BaseModel):
     ]
     
     kpi_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='kpis')
     name = models.CharField(max_length=200, help_text="KPI name")
     description = models.TextField(blank=True, help_text="KPI description")
     kpi_type = models.CharField(max_length=20, choices=KPI_TYPE_CHOICES)
@@ -200,7 +197,6 @@ class Dashboard(BaseModel):
     ]
     
     dashboard_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='dashboards')
     name = models.CharField(max_length=200, help_text="Dashboard name")
     description = models.TextField(blank=True, help_text="Dashboard description")
     dashboard_type = models.CharField(max_length=20, choices=DASHBOARD_TYPE_CHOICES, default='custom')
@@ -317,7 +313,6 @@ class DataSource(BaseModel):
     ]
     
     source_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='data_sources')
     name = models.CharField(max_length=200, help_text="Data source name")
     description = models.TextField(blank=True, help_text="Data source description")
     source_type = models.CharField(max_length=20, choices=SOURCE_TYPE_CHOICES)
@@ -359,7 +354,6 @@ class ReportTemplate(BaseModel):
     ]
     
     template_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='report_templates')
     name = models.CharField(max_length=200, help_text="Template name")
     description = models.TextField(blank=True, help_text="Template description")
     template_type = models.CharField(max_length=20, choices=TEMPLATE_TYPE_CHOICES)
@@ -399,7 +393,6 @@ class AnalyticsEvent(BaseModel):
     ]
     
     event_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='analytics_events')
     event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES)
     event_name = models.CharField(max_length=200, help_text="Event name")
     description = models.TextField(blank=True, help_text="Event description")
@@ -425,7 +418,7 @@ class AnalyticsEvent(BaseModel):
         indexes = [
             models.Index(fields=['event_type', 'event_timestamp']),
             models.Index(fields=['user', 'event_timestamp']),
-            models.Index(fields=['organization', 'event_timestamp']),
+            models.Index(fields=['event_timestamp']),
         ]
     
     def __str__(self):
@@ -459,7 +452,6 @@ class Alert(BaseModel):
     ]
     
     alert_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='alerts')
     alert_type = models.CharField(max_length=20, choices=ALERT_TYPE_CHOICES)
     severity = models.CharField(max_length=10, choices=ALERT_SEVERITY_CHOICES, default='medium')
     status = models.CharField(max_length=15, choices=ALERT_STATUS_CHOICES, default='active')
@@ -496,7 +488,7 @@ class Alert(BaseModel):
         indexes = [
             models.Index(fields=['status', 'severity']),
             models.Index(fields=['alert_type', 'triggered_at']),
-            models.Index(fields=['organization', 'status']),
+            models.Index(fields=['status']),
         ]
     
     def __str__(self):
@@ -516,7 +508,6 @@ class AnalyticsCache(BaseModel):
     ]
     
     cache_key = models.CharField(max_length=500, unique=True, help_text="Cache key")
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='analytics_cache')
     cache_type = models.CharField(max_length=20, choices=CACHE_TYPE_CHOICES)
     
     # Cache data
@@ -540,7 +531,7 @@ class AnalyticsCache(BaseModel):
         indexes = [
             models.Index(fields=['cache_key']),
             models.Index(fields=['expires_at']),
-            models.Index(fields=['organization', 'cache_type']),
+            models.Index(fields=['cache_type']),
         ]
     
     def __str__(self):

@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: ineat_erp_db_prod
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ineat_erp}
+      POSTGRES_USER: ${POSTGRES_USER:-ineat_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ineat_user} -d ${POSTGRES_DB:-ineat_erp}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ineat_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: ineat_erp_redis_prod
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ineat_network
+
+  # Django Backend
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile.prod
+    container_name: ineat_erp_backend_prod
+    environment:
+      - DJANGO_ENV=production
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-ineat_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ineat_erp}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+    volumes:
+      - backend_media:/app/media
+      - backend_static:/app/staticfiles
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             python manage.py setup_single_organization --create-admin &&
+             gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    restart: unless-stopped
+    networks:
+      - ineat_network
+
+  # Celery Worker
+  celery:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile.prod
+    container_name: ineat_erp_celery_prod
+    environment:
+      - DJANGO_ENV=production
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-ineat_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ineat_erp}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    volumes:
+      - backend_media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: celery -A backend worker --loglevel=info --concurrency=2
+    restart: unless-stopped
+    networks:
+      - ineat_network
+
+  # Nginx
+  nginx:
+    image: nginx:alpine
+    container_name: ineat_erp_nginx_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - backend_static:/var/www/static:ro
+      - backend_media:/var/www/media:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ineat_network
+
+networks:
+  ineat_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_media:
+  backend_static:

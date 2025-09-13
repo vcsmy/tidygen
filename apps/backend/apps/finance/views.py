@@ -41,7 +41,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     ordering = ['code']
     
     def get_queryset(self):
-        return Account.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Account.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -59,7 +59,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Customer.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Customer.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -93,7 +93,7 @@ class VendorViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Vendor.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Vendor.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -119,7 +119,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     ordering = ['-issue_date']
     
     def get_queryset(self):
-        return Invoice.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Invoice.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -249,7 +249,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     ordering = ['-payment_date']
     
     def get_queryset(self):
-        return Payment.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Payment.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -267,7 +267,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     ordering = ['-expense_date']
     
     def get_queryset(self):
-        return Expense.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Expense.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -384,7 +384,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return Budget.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return Budget.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -417,7 +417,7 @@ class TaxRateViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return TaxRate.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return TaxRate.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -435,7 +435,7 @@ class RecurringInvoiceViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return RecurringInvoice.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return RecurringInvoice.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -503,7 +503,7 @@ class FinancialReportViewSet(viewsets.ModelViewSet):
     ordering = ['-generated_at']
     
     def get_queryset(self):
-        return FinancialReport.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return FinancialReport.objects.organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -520,7 +520,7 @@ class FinanceDashboardViewSet(viewsets.ViewSet):
         organization = request.user.organization_memberships.first().organization
         
         # Calculate totals
-        total_revenue = Payment.objects.filter(organization=organization).aggregate(
+        total_revenue = Payment.objects.aggregate(
             total=Sum('amount')
         )['total'] or Decimal('0')
         
@@ -585,7 +585,7 @@ class FinanceDashboardViewSet(viewsets.ViewSet):
         monthly_expenses.reverse()
         
         # Top customers
-        top_customers = Customer.objects.filter(organization=organization).annotate(
+        top_customers = Customer.objects.annotate(
             total_revenue=Sum('payments__amount')
         ).order_by('-total_revenue')[:5]
         

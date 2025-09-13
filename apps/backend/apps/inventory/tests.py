@@ -9,7 +9,6 @@ from rest_framework import status
 from decimal import Decimal
 from datetime import date, timedelta
 
-from apps.organizations.models import Organization
 from .models import (
     Product, ProductCategory, StockMovement, Supplier,
     PurchaseOrder, PurchaseOrderItem

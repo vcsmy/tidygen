@@ -20,7 +20,6 @@ from apps.analytics.models import (
     Report, KPI, KPIMeasurement, Dashboard, DashboardWidget,
     DataSource, ReportTemplate, AnalyticsEvent, Alert, AnalyticsCache
 )
-from apps.organizations.models import Organization
 
 User = get_user_model()
 
@@ -1174,7 +1173,7 @@ class AnalyticsIntegrationTest(TestCase):
         self.assertEqual(alert.related_kpi, kpi)
         
         # Verify analytics events were created
-        events = AnalyticsEvent.objects.filter(organization=self.organization)
+        events = AnalyticsEvent.objects
         self.assertTrue(events.exists())
     
     def test_kpi_threshold_alert_workflow(self):

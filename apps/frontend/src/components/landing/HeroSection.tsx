@@ -8,7 +8,11 @@ import {
   Building2, 
   Users, 
   BarChart3,
-  Shield
+  Shield,
+  Github,
+  Server,
+  BookOpen,
+  ExternalLink
 } from "lucide-react";
 
 interface HeroSectionProps {
@@ -25,50 +29,83 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
           {/* Left Column - Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <Badge variant="secondary" className="w-fit">
-                <Sparkles className="h-3 w-3 mr-1" />
-                Commercial ERP Platform
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className="w-fit">
+                  <Sparkles className="h-3 w-3 mr-1" />
+                  Free & Open Source
+                </Badge>
+                <Badge variant="outline" className="w-fit">
+                  <Shield className="h-3 w-3 mr-1" />
+                  Web3 Foundation Grant Candidate
+                </Badge>
+              </div>
               
-              <h1 className="text-4xl lg:text-6xl font-bold tracking-tight">
-                Scale Your Business with
-                <span className="text-primary"> Enterprise ERP</span>
+              <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
+                iNeat Community Edition
+                <span className="text-primary"> – Free, Open Source, and Self-Hosted</span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Multi-tenant ERP platform designed for enterprises, dealers, and resellers. 
-                Accelerate growth with white-label solutions, partner portals, and enterprise-grade security.
+                A simplified, single-tenant version of iNeat ERP perfect for developers, small businesses, 
+                and grant foundations. Self-host your own Web3-aligned ERP system with full control over your data.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" onClick={onRequestDemo} className="group">
-                <Play className="h-4 w-4 mr-2" />
-                Request a Demo
-                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Button size="lg" className="group" asChild>
+                <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                  <Github className="h-4 w-4 mr-2" />
+                  Get on GitHub
+                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
               
-              <Button size="lg" variant="outline" onClick={onStartTrial} className="group">
-                <Sparkles className="h-4 w-4 mr-2" />
-                Start Free Trial
-                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Button size="lg" variant="outline" className="group" asChild>
+                <a href="#deploy" onClick={(e) => { e.preventDefault(); document.getElementById('deploy')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                  <Server className="h-4 w-4 mr-2" />
+                  Deploy Now
+                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+
+            {/* Secondary CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button variant="ghost" size="sm" className="group" asChild>
+                <a href="https://docs.ineat.io/community-edition/self-hosting" target="_blank" rel="noopener noreferrer">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Self-Host Guide
+                  <ExternalLink className="h-3 w-3 ml-2" />
+                </a>
+              </Button>
+              
+              <Button variant="ghost" size="sm" className="group" asChild>
+                <a href="https://discord.gg/ineat-community" target="_blank" rel="noopener noreferrer">
+                  <Users className="h-4 w-4 mr-2" />
+                  Join Community
+                  <ExternalLink className="h-3 w-3 ml-2" />
+                </a>
               </Button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center space-x-1">
+                <Github className="h-4 w-4" />
+                <span>Open Source</span>
+              </div>
               <div className="flex items-center space-x-1">
                 <Shield className="h-4 w-4" />
-                <span>Enterprise Security</span>
+                <span>Self-Hosted</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Users className="h-4 w-4" />
-                <span>500+ Active Partners</span>
+                <span>Community Driven</span>
               </div>
               <div className="flex items-center space-x-1">
                 <BarChart3 className="h-4 w-4" />
-                <span>99.9% SLA Guarantee</span>
+                <span>Web3 Aligned</span>
               </div>
             </div>
           </div>
@@ -76,14 +113,15 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
           {/* Right Column - Visual */}
           <div className="relative">
             <div className="relative z-10">
-              {/* Dashboard Preview */}
+              {/* Self-Hosted Dashboard Preview */}
               <div className="bg-card border rounded-lg shadow-2xl overflow-hidden">
                 <div className="bg-muted/50 px-4 py-3 border-b">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span className="ml-4 text-sm text-muted-foreground">iNEAT-ERP Dashboard</span>
+                    <span className="ml-4 text-sm text-muted-foreground">iNeat Community Edition</span>
+                    <Badge variant="outline" className="ml-auto text-xs">Self-Hosted</Badge>
                   </div>
                 </div>
                 
@@ -93,31 +131,34 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
                     <div className="bg-primary/10 p-4 rounded-lg">
                       <div className="flex items-center space-x-2 mb-2">
                         <Users className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium">Active Partners</span>
+                        <span className="text-sm font-medium">Active Users</span>
                       </div>
-                      <div className="text-2xl font-bold">547</div>
-                      <div className="text-xs text-muted-foreground">+12% this month</div>
+                      <div className="text-2xl font-bold">12</div>
+                      <div className="text-xs text-muted-foreground">Your team</div>
                     </div>
                     
                     <div className="bg-success/10 p-4 rounded-lg">
                       <div className="flex items-center space-x-2 mb-2">
                         <BarChart3 className="h-4 w-4 text-success" />
-                        <span className="text-sm font-medium">Revenue</span>
+                        <span className="text-sm font-medium">Data Control</span>
                       </div>
-                      <div className="text-2xl font-bold">$8.2M</div>
-                      <div className="text-xs text-muted-foreground">+18% this month</div>
+                      <div className="text-2xl font-bold">100%</div>
+                      <div className="text-xs text-muted-foreground">Your servers</div>
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <div className="h-2 bg-muted rounded-full">
-                      <div className="h-2 bg-primary rounded-full w-3/4"></div>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Inventory Management</span>
+                      <Badge variant="secondary" className="text-xs">Active</Badge>
                     </div>
-                    <div className="h-2 bg-muted rounded-full">
-                      <div className="h-2 bg-accent rounded-full w-1/2"></div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Financial Reports</span>
+                      <Badge variant="secondary" className="text-xs">Active</Badge>
                     </div>
-                    <div className="h-2 bg-muted rounded-full">
-                      <div className="h-2 bg-success rounded-full w-5/6"></div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Web3 Integration</span>
+                      <Badge variant="secondary" className="text-xs">Ready</Badge>
                     </div>
                   </div>
                 </div>

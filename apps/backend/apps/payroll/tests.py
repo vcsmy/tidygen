@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 from apps.core.models import User
-from apps.organizations.models import Organization
 from apps.hr.models import Employee, Department, Position, PayrollPeriod
 from .models import (
     PayrollConfiguration, PayrollComponent, EmployeePayrollProfile,

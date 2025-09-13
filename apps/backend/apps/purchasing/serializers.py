@@ -12,7 +12,6 @@ from apps.purchasing.models import (
     ProcurementRequest, ProcurementRequestItem, SupplierPerformance, PurchaseAnalytics
 )
 from apps.inventory.models import Product, Supplier
-from apps.organizations.models import Organization
 from decimal import Decimal
 
 User = get_user_model()

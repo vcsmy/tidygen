@@ -44,9 +44,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
     
     def get_queryset(self):
-        return Client.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
-        ).select_related('assigned_to', 'created_by').prefetch_related(
+        return Client.objects.all().select_related('assigned_to', 'created_by').prefetch_related(
             'individual_client', 'corporate_client', 'contacts', 'notes',
             'documents', 'interactions', 'tag_assignments__tag',
             'segment_assignments__segment'
@@ -60,8 +58,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         return ClientSerializer
     
     def perform_create(self, serializer):
-        organization = self.request.user.organization_memberships.first().organization
-        serializer.save(organization=organization, created_by=self.request.user)
+        serializer.save(created_by=self.request.user)
     
     @action(detail=True, methods=['post'])
     def add_contact(self, request, pk=None):
@@ -391,9 +388,7 @@ class ClientTagViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return ClientTag.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
-        )
+        return ClientTag.objects.all()
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -510,8 +505,7 @@ class ClientSegmentViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return ClientSegment.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return ClientSegment.objects.all().organization
         )
     
     def perform_create(self, serializer):
@@ -541,7 +535,7 @@ class ClientDashboardViewSet(viewsets.ViewSet):
     def overview(self, request):
         """Get client dashboard overview."""
         organization = request.user.organization_memberships.first().organization
-        clients = Client.objects.filter(organization=organization)
+        clients = Client.objects
         
         # Basic counts
         total_clients = clients.count()

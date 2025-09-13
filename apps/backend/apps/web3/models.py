@@ -5,7 +5,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 import hashlib
 import json
 
@@ -261,7 +260,6 @@ class DecentralizedIdentity(BaseModel):
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='did')
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='dids')
     did_identifier = models.CharField(max_length=255, unique=True)
     did_method = models.CharField(max_length=20, choices=DID_METHODS)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
@@ -283,11 +281,10 @@ class DecentralizedIdentity(BaseModel):
     class Meta:
         verbose_name = 'Decentralized Identity'
         verbose_name_plural = 'Decentralized Identities'
-        unique_together = ['user', 'organization']
+        unique_together = ['user']
         indexes = [
             models.Index(fields=['did_identifier']),
             models.Index(fields=['user', 'status']),
-            models.Index(fields=['organization', 'status']),
         ]
     
     def __str__(self):
@@ -326,7 +323,6 @@ class OnChainAnchor(BaseModel):
         ('failed', 'Failed'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='anchors')
     anchor_type = models.CharField(max_length=20, choices=ANCHOR_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     
@@ -358,7 +354,7 @@ class OnChainAnchor(BaseModel):
         indexes = [
             models.Index(fields=['data_hash']),
             models.Index(fields=['transaction_hash']),
-            models.Index(fields=['organization', 'anchor_type']),
+            models.Index(fields=['anchor_type']),
             models.Index(fields=['status', 'created']),
         ]
     
@@ -394,7 +390,6 @@ class SmartContractModule(BaseModel):
         ('deprecated', 'Deprecated'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='smart_contract_modules')
     name = models.CharField(max_length=100)
     module_type = models.CharField(max_length=30, choices=MODULE_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
@@ -422,7 +417,7 @@ class SmartContractModule(BaseModel):
         verbose_name = 'Smart Contract Module'
         verbose_name_plural = 'Smart Contract Modules'
         ordering = ['-created']
-        unique_together = ['organization', 'name', 'version']
+        unique_together = ['name', 'version']
     
     def __str__(self):
         return f"{self.name} ({self.module_type})"
@@ -446,7 +441,6 @@ class DAOGovernance(BaseModel):
         ('expired', 'Expired'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='dao_governance')
     governance_type = models.CharField(max_length=20, choices=GOVERNANCE_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     
@@ -480,7 +474,7 @@ class DAOGovernance(BaseModel):
         verbose_name_plural = 'DAO Governance'
         ordering = ['-created']
         indexes = [
-            models.Index(fields=['organization', 'status']),
+            models.Index(fields=['status']),
             models.Index(fields=['proposer', 'status']),
             models.Index(fields=['voting_start', 'voting_end']),
         ]
@@ -542,7 +536,6 @@ class TokenizedReward(BaseModel):
         ('paid', 'Paid'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tokenized_rewards')
     reward_type = models.CharField(max_length=20, choices=REWARD_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     
@@ -575,7 +568,7 @@ class TokenizedReward(BaseModel):
         ordering = ['-created']
         indexes = [
             models.Index(fields=['recipient', 'status']),
-            models.Index(fields=['organization', 'reward_type']),
+            models.Index(fields=['reward_type']),
             models.Index(fields=['status', 'created']),
         ]
     
@@ -599,7 +592,6 @@ class DecentralizedStorage(BaseModel):
         ('failed', 'Failed'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='decentralized_storage')
     storage_type = models.CharField(max_length=20, choices=STORAGE_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='uploading')
     
@@ -631,7 +623,7 @@ class DecentralizedStorage(BaseModel):
         indexes = [
             models.Index(fields=['storage_hash']),
             models.Index(fields=['file_hash']),
-            models.Index(fields=['organization', 'storage_type']),
+            models.Index(fields=['storage_type']),
             models.Index(fields=['status', 'created']),
         ]
     
@@ -657,7 +649,6 @@ class BlockchainAuditLog(BaseModel):
         ('critical', 'Critical'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='audit_logs')
     log_type = models.CharField(max_length=20, choices=LOG_TYPES)
     severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES, default='medium')
     
@@ -688,7 +679,7 @@ class BlockchainAuditLog(BaseModel):
         verbose_name_plural = 'Blockchain Audit Logs'
         ordering = ['-created']
         indexes = [
-            models.Index(fields=['organization', 'log_type']),
+            models.Index(fields=['log_type']),
             models.Index(fields=['user', 'created']),
             models.Index(fields=['severity', 'created']),
             models.Index(fields=['is_anchored', 'created']),

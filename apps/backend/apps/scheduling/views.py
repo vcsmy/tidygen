@@ -51,7 +51,7 @@ class ScheduleTemplateViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -111,7 +111,7 @@ class ResourceViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -192,7 +192,7 @@ class TeamViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -286,7 +286,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -437,7 +437,7 @@ class ScheduleConflictViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -496,7 +496,7 @@ class ScheduleRuleViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -528,7 +528,7 @@ class ScheduleNotificationViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -572,7 +572,7 @@ class ScheduleAnalyticsViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -597,7 +597,7 @@ class ScheduleIntegrationViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter queryset by organization."""
-        return self.queryset.filter(organization=self.request.user.organization)
+        return self.queryset
     
     def get_serializer_class(self):
         """Return appropriate serializer class."""
@@ -657,7 +657,7 @@ class SchedulingDashboardView(APIView):
         organization = request.user.organization
         
         # Get basic counts
-        total_appointments = Appointment.objects.filter(organization=organization).count()
+        total_appointments = Appointment.objects.count()
         upcoming_appointments = Appointment.objects.filter(
             organization=organization,
             start_datetime__gt=timezone.now(),
@@ -669,20 +669,20 @@ class SchedulingDashboardView(APIView):
             status__in=['scheduled', 'confirmed', 'in_progress']
         ).count()
         
-        total_conflicts = ScheduleConflict.objects.filter(organization=organization).count()
+        total_conflicts = ScheduleConflict.objects.count()
         unresolved_conflicts = ScheduleConflict.objects.filter(
             organization=organization,
             status='pending'
         ).count()
         
-        total_resources = Resource.objects.filter(organization=organization).count()
+        total_resources = Resource.objects.count()
         available_resources = Resource.objects.filter(
             organization=organization,
             is_active=True,
             is_available=True
         ).count()
         
-        total_teams = Team.objects.filter(organization=organization).count()
+        total_teams = Team.objects.count()
         active_teams = Team.objects.filter(
             organization=organization,
             is_active=True

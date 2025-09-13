@@ -8,65 +8,71 @@ import {
   CheckCircle,
   Clock,
   Users,
-  Shield
+  Shield,
+  Cloud
 } from "lucide-react";
 
 export function ServicesSection() {
   const services = [
     {
       icon: <Server className="h-8 w-8" />,
-      title: "Managed Hosting",
-      description: "Let us handle the technical complexity while you focus on your business.",
+      title: "Private Cloud Hosting",
+      description: "Managed VPS or Kubernetes hosting for your Community Edition instance.",
       features: [
+        "Managed VPS hosting",
+        "Kubernetes deployment",
         "24/7 server monitoring",
         "Daily automated backups",
         "SSL certificates included",
-        "Regular security updates",
-        "99.9% uptime guarantee",
-        "Performance optimization"
+        "Regular security updates"
       ],
       pricing: "Starting at $30/month",
       cta: "Get Hosting",
       popular: true
     },
     {
-      icon: <Headphones className="h-8 w-8" />,
-      title: "Premium Support",
-      description: "Get expert help when you need it with our dedicated support team.",
+      icon: <Cloud className="h-8 w-8" />,
+      title: "iNeat.Cloud",
+      description: "Turnkey hosted instance with updates and monitoring included.",
       features: [
-        "Priority email support",
-        "Live chat assistance",
-        "24/7 phone support",
-        "Dedicated account manager",
-        "Custom training sessions",
-        "Issue resolution SLA"
+        "Fully managed instance",
+        "Automatic updates",
+        "Performance monitoring",
+        "Data backup & recovery",
+        "99.9% uptime guarantee",
+        "Technical support included"
       ],
-      pricing: "Starting at $99/month",
-      cta: "Get Support",
+      pricing: "Starting at $49/month",
+      cta: "Get Cloud Hosting",
       popular: false
     },
     {
       icon: <BookOpen className="h-8 w-8" />,
-      title: "Training & Onboarding",
-      description: "Comprehensive training to get your team up and running quickly.",
+      title: "Installation Support",
+      description: "One-time setup assistance for your infrastructure.",
       features: [
-        "Custom onboarding program",
-        "Team training sessions",
-        "Best practices guidance",
-        "Documentation & tutorials",
-        "Video training library",
-        "Ongoing education"
+        "Custom installation setup",
+        "Infrastructure configuration",
+        "Database optimization",
+        "Security hardening",
+        "Performance tuning",
+        "Documentation handover"
       ],
-      pricing: "Starting at $199/session",
-      cta: "Schedule Training",
+      pricing: "Starting at $199/setup",
+      cta: "Get Support",
       popular: false
     }
   ];
 
   const additionalServices = [
     {
-      title: "Custom Development",
-      description: "Tailored features and integrations for your specific needs.",
+      title: "Technical Training",
+      description: "Admin and user training sessions for your team.",
+      icon: <CheckCircle className="h-5 w-5" />
+    },
+    {
+      title: "Paid Support & Customization",
+      description: "Ongoing support and custom development via subscription.",
       icon: <CheckCircle className="h-5 w-5" />
     },
     {
@@ -78,11 +84,6 @@ export function ServicesSection() {
       title: "API Integration",
       description: "Connect with your favorite tools and services.",
       icon: <CheckCircle className="h-5 w-5" />
-    },
-    {
-      title: "White-Label Solutions",
-      description: "Rebrand iNEAT-ERP as your own solution.",
-      icon: <CheckCircle className="h-5 w-5" />
     }
   ];
 
@@ -91,12 +92,17 @@ export function ServicesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold">
-            Professional Services
+            Need Help Getting Started?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Beyond software, we provide comprehensive enterprise services including 
-            customization, training, and SLA support to ensure your success with iNEAT-ERP.
+            While iNeat Community Edition is completely free and open source, we offer optional 
+            professional services to help you get the most out of your deployment.
           </p>
+          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 max-w-2xl mx-auto">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              <strong>Note:</strong> These services are optional and do not affect the free license or usage rights of the Community Edition.
+            </p>
+          </div>
         </div>
 
         {/* Main Services */}

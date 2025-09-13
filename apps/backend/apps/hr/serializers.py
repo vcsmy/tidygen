@@ -8,7 +8,6 @@ from apps.hr.models import (
     PayrollPeriod, Payroll, PerformanceReview, Training, TrainingEnrollment,
     Document, Policy, PolicyAcknowledgment
 )
-from apps.organizations.models import Organization
 
 User = get_user_model()
 

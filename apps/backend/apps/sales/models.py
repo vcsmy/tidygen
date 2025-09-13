@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 
 User = get_user_model()
 
@@ -34,7 +33,6 @@ class Client(BaseModel):
         ('vip', 'VIP'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='clients')
     client_type = models.CharField(max_length=20, choices=CLIENT_TYPES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='prospect')
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
@@ -381,7 +379,6 @@ class ClientTag(BaseModel):
     """
     Tags for categorizing and organizing clients.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='client_tags')
     name = models.CharField(max_length=50)
     color = models.CharField(max_length=7, default='#007bff')  # Hex color code
     description = models.TextField(blank=True)
@@ -389,7 +386,7 @@ class ClientTag(BaseModel):
     class Meta:
         verbose_name = 'Client Tag'
         verbose_name_plural = 'Client Tags'
-        unique_together = ['organization', 'name']
+        unique_together = ['name']
         ordering = ['name']
     
     def __str__(self):
@@ -473,7 +470,6 @@ class ClientSegment(BaseModel):
     """
     Client segmentation for marketing and sales purposes.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='client_segments')
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     
@@ -487,7 +483,7 @@ class ClientSegment(BaseModel):
     class Meta:
         verbose_name = 'Client Segment'
         verbose_name_plural = 'Client Segments'
-        unique_together = ['organization', 'name']
+        unique_together = ['name']
         ordering = ['name']
     
     def __str__(self):

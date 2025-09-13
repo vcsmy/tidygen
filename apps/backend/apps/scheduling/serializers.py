@@ -7,7 +7,6 @@ from django.utils import timezone
 from decimal import Decimal
 
 from apps.core.models import User
-from apps.organizations.models import Organization
 from apps.hr.models import Employee
 from .models import (
     ScheduleTemplate, Resource, Team, TeamMember, Appointment,

@@ -10,7 +10,6 @@ from decimal import Decimal
 import uuid
 
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 
 User = get_user_model()
 
@@ -27,7 +26,6 @@ class ScheduleTemplate(BaseModel):
         ('custom', 'Custom'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_templates')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     schedule_type = models.CharField(max_length=20, choices=SCHEDULE_TYPES, default='weekly')
@@ -65,7 +63,7 @@ class ScheduleTemplate(BaseModel):
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} - {self.organization.name}"
+        return self.name
 
 
 class Resource(BaseModel):
@@ -81,7 +79,6 @@ class Resource(BaseModel):
         ('other', 'Other'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='scheduling_resources')
     name = models.CharField(max_length=200)
     resource_type = models.CharField(max_length=20, choices=RESOURCE_TYPES, default='room')
     description = models.TextField(blank=True)
@@ -115,14 +112,13 @@ class Resource(BaseModel):
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} ({self.get_resource_type_display()}) - {self.organization.name}"
+        return f"{self.name} ({self.get_resource_type_display()})"
 
 
 class Team(BaseModel):
     """
     Teams that can be assigned to appointments or tasks.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='scheduling_teams')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
@@ -152,7 +148,7 @@ class Team(BaseModel):
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} - {self.organization.name}"
+        return self.name
 
 
 class TeamMember(BaseModel):
@@ -214,7 +210,6 @@ class Appointment(BaseModel):
         ('urgent', 'Urgent'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='appointments')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
@@ -278,7 +273,7 @@ class Appointment(BaseModel):
         indexes = [
             models.Index(fields=['start_datetime', 'end_datetime']),
             models.Index(fields=['status']),
-            models.Index(fields=['organization', 'start_datetime']),
+            models.Index(fields=['start_datetime']),
         ]
     
     def __str__(self):
@@ -313,7 +308,6 @@ class ScheduleConflict(BaseModel):
         ('escalated', 'Escalated'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_conflicts')
     conflict_type = models.CharField(max_length=20, choices=CONFLICT_TYPES)
     status = models.CharField(max_length=20, choices=RESOLUTION_STATUS, default='pending')
     
@@ -372,7 +366,6 @@ class ScheduleRule(BaseModel):
         ('cancellation', 'Cancellation'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_rules')
     name = models.CharField(max_length=200)
     rule_type = models.CharField(max_length=20, choices=RULE_TYPES)
     description = models.TextField(blank=True)
@@ -405,7 +398,7 @@ class ScheduleRule(BaseModel):
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} ({self.get_rule_type_display()}) - {self.organization.name}"
+        return f"{self.name} ({self.get_rule_type_display()})"
 
 
 class ScheduleNotification(BaseModel):
@@ -430,7 +423,6 @@ class ScheduleNotification(BaseModel):
         ('in_app', 'In-App Notification'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_notifications')
     notification_type = models.CharField(max_length=30, choices=NOTIFICATION_TYPES)
     delivery_method = models.CharField(max_length=20, choices=DELIVERY_METHODS, default='email')
     
@@ -472,7 +464,6 @@ class ScheduleAnalytics(BaseModel):
     """
     Analytics and reporting for scheduling data.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_analytics')
     
     # Time period
     period_start = models.DateField()
@@ -516,10 +507,10 @@ class ScheduleAnalytics(BaseModel):
         verbose_name = 'Schedule Analytics'
         verbose_name_plural = 'Schedule Analytics'
         ordering = ['-period_start']
-        unique_together = ['organization', 'period_start', 'period_end', 'period_type']
+        unique_together = ['period_start', 'period_end', 'period_type']
     
     def __str__(self):
-        return f"Analytics - {self.organization.name} ({self.period_start} to {self.period_end})"
+        return f"Analytics ({self.period_start} to {self.period_end})"
 
 
 class ScheduleIntegration(BaseModel):
@@ -535,7 +526,6 @@ class ScheduleIntegration(BaseModel):
         ('payment', 'Payment System'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='schedule_integrations')
     name = models.CharField(max_length=200)
     integration_type = models.CharField(max_length=20, choices=INTEGRATION_TYPES)
     provider_name = models.CharField(max_length=100)
@@ -579,4 +569,4 @@ class ScheduleIntegration(BaseModel):
         ordering = ['name']
     
     def __str__(self):
-        return f"{self.name} ({self.get_integration_type_display()}) - {self.organization.name}"
+        return f"{self.name} ({self.get_integration_type_display()})"

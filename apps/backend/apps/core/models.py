@@ -65,9 +65,10 @@ class User(AbstractUser, BaseModel):
     def full_name(self):
         return f"{self.first_name} {self.last_name}".strip()
     
-    def get_organizations(self):
-        """Get all organizations this user belongs to."""
-        return self.organization_memberships.filter(is_active=True).select_related('organization')
+    def get_organization(self):
+        """Get the single organization for community edition."""
+        from .models import Organization
+        return Organization.objects.first()
 
 
 class Permission(BaseModel):
@@ -132,6 +133,71 @@ class SystemSettings(BaseModel):
     
     def __str__(self):
         return f"{self.key}: {self.value}"
+
+
+class Organization(BaseModel):
+    """
+    Single organization model for community edition.
+    This replaces the multi-tenant organization system.
+    """
+    name = models.CharField(_('organization name'), max_length=200)
+    description = models.TextField(_('description'), blank=True)
+    
+    # Contact information
+    email = models.EmailField(_('email'), blank=True)
+    phone = models.CharField(_('phone'), max_length=20, blank=True)
+    website = models.URLField(_('website'), blank=True)
+    
+    # Address
+    address_line1 = models.CharField(_('address line 1'), max_length=200, blank=True)
+    address_line2 = models.CharField(_('address line 2'), max_length=200, blank=True)
+    city = models.CharField(_('city'), max_length=100, blank=True)
+    state = models.CharField(_('state'), max_length=100, blank=True)
+    postal_code = models.CharField(_('postal code'), max_length=20, blank=True)
+    country = models.CharField(_('country'), max_length=100, blank=True)
+    
+    # Organization details
+    industry = models.CharField(_('industry'), max_length=100, blank=True)
+    size = models.CharField(
+        _('size'),
+        max_length=20,
+        choices=[
+            ('1-10', '1-10 employees'),
+            ('11-50', '11-50 employees'),
+            ('51-200', '51-200 employees'),
+            ('201-500', '201-500 employees'),
+            ('501-1000', '501-1000 employees'),
+            ('1000+', '1000+ employees'),
+        ],
+        blank=True
+    )
+    
+    # Settings
+    timezone = models.CharField(_('timezone'), max_length=50, default='UTC')
+    currency = models.CharField(_('currency'), max_length=3, default='USD')
+    language = models.CharField(_('language'), max_length=10, default='en')
+    
+    # Status
+    is_active = models.BooleanField(_('active'), default=True)
+    
+    # Web3 settings
+    wallet_address = models.CharField(_('wallet address'), max_length=42, blank=True, null=True)
+    blockchain_network = models.CharField(_('blockchain network'), max_length=20, default='ethereum')
+    
+    class Meta:
+        verbose_name = _('Organization')
+        verbose_name_plural = _('Organizations')
+        db_table = 'core_organization'
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one organization exists
+        if not self.pk and Organization.objects.exists():
+            raise ValueError("Only one organization is allowed in community edition")
+        super().save(*args, **kwargs)
 
 
 class AuditLog(BaseModel):

@@ -1,276 +1,300 @@
-# iNEAT ERP Frontend
+# iNeat ERP Community Edition
 
-A modern React + TypeScript frontend for the iNEAT ERP platform with Web3 integration.
+<div align="center">
+
+![iNeat ERP](https://img.shields.io/badge/iNeat%20ERP-Community%20Edition-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.12+-blue)
+![Django](https://img.shields.io/badge/Django-4.2+-green)
+![Self-Hosted](https://img.shields.io/badge/Self--Hosted-✓-orange)
+
+**A comprehensive, single-tenant ERP system designed for small to medium businesses. Built with Django REST Framework and modern web technologies.**
+
+[🚀 Quick Start](#quick-start) • [📖 Documentation](DEPLOYMENT.md) • [🤝 Contributing](#contributing) • [💬 Community](https://github.com/your-org/ineat-erp-community/discussions)
+
+</div>
+
+---
+
+## 🎯 Why iNeat ERP Community Edition?
+
+**iNeat ERP Community Edition** is a powerful, self-hosted ERP solution that gives you complete control over your business data and operations. Perfect for businesses that want enterprise-grade functionality without the complexity of multi-tenant systems.
+
+### ✨ Key Benefits
+
+- **🔒 Self-Hosted**: Your data stays on your infrastructure
+- **💰 Cost-Effective**: No monthly subscriptions or per-user fees
+- **🛠️ Customizable**: Open-source code you can modify and extend
+- **📈 Scalable**: Grows with your business from startup to enterprise
+- **🔧 Modern Tech Stack**: Built with Django, React, and PostgreSQL
+
+## 📊 Community vs Commercial Edition
+
+| Feature | Community Edition | Commercial Edition |
+|---------|------------------|-------------------|
+| **🏠 Deployment** | Self-hosted only | Cloud-hosted + Self-hosted |
+| **👥 Tenancy** | Single-tenant | Multi-tenant |
+| **💰 Cost** | Free (MIT License) | Subscription-based |
+| **🛠️ Customization** | Full source code access | Limited customization |
+| **📞 Support** | Community support | Enterprise support |
+| **🔄 Updates** | Manual updates | Automatic updates |
+| **🏢 Multi-Company** | Single organization | Multiple organizations |
+| **🤝 Dealer/Reseller Portals** | ❌ Not included | ✅ Included |
+| **📈 Advanced Analytics** | Basic reporting | Advanced BI & analytics |
+| **🔐 Enterprise Security** | Standard security | Advanced security features |
+| **☁️ Cloud Integration** | Manual setup | Built-in cloud services |
+| **📱 Mobile Apps** | Web-based | Native mobile apps |
+| **🔌 Third-party Integrations** | Manual integration | Pre-built integrations |
+
+> **💡 Need multi-tenant, dealer/reseller portals, or enterprise support?** Check out our [Commercial Edition](https://ineat-erp.com/commercial) for advanced features and professional support.
 
 ## 🚀 Features
 
-- **React 18** with TypeScript for type safety
-- **Vite** for fast development and building
-- **Tailwind CSS** for utility-first styling
-- **shadcn/ui** components for consistent UI
-- **React Router** for client-side routing
-- **Zustand** for state management
-- **React Query** for server state management
-- **Web3 Integration** with ethers.js and MetaMask
-- **Responsive Design** for all device sizes
-- **Docker Support** for containerized deployment
+### Core ERP Modules
+- **👥 Human Resources Management** - Employee records, payroll, leave management
+- **📦 Inventory Management** - Stock tracking, suppliers, purchase orders
+- **💼 Sales & CRM** - Customer management, sales tracking, invoicing
+- **💰 Financial Management** - Accounting, invoicing, expense tracking
+- **📅 Project Management** - Task scheduling, resource allocation
+- **📊 Analytics & Reporting** - Business intelligence and insights
+- **⛓️ Web3 Integration** - Optional blockchain features for modern businesses
 
-## 🏗️ Project Structure
+## 🚀 Quick Start
 
-```
-src/
-├── components/          # Reusable UI components
-│   ├── ui/             # Base UI components (shadcn/ui)
-│   ├── auth/           # Authentication components
-│   └── web3/           # Web3 integration components
-├── layouts/            # Layout components
-├── pages/              # Page components
-├── store/              # Zustand state management
-├── services/           # API services
-├── types/              # TypeScript type definitions
-├── hooks/              # Custom React hooks
-├── utils/              # Utility functions
-└── lib/                # Library configurations
-```
-
-## 🛠️ Development Setup
+Get iNeat ERP Community Edition running in minutes with Docker!
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
-- Docker (optional)
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/downloads)
+- 4GB RAM minimum (8GB recommended)
 
 ### Installation
 
-1. **Clone and navigate to frontend directory:**
+1. **Clone the repository:**
    ```bash
-   cd apps/frontend
+   git clone https://github.com/your-org/ineat-erp-community.git
+   cd ineat-erp-community
    ```
 
-2. **Install dependencies:**
+2. **Start the application:**
    ```bash
-   npm install
+   docker-compose up -d
    ```
 
-3. **Set up environment variables:**
-   ```bash
-   cp env.example .env.local
-   # Edit .env.local with your configuration
-   ```
+3. **Access your ERP system:**
+   - 🌐 **Web Application**: http://localhost:8000
+   - ⚙️ **Admin Interface**: http://localhost:8000/admin
+   - 📚 **API Documentation**: http://localhost:8000/api/docs
 
-4. **Start development server:**
-   ```bash
-   npm run dev
-   ```
+4. **Default login credentials:**
+   - **Username**: `admin`
+   - **Password**: `admin123`
+   - ⚠️ **Important**: Change the default password after first login!
 
-The application will be available at `http://localhost:3000`
+### 🎉 You're Ready!
 
-### Docker Development
+Your iNeat ERP Community Edition is now running! Start by:
+1. Setting up your organization details
+2. Adding your first employees
+3. Configuring your inventory
+4. Setting up your chart of accounts
 
-```bash
-# Build and run with Docker
-npm run docker:dev
+## 🏗️ Architecture
 
-# Or manually
-docker-compose -f docker-compose.dev.yml up
+iNeat ERP Community Edition is built with a modern, scalable architecture:
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend       │    │   Database      │
+│   (React/Next)  │◄──►│   (Django API)  │◄──►│   (PostgreSQL)  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   Cache         │
+                       │   (Redis)       │
+                       └─────────────────┘
 ```
 
-## 🎨 UI Components
+### Technology Stack
 
-The project uses a combination of:
+- **🎨 Frontend**: React 18, Next.js 14, TypeScript, Tailwind CSS
+- **⚙️ Backend**: Django 4.2+, Django REST Framework, Python 3.12+
+- **🗄️ Database**: PostgreSQL 15+ (primary), Redis 7+ (cache)
+- **🐳 Deployment**: Docker, Docker Compose, Nginx
+- **🔐 Authentication**: JWT tokens, Role-based access control
+- **📊 Monitoring**: Built-in health checks, logging, and metrics
 
-- **Tailwind CSS** for styling
-- **shadcn/ui** for pre-built components
-- **Lucide React** for icons
-- **Custom components** for specific functionality
+## 🛠️ Development
 
-### Available Components
+We welcome contributions from the community! Here's how to get started with development:
 
-- `Button` - Various button styles and sizes
-- `Input` - Form input fields
-- `Card` - Content containers
-- `LoginForm` - User authentication
-- `RegisterForm` - User registration
-- `WalletConnect` - Web3 wallet integration
-- `DashboardLayout` - Main application layout
-
-## 🔐 Authentication
-
-The frontend implements JWT-based authentication with:
-
-- **Login/Register forms** with validation
-- **Protected routes** that require authentication
-- **Automatic token refresh** handling
-- **Persistent login state** with Zustand
-- **Logout functionality** with token cleanup
-
-## ⛓️ Web3 Integration
-
-Web3 features include:
-
-- **MetaMask wallet connection**
-- **Wallet address display** and management
-- **Message signing** for verification
-- **Network switching** support
-- **Balance checking** functionality
-- **Transaction history** (coming soon)
-
-### Web3 Setup
-
-1. **Install MetaMask** browser extension
-2. **Connect wallet** using the Web3 page
-3. **Sign messages** to verify ownership
-4. **Switch networks** as needed
-
-## 🗂️ State Management
-
-### Zustand Stores
-
-- **Auth Store** - User authentication state
-- **Web3 Store** - Blockchain wallet state
-
-### React Query
-
-- **API data fetching** with caching
-- **Automatic refetching** on window focus
-- **Error handling** and retry logic
-- **Loading states** management
-
-## 🎯 Routing
-
-The application uses React Router with:
-
-- **Protected routes** for authenticated users
-- **Public routes** for login/register
-- **Nested routing** for dashboard sections
-- **Automatic redirects** based on auth state
-
-### Available Routes
-
-- `/login` - User login
-- `/register` - User registration
-- `/dashboard` - Main dashboard
-- `/dashboard/web3` - Web3 integration
-- `/dashboard/users` - User management (placeholder)
-- `/dashboard/organizations` - Organization management (placeholder)
-- `/dashboard/inventory` - Inventory management (placeholder)
-- `/dashboard/sales` - Sales management (placeholder)
-- `/dashboard/purchasing` - Purchasing management (placeholder)
-- `/dashboard/finance` - Finance management (placeholder)
-- `/dashboard/hr` - HR management (placeholder)
-- `/dashboard/settings` - Settings (placeholder)
-
-## 🐳 Docker Deployment
-
-### Production Build
+### Backend Development
 
 ```bash
-# Build production image
-npm run docker:build
-
-# Run production container
-npm run docker:run
+cd apps/backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py setup_single_organization --create-admin
+python manage.py runserver
 ```
 
-### Docker Compose
+### Frontend Development
 
 ```bash
-# Development
-docker-compose -f docker-compose.dev.yml up
-
-# Production (with backend)
-docker-compose -f ../infra/docker/development/docker-compose.yml up
+cd apps/frontend
+npm install
+npm run dev
 ```
 
-## 📱 Responsive Design
-
-The application is fully responsive with:
-
-- **Mobile-first** design approach
-- **Breakpoint-based** layouts
-- **Touch-friendly** interactions
-- **Optimized** for all screen sizes
-
-## 🔧 Configuration
-
-### Environment Variables
-
-- `VITE_API_URL` - Backend API URL
-- `VITE_APP_NAME` - Application name
-- `VITE_APP_VERSION` - Application version
-- `VITE_WEB3_NETWORK_ID` - Default Web3 network
-- `VITE_WEB3_RPC_URL` - Web3 RPC endpoint
-- `VITE_ENABLE_WEB3` - Enable/disable Web3 features
-- `VITE_DEBUG` - Debug mode
-
-### Tailwind Configuration
-
-Custom theme with:
-- **CSS variables** for colors
-- **Dark mode** support
-- **Custom spacing** and typography
-- **Component variants** for consistency
-
-## 🧪 Testing
+### Development with Docker
 
 ```bash
-# Type checking
-npm run type-check
+# Start development environment
+docker-compose up -d
 
-# Linting
-npm run lint
+# View logs
+docker-compose logs -f backend
 
-# Build verification
-npm run build
+# Run tests
+docker-compose exec backend python manage.py test
 ```
 
-## 🚀 Production Deployment
+## 🚀 Deployment
 
-1. **Build the application:**
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
+### Simple Production Deployment
+
+1. **Set up environment:**
    ```bash
-   npm run build
+   cp apps/backend/env.example apps/backend/.env.prod
+   # Edit .env.prod with your production settings
    ```
 
-2. **Serve static files:**
+2. **Deploy:**
    ```bash
-   npm run serve
+   docker-compose -f docker-compose.prod.yml --env-file apps/backend/.env.prod up -d
    ```
 
-3. **Or use Docker:**
-   ```bash
-   npm run docker:build
-   npm run docker:run
-   ```
+## ⚙️ Configuration
 
-## 📚 API Integration
+The system uses environment variables for configuration. See `apps/backend/env.example` for all available options.
 
-The frontend integrates with the Django REST API:
+### Key Configuration Options
 
-- **Authentication endpoints** for login/register
-- **User management** for profile updates
-- **Web3 endpoints** for wallet operations
-- **Error handling** with user-friendly messages
-- **Loading states** for better UX
+- `DATABASE_URL`: PostgreSQL connection string
+- `SECRET_KEY`: Django secret key
+- `ALLOWED_HOSTS`: Allowed hostnames
+- `CORS_ALLOWED_ORIGINS`: CORS configuration
+- `WEB3_ENABLED`: Enable/disable Web3 features
 
-## 🔄 Development Workflow
+## 📚 API Documentation
 
-1. **Make changes** to components or pages
-2. **Test locally** with `npm run dev`
-3. **Type check** with `npm run type-check`
-4. **Lint code** with `npm run lint`
-5. **Build** to verify production build
-6. **Deploy** using Docker or static hosting
+The API documentation is available at `/api/docs/` when running the application. It provides:
+
+- Interactive API explorer
+- Request/response examples
+- Authentication information
+- Schema definitions
+
+## 🧩 Modules
+
+### Core ERP Modules
+
+- **👤 Accounts**: User authentication and management
+- **👥 HR**: Human resources management
+- **📦 Inventory**: Stock and supplier management
+- **💼 Sales**: Customer and sales management
+- **💰 Finance**: Accounting and financial management
+- **🛒 Purchasing**: Purchase order management
+- **💳 Payroll**: Employee payroll processing
+- **📅 Scheduling**: Task and resource scheduling
+- **📊 Analytics**: Business intelligence and reporting
+- **⛓️ Web3**: Blockchain integration features
+
+## 🔒 Security
+
+- **🔐 JWT-based authentication** with refresh tokens
+- **👥 Role-based access control** (RBAC)
+- **🌐 CORS protection** for cross-origin requests
+- **⏱️ Rate limiting** to prevent abuse
+- **✅ Input validation** and sanitization
+- **🛡️ SQL injection protection**
+- **🔒 HTTPS support** for production deployments
 
 ## 🤝 Contributing
 
-1. Follow the existing code structure
-2. Use TypeScript for all new code
-3. Follow the component naming conventions
-4. Add proper error handling
-5. Test on multiple screen sizes
-6. Update documentation as needed
+We welcome contributions from the community! Here's how you can help:
+
+### Ways to Contribute
+
+- 🐛 **Report bugs** and issues
+- 💡 **Suggest new features**
+- 📝 **Improve documentation**
+- 🔧 **Submit code improvements**
+- 🧪 **Add tests**
+- 🌍 **Translate to other languages**
+
+### Getting Started
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests
+4. **Commit your changes**: `git commit -m 'Add amazing feature'`
+5. **Push to the branch**: `git push origin feature/amazing-feature`
+6. **Open a Pull Request**
+
+### Development Guidelines
+
+- Follow the existing code style
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass
+- Follow semantic commit messages
 
 ## 📄 License
 
-This project is part of the iNEAT ERP platform and follows the same licensing terms.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+### Community Support
+
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-org/ineat-erp-community/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/ineat-erp-community/discussions)
+- 📖 **Documentation**: [Read the docs](https://docs.ineat-erp.com)
+- 🌐 **Community Forum**: [Join the discussion](https://community.ineat-erp.com)
+
+### Commercial Support
+
+For enterprise features, multi-tenant support, dealer/reseller portals, and professional support, check out our [Commercial Edition](https://ineat-erp.com/commercial).
+
+## 🗺️ Roadmap
+
+### Upcoming Features
+
+- [ ] 📱 **Mobile Application** - Native iOS and Android apps
+- [ ] 📊 **Advanced Analytics** - Enhanced reporting and BI features
+- [ ] 🔌 **Third-party Integrations** - Popular business tools integration
+- [ ] 🌍 **Multi-language Support** - Internationalization
+- [ ] ⛓️ **Advanced Web3 Features** - Enhanced blockchain integration
+- [ ] 🤖 **AI-powered Insights** - Machine learning for business intelligence
+- [ ] 📈 **Advanced Workflow Automation** - Custom business process automation
+
+### Community Requests
+
+Have a feature request? [Submit it here](https://github.com/your-org/ineat-erp-community/issues/new?template=feature_request.md)!
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the iNeat ERP Community**
+
+[⭐ Star us on GitHub](https://github.com/your-org/ineat-erp-community) • [🐦 Follow us on Twitter](https://twitter.com/ineat_erp) • [💼 Visit our website](https://ineat-erp.com)
+
+</div>

@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 
 User = get_user_model()
 
@@ -21,7 +20,6 @@ class Account(BaseModel):
         ('expense', 'Expense'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='accounts')
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=20)
     account_type = models.CharField(max_length=20, choices=ACCOUNT_TYPES)
@@ -33,7 +31,7 @@ class Account(BaseModel):
     class Meta:
         verbose_name = 'Account'
         verbose_name_plural = 'Accounts'
-        unique_together = ['organization', 'code']
+        unique_together = ['code']
         ordering = ['code']
     
     def __str__(self):
@@ -42,7 +40,6 @@ class Account(BaseModel):
 
 class Customer(BaseModel):
     """Customer model for invoicing and payments."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='customers')
     name = models.CharField(max_length=200)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
@@ -74,7 +71,6 @@ class Customer(BaseModel):
 
 class Vendor(BaseModel):
     """Vendor model for expenses and payments."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='vendors')
     name = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
@@ -115,7 +111,6 @@ class Invoice(BaseModel):
         ('cancelled', 'Cancelled'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='invoices')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='invoices')
     invoice_number = models.CharField(max_length=100, unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
@@ -187,7 +182,6 @@ class Payment(BaseModel):
         ('other', 'Other'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='payments')
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='payments', null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='payments')
     
@@ -238,7 +232,6 @@ class Expense(BaseModel):
         ('paid', 'Paid'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='expenses')
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, blank=True, related_name='expenses')
     category = models.CharField(max_length=30, choices=CATEGORIES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
@@ -271,7 +264,6 @@ class Expense(BaseModel):
 
 class Budget(BaseModel):
     """Budget model for financial planning."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='budgets')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
@@ -332,7 +324,6 @@ class FinancialReport(BaseModel):
         ('custom', 'Custom Report'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='financial_reports')
     report_type = models.CharField(max_length=30, choices=REPORT_TYPES)
     name = models.CharField(max_length=200)
     
@@ -358,7 +349,6 @@ class FinancialReport(BaseModel):
 
 class TaxRate(BaseModel):
     """Tax rate model for different tax jurisdictions."""
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='tax_rates')
     name = models.CharField(max_length=100)
     rate = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(100)])
     description = models.TextField(blank=True)
@@ -383,7 +373,6 @@ class RecurringInvoice(BaseModel):
         ('yearly', 'Yearly'),
     ]
     
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='recurring_invoices')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='recurring_invoices')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)

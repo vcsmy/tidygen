@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 from apps.core.models import User
-from apps.organizations.models import Organization
 from .models import (
     ScheduleTemplate, Resource, Team, TeamMember, Appointment,
     ScheduleConflict, ScheduleRule, ScheduleNotification,

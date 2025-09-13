@@ -11,7 +11,6 @@ from apps.analytics.models import (
     Report, KPI, KPIMeasurement, Dashboard, DashboardWidget,
     DataSource, ReportTemplate, AnalyticsEvent, Alert, AnalyticsCache
 )
-from apps.organizations.models import Organization
 from decimal import Decimal
 import json
 

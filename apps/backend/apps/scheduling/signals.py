@@ -11,7 +11,6 @@ from django.template.loader import render_to_string
 from django.conf import settings
 
 from apps.core.models import User
-from apps.organizations.models import Organization
 from .models import (
     ScheduleTemplate, Resource, Team, TeamMember, Appointment,
     ScheduleConflict, ScheduleRule, ScheduleNotification,

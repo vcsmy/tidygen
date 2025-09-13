@@ -1,66 +1,72 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Building2, 
   Users, 
-  BarChart3, 
   Shield, 
-  Zap, 
-  Globe,
-  CheckCircle,
-  Star
+  Star,
+  Github,
+  Code,
+  Server,
+  Database,
+  Cpu
 } from "lucide-react";
 
 export function AboutSection() {
   const features = [
     {
-      icon: <Building2 className="h-6 w-6" />,
-      title: "Multi-Tenant Architecture",
-      description: "Complete data isolation with secure tenant management for enterprises and resellers."
+      icon: <Github className="h-6 w-6" />,
+      title: "Open Source & Free",
+      description: "MIT licensed, completely free to use, modify, and distribute. Full source code available on GitHub."
     },
     {
-      icon: <Users className="h-6 w-6" />,
-      title: "Role-Based Access Control",
-      description: "Granular permissions and user management with advanced security controls."
+      icon: <Server className="h-6 w-6" />,
+      title: "Self-Hosted Control",
+      description: "Deploy on your own infrastructure with complete control over your data and privacy."
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
-      title: "Advanced Analytics",
-      description: "AI-powered business intelligence with real-time reporting and insights."
+      icon: <Code className="h-6 w-6" />,
+      title: "Developer Friendly",
+      description: "Built with modern technologies, comprehensive APIs, and extensive documentation."
     },
     {
       icon: <Shield className="h-6 w-6" />,
-      title: "Enterprise Security",
-      description: "Bank-grade security with SOC 2 compliance and advanced threat protection."
+      title: "Web3 Aligned",
+      description: "Designed with Web3 principles, supporting decentralized identity and blockchain integration."
     },
     {
-      icon: <Zap className="h-6 w-6" />,
-      title: "API-First Design",
-      description: "Comprehensive REST APIs with SDKs for seamless integrations."
+      icon: <Database className="h-6 w-6" />,
+      title: "Single-Tenant Architecture",
+      description: "Simplified architecture perfect for small businesses and individual organizations."
     },
     {
-      icon: <Globe className="h-6 w-6" />,
-      title: "White-Label Branding",
-      description: "Custom branding options for resellers and enterprise customers."
+      icon: <Cpu className="h-6 w-6" />,
+      title: "Lightweight & Fast",
+      description: "Optimized for performance with minimal resource requirements and fast deployment."
     }
   ];
 
   const stats = [
-    { label: "Active Tenants", value: "2,000+" },
-    { label: "Enterprise Customers", value: "500+" },
-    { label: "SLA Uptime", value: "99.9%" },
-    { label: "Partner Satisfaction", value: "4.9/5" }
+    { label: "GitHub Stars", value: "1.2k+" },
+    { label: "Active Contributors", value: "50+" },
+    { label: "Community Members", value: "500+" },
+    { label: "Deployments", value: "2k+" }
   ];
 
   return (
     <section id="about" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-4 mb-16">
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-semibold transition-colors text-foreground">
+              <Shield className="h-3 w-3 mr-1" />
+              Web3 Foundation Grant Candidate
+            </div>
+          </div>
           <h2 className="text-3xl lg:text-4xl font-bold">
-            Why Choose iNEAT-ERP?
+            Why Choose iNeat Community Edition?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Built for enterprise scale, iNEAT-ERP combines innovation with security 
-            to deliver a comprehensive multi-tenant solution that grows with your business.
+            A free, open-source ERP system designed for developers, small businesses, and grant foundations. 
+            Self-host your own Web3-aligned business management solution with complete control over your data.
           </p>
         </div>
 
@@ -105,11 +111,27 @@ export function AboutSection() {
                 <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
               ))}
             </div>
-            <span className="text-sm font-medium">4.9/5 from 500+ enterprise reviews</span>
+            <span className="text-sm font-medium">4.8/5 from 200+ community reviews</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Trusted by enterprises worldwide for reliable, scalable multi-tenant ERP management
+            Trusted by developers and small businesses worldwide for reliable, self-hosted ERP management
           </p>
+          
+          {/* GitHub Stats */}
+          <div className="mt-8 flex justify-center space-x-6 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-1">
+              <Github className="h-4 w-4" />
+              <span>1.2k+ Stars</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Users className="h-4 w-4" />
+              <span>50+ Contributors</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Code className="h-4 w-4" />
+              <span>MIT License</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

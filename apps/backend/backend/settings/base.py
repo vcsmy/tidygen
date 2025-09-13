@@ -51,7 +51,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'apps.core',
     'apps.accounts',
-    'apps.organizations',
     'apps.web3',
     'apps.inventory',
     'apps.sales',
@@ -73,7 +72,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'apps.organizations.middleware.TenantMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
@@ -255,7 +253,6 @@ SPECTACULAR_SETTINGS = {
     ],
     'TAGS': [
         {'name': 'Authentication', 'description': 'User authentication and authorization'},
-        {'name': 'Organizations', 'description': 'Multi-tenant organization management'},
         {'name': 'Users', 'description': 'User management and profiles'},
         {'name': 'Web3', 'description': 'Blockchain and Web3 integration'},
         {'name': 'Inventory', 'description': 'Inventory management'},
@@ -375,9 +372,8 @@ AUTHENTICATION_BACKENDS = [
 # AUDITLOG_INCLUDE_ALL_MODELS = True
 # AUDITLOG_EXCLUDE_TRACKING_FIELDS = ['password', 'secret_key', 'token']
 
-# Multi-tenancy Configuration
-TENANT_MODEL = 'organizations.Organization'
-TENANT_DOMAIN_MODEL = 'organizations.Domain'
+# Single-tenant Configuration (Community Edition)
+# All users belong to the same organization context
 
 # Web3 Configuration
 WEB3_PROVIDER_URL = config('WEB3_PROVIDER_URL', default='https://goerli.infura.io/v3/YOUR_INFURA_KEY')

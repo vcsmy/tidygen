@@ -9,7 +9,6 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from apps.core.models import BaseModel
-from apps.organizations.models import Organization
 from apps.inventory.models import Product, Supplier
 from decimal import Decimal
 import uuid
@@ -40,7 +39,6 @@ class PurchaseOrder(BaseModel):
     ]
     
     po_number = models.CharField(max_length=50, unique=True, help_text="Unique purchase order number")
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='purchase_orders')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='purchase_orders')
     requested_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requested_purchase_orders')
     approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_purchase_orders')
@@ -234,7 +232,6 @@ class ProcurementRequest(BaseModel):
     ]
     
     request_number = models.CharField(max_length=50, unique=True, help_text="Unique request number")
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='procurement_requests')
     requested_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='procurement_requests')
     reviewed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewed_procurement_requests')
     
@@ -331,7 +328,6 @@ class SupplierPerformance(BaseModel):
     Track supplier performance metrics.
     """
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='performance_records')
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='supplier_performance')
     
     # Performance metrics
     on_time_delivery_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'), 
@@ -375,7 +371,6 @@ class PurchaseAnalytics(BaseModel):
     """
     Analytics and reporting data for purchasing.
     """
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='purchase_analytics')
     
     # Time period
     period_start = models.DateTimeField()
@@ -403,7 +398,7 @@ class PurchaseAnalytics(BaseModel):
         ordering = ['-period_end']
         verbose_name = "Purchase Analytics"
         verbose_name_plural = "Purchase Analytics"
-        unique_together = ['organization', 'period_start', 'period_end']
+        unique_together = ['period_start', 'period_end']
     
     def __str__(self):
         return f"Analytics {self.period_start.date()} - {self.period_end.date()}"

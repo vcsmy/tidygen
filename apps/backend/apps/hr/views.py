@@ -46,8 +46,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Department.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return Department.objects.all().organization
         ).select_related('manager', 'parent_department').prefetch_related('employees')
     
     def perform_create(self, serializer):
@@ -66,8 +65,7 @@ class PositionViewSet(viewsets.ModelViewSet):
     ordering = ['title']
     
     def get_queryset(self):
-        return Position.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return Position.objects.all().organization
         ).select_related('department', 'reports_to').prefetch_related('employees')
     
     def perform_create(self, serializer):
@@ -86,8 +84,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     ordering = ['user__last_name', 'user__first_name']
     
     def get_queryset(self):
-        return Employee.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return Employee.objects.all().organization
         ).select_related('user', 'position', 'department', 'manager').prefetch_related(
             'attendances', 'leave_requests', 'payrolls', 'performance_reviews',
             'training_enrollments', 'documents'
@@ -288,8 +285,7 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return LeaveType.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return LeaveType.objects.all().organization
         )
     
     def perform_create(self, serializer):
@@ -426,8 +422,7 @@ class PayrollPeriodViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return PayrollPeriod.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return PayrollPeriod.objects.all().organization
         ).select_related('processed_by').prefetch_related('payrolls')
     
     def perform_create(self, serializer):
@@ -661,8 +656,7 @@ class TrainingViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return Training.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return Training.objects.all().organization
         ).prefetch_related('enrollments')
     
     def perform_create(self, serializer):
@@ -729,8 +723,7 @@ class PolicyViewSet(viewsets.ModelViewSet):
     ordering = ['-effective_date']
     
     def get_queryset(self):
-        return Policy.objects.filter(
-            organization=self.request.user.organization_memberships.first().organization
+        return Policy.objects.all().organization
         ).select_related('approved_by').prefetch_related('acknowledgments')
     
     def perform_create(self, serializer):
@@ -777,7 +770,7 @@ class HRDashboardViewSet(viewsets.ViewSet):
     def overview(self, request):
         """Get HR dashboard overview."""
         organization = request.user.organization_memberships.first().organization
-        employees = Employee.objects.filter(organization=organization)
+        employees = Employee.objects
         
         # Basic counts
         total_employees = employees.count()
@@ -792,8 +785,8 @@ class HRDashboardViewSet(viewsets.ViewSet):
         ).count()
         
         # Department and position counts
-        total_departments = Department.objects.filter(organization=organization).count()
-        total_positions = Position.objects.filter(organization=organization).count()
+        total_departments = Department.objects.count()
+        total_positions = Position.objects.count()
         
         # Employees by department
         employees_by_department = employees.values('department__name').annotate(
@@ -870,7 +863,7 @@ class HRDashboardViewSet(viewsets.ViewSet):
     def analytics(self, request):
         """Get HR analytics."""
         organization = request.user.organization_memberships.first().organization
-        employees = Employee.objects.filter(organization=organization)
+        employees = Employee.objects
         
         # Basic counts
         total_employees = employees.count()

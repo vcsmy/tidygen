@@ -36,7 +36,7 @@ class ProductCategoryViewSet(BaseModelViewSet):
 
     def get_queryset(self):
         """Filter by organization."""
-        return super().get_queryset().filter(organization=self.request.user.organization)
+        return super().get_queryset()
 
     @action(detail=True, methods=['get'])
     def products(self, request, pk=None):
@@ -82,7 +82,7 @@ class ProductViewSet(BaseModelViewSet):
 
     def get_queryset(self):
         """Filter by organization."""
-        return super().get_queryset().filter(organization=self.request.user.organization)
+        return super().get_queryset()
 
     @action(detail=True, methods=['post'])
     def adjust_stock(self, request, pk=None):
@@ -240,7 +240,7 @@ class SupplierViewSet(BaseModelViewSet):
 
     def get_queryset(self):
         """Filter by organization."""
-        return super().get_queryset().filter(organization=self.request.user.organization)
+        return super().get_queryset()
 
     @action(detail=True, methods=['get'])
     def purchase_orders(self, request, pk=None):
@@ -292,7 +292,7 @@ class PurchaseOrderViewSet(BaseModelViewSet):
 
     def get_queryset(self):
         """Filter by organization."""
-        return super().get_queryset().filter(organization=self.request.user.organization)
+        return super().get_queryset()
 
     def perform_create(self, serializer):
         """Generate order number and save."""
@@ -388,12 +388,12 @@ class InventoryDashboardViewSet(viewsets.ViewSet):
         organization = request.user.organization
         
         # Calculate summary metrics
-        total_products = Product.objects.filter(organization=organization).count()
-        total_categories = ProductCategory.objects.filter(organization=organization).count()
-        total_suppliers = Supplier.objects.filter(organization=organization).count()
+        total_products = Product.objects.count()
+        total_categories = ProductCategory.objects.count()
+        total_suppliers = Supplier.objects.count()
         
         # Calculate total stock value
-        products = Product.objects.filter(organization=organization)
+        products = Product.objects
         total_stock_value = sum(
             product.current_stock * product.cost_price 
             for product in products
@@ -435,7 +435,7 @@ class InventoryDashboardViewSet(viewsets.ViewSet):
     def stock_alerts(self, request):
         """Get stock alerts."""
         organization = request.user.organization
-        products = Product.objects.filter(organization=organization)
+        products = Product.objects
         alerts = []
 
         for product in products:
