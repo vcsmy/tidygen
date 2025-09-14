@@ -1,21 +1,21 @@
-# Ineat-ERP: Web3-Enabled Open Source ERP
+# TidyGen ERP: Web3-Enabled Open Source ERP
 
 ## Project Overview
 
-**Project Name:** Ineat-ERP  
-**Project Repository:** [https://github.com/vcsmy/ineat-erp](https://github.com/vcsmy/ineat-erp)  
+**Project Name:** TidyGen ERP  
+**Project Repository:** [https://github.com/vcsmy/tidygen-erp](https://github.com/vcsmy/tidygen-erp)  
 **Grant Category:** Application Development (Infrastructure + Tooling)  
-**Team Name:** Ineat Labs  
+**Team Name:** TidyGen Labs  
 **Payment Address:** (Your Polkadot or Kusama address here)  
 
 ### Overview
 
-Ineat-ERP is a modular, open-source ERP system designed to serve both enterprises and communities.  
+TidyGen ERP is a modular, open-source ERP system designed to serve both enterprises and communities.  
 We propose two versions:  
 - **Community Edition (Self-Hosted):** Open-source, self-hostable ERP solution.  
 - **Commercial Edition (Enterprise):** Enterprise-grade SaaS with dealer, partner, and reseller support.  
 
-This grant focuses on extending Ineat-ERP with **Web3-native capabilities**, making it a core open-source ERP for decentralized ecosystems.  
+This grant focuses on extending TidyGen ERP with **Web3-native capabilities**, making it a core open-source ERP for decentralized ecosystems.  
 
 ### Problem Statement
 
@@ -99,6 +99,6 @@ We request **$45,000 USD equivalent in DOT** to deliver the above milestones acr
 
 ## Additional Information
 
-- Repo: [ineat-erp](https://github.com/vcsmy/ineat-erp)  
+- Repo: [tidygen-erp](https://github.com/vcsmy/tidygen-erp)  
 - We will maintain open development and documentation.  
 - Commitment to long-term support through community and commercial offerings.  

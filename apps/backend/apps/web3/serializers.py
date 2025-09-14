@@ -436,7 +436,7 @@ class DIDCreateSerializer(serializers.ModelSerializer):
             did_identifier = f"did:key:{hashlib.sha256(f'{user.id}{organization.id}'.encode()).hexdigest()[:32]}"
         else:
             # Default to web DID
-            did_identifier = f"did:web:{organization.slug}.ineat.com:{user.username}"
+            did_identifier = f"did:web:{organization.slug}.tidygen.com:{user.username}"
         
         validated_data['user'] = user
         validated_data['organization'] = organization

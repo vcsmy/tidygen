@@ -76,13 +76,20 @@ class WalletViewSet(viewsets.ModelViewSet):
         serializer = WalletVerificationSerializer(data=request.data)
         
         if serializer.is_valid():
-            # TODO: Implement signature verification
-            # This would involve verifying the signature against the message and address
-            wallet.is_verified = True
-            wallet.verification_signature = serializer.validated_data['signature']
-            wallet.save()
+            # Verify signature using blockchain service
+            from .services import blockchain_service
             
-            return Response({'message': 'Wallet verified successfully.'})
+            message = serializer.validated_data['message']
+            signature = serializer.validated_data['signature']
+            
+            if blockchain_service.verify_signature(wallet.address, message, signature):
+                wallet.is_verified = True
+                wallet.verification_signature = signature
+                wallet.save()
+                
+                return Response({'message': 'Wallet verified successfully.'})
+            else:
+                return Response({'error': 'Signature verification failed'}, status=status.HTTP_400_BAD_REQUEST)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -214,16 +221,18 @@ class TransactionView(APIView):
         """Create a new transaction."""
         serializer = TransactionRequestSerializer(data=request.data)
         if serializer.is_valid():
-            # TODO: Implement transaction creation
-            # This would involve creating a transaction object and returning it
-            # for the frontend to sign and broadcast
+            from .services import blockchain_service
+            
+            # Get current gas price
+            gas_price = blockchain_service.get_gas_price()
             
             transaction_data = {
                 'to': serializer.validated_data['to_address'],
                 'value': int(serializer.validated_data['value'] * 10**18),  # Convert to wei
                 'gas': serializer.validated_data.get('gas_limit', 21000),
-                'gasPrice': serializer.validated_data.get('gas_price', 20000000000),  # 20 gwei
+                'gasPrice': gas_price or serializer.validated_data.get('gas_price', 20000000000),
                 'data': serializer.validated_data.get('data', '0x'),
+                'nonce': blockchain_service.w3.eth.get_transaction_count(request.user.wallets.filter(is_primary=True).first().address) if request.user.wallets.filter(is_primary=True).exists() else 0,
             }
             
             return Response({
@@ -268,14 +277,25 @@ class Web3StatusView(APIView):
     
     def get(self, request):
         """Get Web3 connection status."""
-        # TODO: Implement actual Web3 connection check
-        status_data = {
-            'connected': True,
-            'network': 'mainnet',
-            'chain_id': 1,
-            'block_number': 18000000,  # Example
-            'gas_price': '20000000000',  # 20 gwei
-        }
+        from .services import blockchain_service
+        
+        if blockchain_service.is_connected():
+            network_info = blockchain_service.get_network_info()
+            status_data = {
+                'connected': True,
+                'network': network_info.get('network_name', 'Unknown'),
+                'chain_id': network_info.get('chain_id', 0),
+                'block_number': network_info.get('block_number', 0),
+                'gas_price': str(network_info.get('gas_price', 0)),
+            }
+        else:
+            status_data = {
+                'connected': False,
+                'network': 'Disconnected',
+                'chain_id': 0,
+                'block_number': 0,
+                'gas_price': '0',
+            }
         
         return Response(status_data)
 
@@ -293,7 +313,7 @@ class MessageSigningView(APIView):
             timestamp = int(timezone.now().timestamp())
             
             # Create authentication message
-            message_prefix = getattr(settings, 'WEB3_MESSAGE_PREFIX', 'iNEAT ERP Login')
+            message_prefix = getattr(settings, 'WEB3_MESSAGE_PREFIX', 'TidyGen ERP Login')
             message = f"{message_prefix}\n\nAddress: {address}\nTimestamp: {timestamp}"
             
             # Create a unique nonce for this request

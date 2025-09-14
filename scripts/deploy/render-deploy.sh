@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# iNeat ERP Community Edition - Render Deployment Script
+# TidyGen ERP Community Edition - Render Deployment Script
 # This script provides instructions and configuration for Render deployment
 
 set -e
 
-echo "🚀 iNeat ERP Community Edition - Render Deployment"
+echo "🚀 TidyGen ERP Community Edition - Render Deployment"
 echo "=================================================="
 
 echo "📋 Render Deployment Instructions:"

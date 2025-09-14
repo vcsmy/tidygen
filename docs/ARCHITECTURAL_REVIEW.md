@@ -1,8 +1,8 @@
-# iNEAT ERP - Comprehensive Architectural Review
+# TidyGen ERP - Comprehensive Architectural Review
 
 ## 🏗️ **Executive Summary**
 
-This document provides a comprehensive architectural review of the iNEAT ERP monorepo, evaluating security practices, scalability, CI/CD robustness, and enterprise-grade structure. The review identifies strengths, areas for improvement, and provides actionable recommendations.
+This document provides a comprehensive architectural review of the TidyGen ERP monorepo, evaluating security practices, scalability, CI/CD robustness, and enterprise-grade structure. The review identifies strengths, areas for improvement, and provides actionable recommendations.
 
 ## 📊 **Overall Assessment**
 
@@ -57,7 +57,7 @@ This document provides a comprehensive architectural review of the iNEAT ERP mon
    ```python
    # ISSUE: Hardcoded secrets in docker-compose.yml
    SECRET_KEY=dev-secret-key-change-in-production
-   POSTGRES_PASSWORD=ineat_password
+   POSTGRES_PASSWORD=tidygen_password
    # IMPACT: Security risk in development
    # PRIORITY: High
    ```
@@ -124,7 +124,7 @@ This document provides a comprehensive architectural review of the iNEAT ERP mon
 
 3. **Add Security Headers**
    ```python
-   # apps/backend/ineat_erp/settings/base.py
+   # apps/backend/tidygen_erp/settings/base.py
    SECURE_CONTENT_TYPE_NOSNIFF = True
    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
    CSP_DEFAULT_SRC = ("'self'",)
@@ -210,12 +210,12 @@ This document provides a comprehensive architectural review of the iNEAT ERP mon
    DATABASES = {
        'default': {
            'ENGINE': 'django.db.backends.postgresql',
-           'NAME': 'ineat_primary',
+           'NAME': 'tidygen_primary',
            # Primary database configuration
        },
        'read_replica': {
            'ENGINE': 'django.db.backends.postgresql',
-           'NAME': 'ineat_replica',
+           'NAME': 'tidygen_replica',
            # Read replica configuration
        }
    }
@@ -268,7 +268,7 @@ This document provides a comprehensive architectural review of the iNEAT ERP mon
        spec:
          containers:
          - name: backend
-           image: ghcr.io/ineat/backend:latest
+           image: ghcr.io/tidygen/backend:latest
            resources:
              requests:
                memory: "256Mi"
@@ -438,7 +438,7 @@ This document provides a comprehensive architectural review of the iNEAT ERP mon
 
 ## 🏆 **Conclusion**
 
-The iNEAT ERP monorepo demonstrates **excellent architectural foundation** with strong security practices, comprehensive CI/CD pipeline, and enterprise-grade structure. The codebase is well-organized, properly documented, and follows industry best practices.
+The TidyGen ERP monorepo demonstrates **excellent architectural foundation** with strong security practices, comprehensive CI/CD pipeline, and enterprise-grade structure. The codebase is well-organized, properly documented, and follows industry best practices.
 
 ### **Key Strengths:**
 - ✅ **Robust Security**: Comprehensive authentication, authorization, and audit logging

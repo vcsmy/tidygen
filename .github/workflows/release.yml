@@ -1,4 +1,4 @@
-# iNEAT ERP - Release Workflow
+# TidyGen ERP - Release Workflow
 # Automated release process with versioning, changelog, and deployment
 
 name: Release
@@ -185,7 +185,7 @@ jobs:
           tag_name: ${{ needs.build-release.outputs.version }}
           release_name: Release ${{ needs.build-release.outputs.version }}
           body: |
-            ## 🚀 iNEAT ERP ${{ needs.build-release.outputs.version }}
+            ## 🚀 TidyGen ERP ${{ needs.build-release.outputs.version }}
             
             ### 📦 Docker Images
             - **Backend**: `${{ needs.build-release.outputs.backend-image }}`
@@ -234,7 +234,7 @@ jobs:
           key: ${{ secrets.PRODUCTION_SSH_KEY }}
           script: |
             # Navigate to project directory
-            cd /opt/ineat-erp
+            cd /opt/tidygen-erp
             
             # Create backup before deployment
             echo "Creating backup..."
@@ -265,7 +265,7 @@ jobs:
             # Health check
             echo "Performing health check..."
             sleep 30
-            curl -f https://api.ineat-erp.com/health/ || exit 1
+            curl -f https://api.tidygen-erp.com/health/ || exit 1
             
             # Clean up old images
             echo "Cleaning up old images..."

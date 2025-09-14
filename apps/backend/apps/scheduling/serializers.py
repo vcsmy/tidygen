@@ -1,5 +1,5 @@
 """
-Comprehensive scheduling management serializers for iNEAT ERP platform.
+Comprehensive scheduling management serializers for TidyGen ERP platform.
 """
 from rest_framework import serializers
 from django.contrib.auth import get_user_model

@@ -1,13 +1,13 @@
-# iNEAT ERP Monorepo Structure
+# TidyGen ERP Monorepo Structure
 't d 
 ## 🏗️ Overview
 
-This document outlines the **monorepo folder structure** for iNEAT ERP, designed for scalability, maintainability, and efficient development workflows. The structure follows modern DevOps practices and supports both development and production environments.
+This document outlines the **monorepo folder structure** for TidyGen ERP, designed for scalability, maintainability, and efficient development workflows. The structure follows modern DevOps practices and supports both development and production environments.
 
 ## 📁 Root Structure
 
 ```
-iNEAT/
+TidyGen/
 ├── apps/                    # Application code
 │   ├── backend/            # Django REST Framework backend
 │   └── frontend/           # React TypeScript frontend
@@ -55,7 +55,7 @@ Contains all application code organized by technology stack and responsibility.
 apps/
 ├── backend/                # Django REST Framework backend
 │   ├── src/                # Source code
-│   │   ├── ineat_erp/     # Django project
+│   │   ├── tidygen_erp/     # Django project
 │   │   ├── apps/          # Django applications
 │   │   │   ├── core/      # Core functionality
 │   │   │   ├── accounts/  # User management
@@ -145,7 +145,7 @@ infra/
 │   ├── ingress/            # Ingress configurations
 │   ├── monitoring/         # Monitoring stack
 │   └── helm/               # Helm charts
-│       ├── ineat-erp/      # Main application chart
+│       ├── tidygen-erp/      # Main application chart
 │       └── monitoring/     # Monitoring chart
 ├── terraform/              # Infrastructure provisioning
 │   ├── environments/       # Environment-specific configs
@@ -338,9 +338,9 @@ tools/
 ### package.json (Root)
 ```json
 {
-  "name": "ineat-erp-monorepo",
+  "name": "tidygen-erp-monorepo",
   "version": "1.0.0",
-  "description": "iNEAT ERP - Web3-enabled Enterprise Resource Planning Platform",
+  "description": "TidyGen ERP - Web3-enabled Enterprise Resource Planning Platform",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -409,8 +409,8 @@ packages:
 ### Quick Setup
 ```bash
 # Clone the repository
-git clone https://github.com/vcsmy/ineat.git
-cd ineat
+git clone https://github.com/vcsmy/tidygen.git
+cd tidygen
 
 # Install dependencies
 pnpm install
@@ -472,4 +472,4 @@ pnpm run deploy:staging
 
 ---
 
-This monorepo structure provides a solid foundation for building and maintaining the iNEAT ERP platform while supporting modern development practices and DevOps workflows.
+This monorepo structure provides a solid foundation for building and maintaining the TidyGen ERP platform while supporting modern development practices and DevOps workflows.

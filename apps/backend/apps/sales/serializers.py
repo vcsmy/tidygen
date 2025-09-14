@@ -1,5 +1,5 @@
 """
-Sales and client management serializers for iNEAT ERP platform.
+Sales and client management serializers for TidyGen ERP platform.
 """
 from rest_framework import serializers
 from django.contrib.auth import get_user_model

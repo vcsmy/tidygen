@@ -1,5 +1,5 @@
 """
-Comprehensive scheduling management models for iNEAT ERP platform.
+Comprehensive scheduling management models for TidyGen ERP platform.
 """
 from django.db import models
 from django.contrib.auth import get_user_model

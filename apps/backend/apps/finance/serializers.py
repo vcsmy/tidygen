@@ -1,5 +1,5 @@
 """
-Finance management serializers for iNEAT ERP platform.
+Finance management serializers for TidyGen ERP platform.
 """
 from rest_framework import serializers
 from django.contrib.auth import get_user_model

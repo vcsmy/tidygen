@@ -1,6 +1,6 @@
 # Sales & Client Management Module
 
-A comprehensive client management system for the iNEAT ERP platform that supports both individual and corporate clients with advanced relationship management, interaction tracking, and analytics.
+A comprehensive client management system for the TidyGen ERP platform that supports both individual and corporate clients with advanced relationship management, interaction tracking, and analytics.
 
 ## Features
 

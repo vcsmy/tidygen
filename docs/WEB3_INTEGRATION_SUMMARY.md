@@ -1,8 +1,8 @@
-# iNEAT ERP - Web3 Integration Summary
+# TidyGen ERP - Web3 Integration Summary
 
 ## 🚀 **Web3 Integration Complete!**
 
-I've successfully implemented a comprehensive Web3 integration for the iNEAT ERP platform with secure wallet connection, message signing, and blockchain interaction capabilities.
+I've successfully implemented a comprehensive Web3 integration for the TidyGen ERP platform with secure wallet connection, message signing, and blockchain interaction capabilities.
 
 ## 📁 **Frontend Web3 Implementation**
 

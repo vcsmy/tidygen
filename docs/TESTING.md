@@ -2,7 +2,7 @@
 
 ## 🧪 **Testing Overview**
 
-The iNEAT ERP system implements comprehensive testing across all layers, from unit tests to end-to-end testing. This guide covers testing strategies, tools, and best practices.
+The TidyGen ERP system implements comprehensive testing across all layers, from unit tests to end-to-end testing. This guide covers testing strategies, tools, and best practices.
 
 ## 🏗️ **Testing Architecture**
 

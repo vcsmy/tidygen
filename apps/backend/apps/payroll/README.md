@@ -1,6 +1,6 @@
 # Payroll Management System
 
-A comprehensive payroll management system for the iNEAT ERP platform, providing complete payroll processing, tax management, reporting, and analytics capabilities.
+A comprehensive payroll management system for the TidyGen ERP platform, providing complete payroll processing, tax management, reporting, and analytics capabilities.
 
 ## Features
 

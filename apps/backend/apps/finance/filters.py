@@ -1,5 +1,5 @@
 """
-Finance management filters for iNEAT ERP platform.
+Finance management filters for TidyGen ERP platform.
 """
 import django_filters
 from django.db.models import Q

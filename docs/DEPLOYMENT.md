@@ -2,7 +2,7 @@
 
 ## 🚀 **Deployment Overview**
 
-This guide covers deploying the iNEAT ERP system to various environments, from development to production. The system supports multiple deployment strategies including Docker, cloud platforms, and traditional server deployments.
+This guide covers deploying the TidyGen ERP system to various environments, from development to production. The system supports multiple deployment strategies including Docker, cloud platforms, and traditional server deployments.
 
 ## 🐳 **Docker Deployment**
 
@@ -45,10 +45,10 @@ cp env.example .env.prod
 version: '3.8'
 services:
   backend:
-    image: your-registry/ineat-backend:latest
+    image: your-registry/tidygen-backend:latest
     environment:
       - DJANGO_ENV=production
-      - DATABASE_URL=postgresql://user:pass@rds-endpoint:5432/ineat_erp
+      - DATABASE_URL=postgresql://user:pass@rds-endpoint:5432/tidygen_erp
       - REDIS_URL=redis://elasticache-endpoint:6379/1
     ports:
       - "8000:8000"
@@ -57,7 +57,7 @@ services:
       - redis
 
   frontend:
-    image: your-registry/ineat-frontend:latest
+    image: your-registry/tidygen-frontend:latest
     environment:
       - VITE_API_URL=https://api.yourdomain.com
     ports:
@@ -68,8 +68,8 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_DB=ineat_erp
-      - POSTGRES_USER=ineat_user
+      - POSTGRES_DB=tidygen_erp
+      - POSTGRES_USER=tidygen_user
       - POSTGRES_PASSWORD=secure_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -87,20 +87,20 @@ services:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ineat-backend
+  name: tidygen-backend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ineat-backend
+      app: tidygen-backend
   template:
     metadata:
       labels:
-        app: ineat-backend
+        app: tidygen-backend
     spec:
       containers:
       - name: backend
-        image: your-registry/ineat-backend:latest
+        image: your-registry/tidygen-backend:latest
         ports:
         - containerPort: 8000
         env:
@@ -109,21 +109,21 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ineat-secrets
+              name: tidygen-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ineat-secrets
+              name: tidygen-secrets
               key: redis-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ineat-backend-service
+  name: tidygen-backend-service
 spec:
   selector:
-    app: ineat-backend
+    app: tidygen-backend
   ports:
   - port: 8000
     targetPort: 8000
@@ -138,7 +138,7 @@ spec:
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: ineat-backend
+  name: tidygen-backend
   annotations:
     run.googleapis.com/ingress: all
 spec:
@@ -149,7 +149,7 @@ spec:
     spec:
       containerConcurrency: 100
       containers:
-      - image: gcr.io/your-project/ineat-backend:latest
+      - image: gcr.io/your-project/tidygen-backend:latest
         ports:
         - containerPort: 8000
         env:
@@ -158,7 +158,7 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ineat-secrets
+              name: tidygen-secrets
               key: database-url
         resources:
           limits:
@@ -173,19 +173,19 @@ spec:
 # azure-container-instances.yml
 apiVersion: 2018-10-01
 location: eastus
-name: ineat-backend
+name: tidygen-backend
 properties:
   containers:
   - name: backend
     properties:
-      image: your-registry.azurecr.io/ineat-backend:latest
+      image: your-registry.azurecr.io/tidygen-backend:latest
       ports:
       - port: 8000
       environmentVariables:
       - name: DJANGO_ENV
         value: "production"
       - name: DATABASE_URL
-        secureValue: "postgresql://user:pass@server:5432/ineat_erp"
+        secureValue: "postgresql://user:pass@server:5432/tidygen_erp"
       resources:
         requests:
           cpu: 2
@@ -223,17 +223,17 @@ sudo apt install -y nodejs
 ```bash
 # Create PostgreSQL database
 sudo -u postgres psql
-CREATE DATABASE ineat_erp;
-CREATE USER ineat_user WITH PASSWORD 'secure_password';
-GRANT ALL PRIVILEGES ON DATABASE ineat_erp TO ineat_user;
+CREATE DATABASE tidygen_erp;
+CREATE USER tidygen_user WITH PASSWORD 'secure_password';
+GRANT ALL PRIVILEGES ON DATABASE tidygen_erp TO tidygen_user;
 \q
 ```
 
 #### **3. Application Deployment**
 ```bash
 # Clone repository
-git clone https://github.com/your-org/ineat.git
-cd ineat
+git clone https://github.com/your-org/tidygen.git
+cd tidygen
 
 # Backend setup
 cd apps/backend
@@ -259,18 +259,18 @@ npm run build
 
 #### **4. Process Management with Systemd**
 ```ini
-# /etc/systemd/system/ineat-backend.service
+# /etc/systemd/system/tidygen-backend.service
 [Unit]
-Description=iNEAT ERP Backend
+Description=TidyGen ERP Backend
 After=network.target
 
 [Service]
 Type=exec
 User=www-data
 Group=www-data
-WorkingDirectory=/opt/ineat/apps/backend
-Environment=PATH=/opt/ineat/apps/backend/venv/bin
-ExecStart=/opt/ineat/apps/backend/venv/bin/gunicorn ineat_erp.wsgi:application --bind 127.0.0.1:8000
+WorkingDirectory=/opt/tidygen/apps/backend
+Environment=PATH=/opt/tidygen/apps/backend/venv/bin
+ExecStart=/opt/tidygen/apps/backend/venv/bin/gunicorn tidygen_erp.wsgi:application --bind 127.0.0.1:8000
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=always
 
@@ -279,18 +279,18 @@ WantedBy=multi-user.target
 ```
 
 ```ini
-# /etc/systemd/system/ineat-celery.service
+# /etc/systemd/system/tidygen-celery.service
 [Unit]
-Description=iNEAT ERP Celery Worker
+Description=TidyGen ERP Celery Worker
 After=network.target
 
 [Service]
 Type=exec
 User=www-data
 Group=www-data
-WorkingDirectory=/opt/ineat/apps/backend
-Environment=PATH=/opt/ineat/apps/backend/venv/bin
-ExecStart=/opt/ineat/apps/backend/venv/bin/celery -A ineat_erp worker --loglevel=info
+WorkingDirectory=/opt/tidygen/apps/backend
+Environment=PATH=/opt/tidygen/apps/backend/venv/bin
+ExecStart=/opt/tidygen/apps/backend/venv/bin/celery -A tidygen_erp worker --loglevel=info
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=always
 
@@ -300,7 +300,7 @@ WantedBy=multi-user.target
 
 #### **5. Nginx Configuration**
 ```nginx
-# /etc/nginx/sites-available/ineat
+# /etc/nginx/sites-available/tidygen
 server {
     listen 80;
     server_name yourdomain.com www.yourdomain.com;
@@ -322,7 +322,7 @@ server {
 
     # Frontend
     location / {
-        root /opt/ineat/apps/frontend/dist;
+        root /opt/tidygen/apps/frontend/dist;
         try_files $uri $uri/ /index.html;
     }
 
@@ -337,14 +337,14 @@ server {
 
     # Static files
     location /static/ {
-        alias /opt/ineat/apps/backend/staticfiles/;
+        alias /opt/tidygen/apps/backend/staticfiles/;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
 
     # Media files
     location /media/ {
-        alias /opt/ineat/apps/backend/media/;
+        alias /opt/tidygen/apps/backend/media/;
         expires 1y;
         add_header Cache-Control "public";
     }
@@ -381,7 +381,7 @@ sudo chmod 600 /etc/ssl/private/your-private-key.key
 
 ### **Application Monitoring**
 ```python
-# apps/backend/ineat_erp/settings/production.py
+# apps/backend/tidygen_erp/settings/production.py
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -407,7 +407,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/ineat/django.log',
+            'filename': '/var/log/tidygen/django.log',
             'formatter': 'verbose',
         },
         'console': {
@@ -437,13 +437,13 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'ineat-backend'
+  - job_name: 'tidygen-backend'
     static_configs:
       - targets: ['localhost:8000']
     metrics_path: '/metrics'
     scrape_interval: 5s
 
-  - job_name: 'ineat-frontend'
+  - job_name: 'tidygen-frontend'
     static_configs:
       - targets: ['localhost:3000']
     metrics_path: '/metrics'
@@ -461,8 +461,8 @@ scrape_configs:
 ### **Log Management**
 ```bash
 # Logrotate configuration
-# /etc/logrotate.d/ineat
-/var/log/ineat/*.log {
+# /etc/logrotate.d/tidygen
+/var/log/tidygen/*.log {
     daily
     missingok
     rotate 52
@@ -471,7 +471,7 @@ scrape_configs:
     notifempty
     create 644 www-data www-data
     postrotate
-        systemctl reload ineat-backend
+        systemctl reload tidygen-backend
     endscript
 }
 ```
@@ -508,15 +508,15 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /opt/ineat
+            cd /opt/tidygen
             git pull origin main
             cd apps/backend
             source venv/bin/activate
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput
-            systemctl restart ineat-backend
-            systemctl restart ineat-celery
+            systemctl restart tidygen-backend
+            systemctl restart tidygen-celery
             cd ../frontend
             npm install
             npm run build
@@ -526,11 +526,11 @@ jobs:
 ### **Docker Registry**
 ```bash
 # Build and push images
-docker build -t your-registry/ineat-backend:latest apps/backend/
-docker build -t your-registry/ineat-frontend:latest apps/frontend/
+docker build -t your-registry/tidygen-backend:latest apps/backend/
+docker build -t your-registry/tidygen-frontend:latest apps/frontend/
 
-docker push your-registry/ineat-backend:latest
-docker push your-registry/ineat-frontend:latest
+docker push your-registry/tidygen-backend:latest
+docker push your-registry/tidygen-frontend:latest
 ```
 
 ## 🗄️ **Database Management**
@@ -542,19 +542,19 @@ docker push your-registry/ineat-frontend:latest
 
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="/opt/backups"
-DB_NAME="ineat_erp"
+DB_NAME="tidygen_erp"
 
 # Create backup
-pg_dump -h localhost -U ineat_user $DB_NAME > $BACKUP_DIR/ineat_erp_$DATE.sql
+pg_dump -h localhost -U tidygen_user $DB_NAME > $BACKUP_DIR/tidygen_erp_$DATE.sql
 
 # Compress backup
-gzip $BACKUP_DIR/ineat_erp_$DATE.sql
+gzip $BACKUP_DIR/tidygen_erp_$DATE.sql
 
 # Remove backups older than 30 days
-find $BACKUP_DIR -name "ineat_erp_*.sql.gz" -mtime +30 -delete
+find $BACKUP_DIR -name "tidygen_erp_*.sql.gz" -mtime +30 -delete
 
 # Upload to cloud storage (optional)
-aws s3 cp $BACKUP_DIR/ineat_erp_$DATE.sql.gz s3://your-backup-bucket/
+aws s3 cp $BACKUP_DIR/tidygen_erp_$DATE.sql.gz s3://your-backup-bucket/
 ```
 
 ### **Database Migration**
@@ -564,7 +564,7 @@ cd apps/backend
 source venv/bin/activate
 
 # Backup before migration
-pg_dump -h localhost -U ineat_user ineat_erp > backup_before_migration.sql
+pg_dump -h localhost -U tidygen_user tidygen_erp > backup_before_migration.sql
 
 # Run migrations
 python manage.py migrate
@@ -577,12 +577,12 @@ python manage.py showmigrations
 
 ### **Database Optimization**
 ```python
-# apps/backend/ineat_erp/settings/production.py
+# apps/backend/tidygen_erp/settings/production.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ineat_erp',
-        'USER': 'ineat_user',
+        'NAME': 'tidygen_erp',
+        'USER': 'tidygen_user',
         'PASSWORD': 'secure_password',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -630,7 +630,7 @@ export default defineConfig({
 
 ### **Django Security**
 ```python
-# apps/backend/ineat_erp/settings/production.py
+# apps/backend/tidygen_erp/settings/production.py
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -698,19 +698,19 @@ sudo systemctl start fail2ban
 ### **Quick Rollback**
 ```bash
 # Rollback to previous version
-cd /opt/ineat
+cd /opt/tidygen
 git checkout previous-commit-hash
 cd apps/backend
 source venv/bin/activate
 python manage.py migrate previous-commit-hash
-systemctl restart ineat-backend
-systemctl restart ineat-celery
+systemctl restart tidygen-backend
+systemctl restart tidygen-celery
 ```
 
 ### **Database Rollback**
 ```bash
 # Restore from backup
-pg_restore -h localhost -U ineat_user -d ineat_erp backup_before_migration.sql
+pg_restore -h localhost -U tidygen_user -d tidygen_erp backup_before_migration.sql
 ```
 
 ## 📞 **Troubleshooting**
@@ -723,7 +723,7 @@ pg_restore -h localhost -U ineat_user -d ineat_erp backup_before_migration.sql
 5. **Memory issues** - Check system resources and optimize
 
 ### **Log Locations**
-- Application logs: `/var/log/ineat/`
+- Application logs: `/var/log/tidygen/`
 - Nginx logs: `/var/log/nginx/`
 - System logs: `/var/log/syslog`
 - Database logs: `/var/log/postgresql/`

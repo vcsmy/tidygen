@@ -1,8 +1,8 @@
-# iNEAT ERP Architecture
+# TidyGen ERP Architecture
 
 ## 🏗️ Overview
 
-iNEAT is a modern **Web3-enabled Enterprise Resource Planning (ERP)** platform built with a **monorepo architecture** that combines traditional ERP functionality with cutting-edge blockchain technology. The system is designed for scalability, maintainability, and enterprise-grade security.
+TidyGen is a modern **Web3-enabled Enterprise Resource Planning (ERP)** platform built with a **monorepo architecture** that combines traditional ERP functionality with cutting-edge blockchain technology. The system is designed for scalability, maintainability, and enterprise-grade security.
 
 > 🎯 **Architecture Goals**: Scalable, maintainable, secure, and Web3-native ERP platform
 
@@ -12,7 +12,7 @@ iNEAT is a modern **Web3-enabled Enterprise Resource Planning (ERP)** platform b
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        iNEAT ERP Platform                      │
+│                        TidyGen ERP Platform                      │
 ├─────────────────────────────────────────────────────────────────┤
 │  Frontend (React SPA)    │    Backend (Django API)            │
 │  ┌─────────────────┐     │    ┌─────────────────┐              │
@@ -34,7 +34,7 @@ iNEAT is a modern **Web3-enabled Enterprise Resource Planning (ERP)** platform b
 
 ### 🔗 **Monorepo Structure**
 
-The iNEAT platform follows a **monorepo architecture** that provides:
+The TidyGen platform follows a **monorepo architecture** that provides:
 
 - **Unified Development**: Single repository for all components
 - **Shared Dependencies**: Common libraries and utilities
@@ -48,7 +48,7 @@ The iNEAT platform follows a **monorepo architecture** that provides:
 
 ```
 backend/
-├── ineat_erp/              # Main Django project configuration
+├── tidygen_erp/              # Main Django project configuration
 │   ├── settings.py         # Environment-specific settings
 │   ├── urls.py            # Main URL routing and API endpoints
 │   ├── wsgi.py            # WSGI configuration for production
@@ -468,4 +468,4 @@ class OrganizationMember(BaseModel):
 
 ---
 
-This architecture document provides a comprehensive overview of the iNEAT ERP platform's design and implementation. It serves as a guide for developers, architects, and stakeholders to understand the system's structure and make informed decisions about future development.
+This architecture document provides a comprehensive overview of the TidyGen ERP platform's design and implementation. It serves as a guide for developers, architects, and stakeholders to understand the system's structure and make informed decisions about future development.

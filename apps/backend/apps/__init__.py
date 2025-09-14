@@ -1,1 +1,1 @@
-# iNEAT ERP Apps
+# TidyGen ERP Apps

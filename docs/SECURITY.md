@@ -17,7 +17,7 @@ We take security bugs seriously. We appreciate your efforts to responsibly discl
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to [security@ineat.com](mailto:security@ineat.com).
+Instead, please report them via email to [security@tidygen.com](mailto:security@tidygen.com).
 
 You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
 
@@ -129,9 +129,9 @@ We follow responsible disclosure practices:
 
 Security advisories are published on:
 
-- [GitHub Security Advisories](https://github.com/vcsmy/ineat/security/advisories)
-- [Project website](https://ineat.com/security)
-- [Security mailing list](mailto:security-announce@ineat.com)
+- [GitHub Security Advisories](https://github.com/vcsmy/tidygen/security/advisories)
+- [Project website](https://tidygen.com/security)
+- [Security mailing list](mailto:security-announce@tidygen.com)
 
 ### CVE Assignment
 
@@ -177,9 +177,9 @@ In case of a security incident:
 
 ### Contact Information
 
-- **Security Team**: [security@ineat.com](mailto:security@ineat.com)
-- **Emergency Contact**: [emergency@ineat.com](mailto:emergency@ineat.com)
-- **General Inquiries**: [info@ineat.com](mailto:info@ineat.com)
+- **Security Team**: [security@tidygen.com](mailto:security@tidygen.com)
+- **Emergency Contact**: [emergency@tidygen.com](mailto:emergency@tidygen.com)
+- **General Inquiries**: [info@tidygen.com](mailto:info@tidygen.com)
 
 ## Security Training
 
@@ -248,4 +248,4 @@ This security policy is provided for informational purposes only and does not cr
 
 **Last Updated**: January 2024
 
-**Contact**: [security@ineat.com](mailto:security@ineat.com)
+**Contact**: [security@tidygen.com](mailto:security@tidygen.com)

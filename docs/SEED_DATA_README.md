@@ -1,6 +1,6 @@
 # 🌱 Database Seed Data
 
-This document explains how to populate the iNEAT ERP system with comprehensive sample data for demonstration and testing purposes.
+This document explains how to populate the TidyGen ERP system with comprehensive sample data for demonstration and testing purposes.
 
 ## 📋 Available Seed Commands
 
@@ -80,7 +80,7 @@ docker-compose exec backend python manage.py seed_business_data --clear
 ## 📊 Sample Data Overview
 
 ### **Organization**
-- **Name**: iNEAT Demo Corp
+- **Name**: TidyGen Demo Corp
 - **Industry**: Technology
 - **Size**: Medium
 - **Location**: San Francisco, CA
@@ -196,7 +196,7 @@ python manage.py shell -c "from apps.sales.models import Customer; print(Custome
 
 ## 🎉 Ready to Demo!
 
-Once seeded, your iNEAT ERP system will have:
+Once seeded, your TidyGen ERP system will have:
 - ✅ Realistic business data across all modules
 - ✅ Multiple user accounts for different roles
 - ✅ Sample transactions and relationships

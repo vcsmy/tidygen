@@ -1,5 +1,5 @@
 """
-Core models for iNEAT ERP platform.
+Core models for TidyGen ERP platform.
 """
 
 from django.db import models

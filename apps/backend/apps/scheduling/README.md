@@ -1,6 +1,6 @@
 # Scheduling Management System
 
-A comprehensive scheduling management system for the iNEAT ERP platform, providing complete appointment scheduling, resource management, team coordination, and conflict resolution capabilities.
+A comprehensive scheduling management system for the TidyGen ERP platform, providing complete appointment scheduling, resource management, team coordination, and conflict resolution capabilities.
 
 ## Features
 

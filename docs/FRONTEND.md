@@ -2,7 +2,7 @@
 
 ## 🎯 **Overview**
 
-The iNEAT ERP frontend is built with React 18, TypeScript, and modern web technologies. It provides a comprehensive user interface for all ERP modules with real-time data integration and Web3 capabilities.
+The TidyGen ERP frontend is built with React 18, TypeScript, and modern web technologies. It provides a comprehensive user interface for all ERP modules with real-time data integration and Web3 capabilities.
 
 ## 🏗️ **Architecture**
 
@@ -446,7 +446,7 @@ const ExpensiveComponent = memo(({ data }) => {
 # .env.local
 VITE_API_URL=http://localhost:8000/api
 VITE_WEB3_PROVIDER_URL=http://localhost:8545
-VITE_APP_NAME=iNEAT ERP
+VITE_APP_NAME=TidyGen ERP
 ```
 
 ### **Docker Build**

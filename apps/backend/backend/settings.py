@@ -1,5 +1,5 @@
 """
-Django settings for iNEAT ERP project.
+Django settings for TidyGen ERP project.
 
 This file imports environment-specific settings based on the DJANGO_SETTINGS_MODULE
 environment variable or defaults to development settings.

@@ -629,7 +629,7 @@ class PayrollNotificationAdmin(admin.ModelAdmin):
 # ==================== ADMIN CUSTOMIZATIONS ====================
 
 # Customize admin site
-admin.site.site_header = "iNEAT ERP - Payroll Management"
+admin.site.site_header = "TidyGen ERP - Payroll Management"
 admin.site.site_title = "Payroll Admin"
 admin.site.index_title = "Payroll Management System"
 

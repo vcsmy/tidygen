@@ -1,8 +1,8 @@
-# iNEAT ERP Integration Tracker
+# TidyGen ERP Integration Tracker
 
 ## 🎯 **Integration Progress Overview**
 
-This document tracks the real-time progress of frontend-backend integration for the iNEAT ERP system.
+This document tracks the real-time progress of frontend-backend integration for the TidyGen ERP system.
 
 ---
 

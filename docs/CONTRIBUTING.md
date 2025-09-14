@@ -1,6 +1,6 @@
-# Contributing to iNEAT ERP
+# Contributing to TidyGen ERP
 
-Thank you for your interest in contributing to **iNEAT ERP**! This document provides comprehensive guidelines and information for contributors to help you get started and make meaningful contributions to our Web3-enabled ERP platform.
+Thank you for your interest in contributing to **TidyGen ERP**! This document provides comprehensive guidelines and information for contributors to help you get started and make meaningful contributions to our Web3-enabled ERP platform.
 
 ## 📋 Table of Contents
 
@@ -17,7 +17,7 @@ Thank you for your interest in contributing to **iNEAT ERP**! This document prov
 
 ## 🤝 Code of Conduct
 
-This project adheres to our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [conduct@ineat.com](mailto:conduct@ineat.com).
+This project adheres to our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [conduct@tidygen.com](mailto:conduct@tidygen.com).
 
 ## 🚀 Getting Started
 
@@ -34,8 +34,8 @@ This project adheres to our [Code of Conduct](CODE_OF_CONDUCT.md). By participat
 1. **Fork the repository** on GitHub
 2. **Clone your fork**:
    ```bash
-   git clone https://github.com/your-username/ineat.git
-   cd ineat
+   git clone https://github.com/your-username/tidygen.git
+   cd tidygen
    ```
 3. **Start development environment**:
    ```bash
@@ -362,15 +362,15 @@ For Web3-related issues, also include:
 
 ### **Community Support**
 
-- **GitHub Discussions**: [Community discussions](https://github.com/vcsmy/ineat/discussions)
-- **Discord**: [Join our Discord server](https://discord.gg/ineat)
-- **Stack Overflow**: Tag questions with `ineat-erp`
+- **GitHub Discussions**: [Community discussions](https://github.com/vcsmy/tidygen/discussions)
+- **Discord**: [Join our Discord server](https://discord.gg/tidygen)
+- **Stack Overflow**: Tag questions with `tidygen-erp`
 
 ### **Direct Support**
 
-- **Technical Issues**: [GitHub Issues](https://github.com/vcsmy/ineat/issues)
-- **Security Issues**: [security@ineat.com](mailto:security@ineat.com)
-- **General Questions**: [support@ineat.com](mailto:support@ineat.com)
+- **Technical Issues**: [GitHub Issues](https://github.com/vcsmy/tidygen/issues)
+- **Security Issues**: [security@tidygen.com](mailto:security@tidygen.com)
+- **General Questions**: [support@tidygen.com](mailto:support@tidygen.com)
 
 ### **Documentation**
 
@@ -412,6 +412,6 @@ Contributors will be recognized in:
 
 ---
 
-Thank you for contributing to **iNEAT ERP**! Your contributions help us build the future of Web3-enabled business management. 🚀
+Thank you for contributing to **TidyGen ERP**! Your contributions help us build the future of Web3-enabled business management. 🚀
 
 **Questions?** Feel free to reach out to our community or open a discussion on GitHub!

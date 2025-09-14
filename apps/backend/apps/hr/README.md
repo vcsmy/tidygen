@@ -1,6 +1,6 @@
 # HR Management Module
 
-A comprehensive human resources management system for the iNEAT ERP platform that handles employee lifecycle, attendance tracking, leave management, payroll processing, performance reviews, training, and policy management.
+A comprehensive human resources management system for the TidyGen ERP platform that handles employee lifecycle, attendance tracking, leave management, payroll processing, performance reviews, training, and policy management.
 
 ## Features
 

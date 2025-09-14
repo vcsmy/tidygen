@@ -500,7 +500,7 @@ class ScheduleIntegrationAdmin(admin.ModelAdmin):
 # ==================== ADMIN CUSTOMIZATIONS ====================
 
 # Customize admin site
-admin.site.site_header = "iNEAT ERP - Scheduling Management"
+admin.site.site_header = "TidyGen ERP - Scheduling Management"
 admin.site.site_title = "Scheduling Admin"
 admin.site.index_title = "Scheduling Management System"
 

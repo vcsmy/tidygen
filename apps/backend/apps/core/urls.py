@@ -1,5 +1,5 @@
 """
-Core URL configuration for iNEAT ERP platform.
+Core URL configuration for TidyGen ERP platform.
 """
 
 from django.urls import path, include

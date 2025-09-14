@@ -1,4 +1,4 @@
-# iNEAT ERP - Security Scanning Workflow
+# TidyGen ERP - Security Scanning Workflow
 # Dedicated security scanning with scheduled runs and vulnerability management
 
 name: Security Scan
@@ -171,24 +171,24 @@ jobs:
       - name: Build backend image for scanning
         run: |
           cd apps/backend
-          docker build -f Dockerfile.prod -t ineat-backend:scan .
+          docker build -f Dockerfile.prod -t tidygen-backend:scan .
       
       - name: Build frontend image for scanning
         run: |
           cd apps/frontend
-          docker build -f Dockerfile -t ineat-frontend:scan .
+          docker build -f Dockerfile -t tidygen-frontend:scan .
       
       - name: Scan backend image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'ineat-backend:scan'
+          image-ref: 'tidygen-backend:scan'
           format: 'sarif'
           output: 'backend-container-scan.sarif'
       
       - name: Scan frontend image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'ineat-frontend:scan'
+          image-ref: 'tidygen-frontend:scan'
           format: 'sarif'
           output: 'frontend-container-scan.sarif'
       

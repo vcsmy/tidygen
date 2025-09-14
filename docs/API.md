@@ -2,7 +2,7 @@
 
 ## 🌐 **API Overview**
 
-The iNEAT ERP system provides a comprehensive RESTful API built with Django REST Framework. All endpoints follow REST conventions and return JSON responses.
+The TidyGen ERP system provides a comprehensive RESTful API built with Django REST Framework. All endpoints follow REST conventions and return JSON responses.
 
 ### **Base URL**
 - **Development**: `http://localhost:8000/api`
@@ -35,7 +35,7 @@ Content-Type: application/json
   "user": {
     "id": 1,
     "username": "admin",
-    "email": "admin@ineat-demo.com",
+    "email": "admin@tidygen-demo.com",
     "first_name": "Admin",
     "last_name": "User",
     "is_active": true,

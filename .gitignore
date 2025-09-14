@@ -1,5 +1,107 @@
-# Python
+# Environment & Configuration
+.env
+.env.*
+!.env.example
+config/secrets.yml
+credentials/
+secrets/
+
+# Security & Keys
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+
+# Development & Build
+node_modules/
+venv/
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+dist/
+build/
+.next/
+coverage/
+.nyc_output/
+
+# Logs & Temporary
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.backup
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE & Editor
+.vscode/
+.idea/
+*.sublime-*
+.vimrc
+.emacs
+*.code-workspace
+
+# Package Manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Pipfile.lock
+poetry.lock
+
+# Database & Cache
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+*.rdb
+
+# Personal & Temporary
+TODO.md
+NOTES.md
+DRAFT.md
+TEMP.md
+*.draft
+*.personal
+
+# Personal Guides & Internal Files (Keep for Your Use - Don't Push to Repo)
+DEPLOYMENT_SETUP_GUIDE.md
+EXECUTE_NOW.md
+SOLO_DEVELOPER_GUIDE.md
+KYC_KYB_GUIDE.md
+FILES_TO_EXCLUDE.md
+W3F_APPLICATION_FILES.md
+REPOSITORY_CLEANUP_SUMMARY.md
+W3F_GRANT_APPLICATION.md
+LEVEL_3_APPLICATION_SUMMARY.md
+
+# Internal Analysis & Status Files
+DEVELOPMENT_PERCENTAGE_ANALYSIS.md
+DEVELOPMENT_READINESS_CHECKLIST.md
+SMART_CONTRACTS_LOCATION.md
+WEB3_IMPLEMENTATION_STATUS.md
+W3F_GRANT_APPLICATION_STRATEGY.md
+
+# Git
+.git/
+.gitignore
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
 *.py[cod]
 *$py.class
 *.so
@@ -21,70 +123,130 @@ wheels/
 *.egg
 MANIFEST
 
-# Django
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-media/
-staticfiles/
-
 # Node.js
-node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 lerna-debug.log*
+.pnpm-debug.log*
 
-# Environment variables
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
 .env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.local
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# parcel-bundler cache
+.cache
+.parcel-cache
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
 # Docker
 .dockerignore
+docker-compose.override.yml
 
-# Testing
-.coverage
-.pytest_cache/
-htmlcov/
-.tox/
-.nox/
-coverage/
-*.cover
-.hypothesis/
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
 
-# Frontend build
-frontend/dist/
-frontend/build/
+# Kubernetes
+*.kubeconfig
 
-# Backend
-backend/static/
-backend/media/
-
-# Logs
-logs/
-*.log
-
-# Temporary files
-tmp/
-temp/
+# Local development
+.local/
+local/

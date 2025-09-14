@@ -1,8 +1,8 @@
-# iNeat ERP Community Edition - Development Roadmap
+# TidyGen ERP Community Edition - Development Roadmap
 
 ## Overview
 
-This roadmap outlines the development timeline for iNeat ERP Community Edition, structured into short-term (6 months), medium-term (12 months), and long-term (24+ months) phases. Each phase builds upon previous achievements while introducing new capabilities and Web3 integrations.
+This roadmap outlines the development timeline for TidyGen ERP Community Edition, structured into short-term (6 months), medium-term (12 months), and long-term (24+ months) phases. Each phase builds upon previous achievements while introducing new capabilities and Web3 integrations.
 
 ## Short-Term Roadmap (0-6 Months)
 
@@ -236,4 +236,4 @@ This roadmap outlines the development timeline for iNeat ERP Community Edition, 
 
 ## Conclusion
 
-This roadmap represents a comprehensive plan for transforming iNeat ERP Community Edition into a leading open-source ERP solution with cutting-edge Web3 integration. The phased approach ensures steady progress while maintaining system stability and user satisfaction. Through community-driven development and strategic partnerships, we will achieve our vision of democratizing access to enterprise-grade business management tools while pioneering the future of decentralized business operations.
+This roadmap represents a comprehensive plan for transforming TidyGen ERP Community Edition into a leading open-source ERP solution with cutting-edge Web3 integration. The phased approach ensures steady progress while maintaining system stability and user satisfaction. Through community-driven development and strategic partnerships, we will achieve our vision of democratizing access to enterprise-grade business management tools while pioneering the future of decentralized business operations.

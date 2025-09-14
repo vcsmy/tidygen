@@ -1,6 +1,6 @@
-# iNEAT ERP Documentation
+# TidyGen ERP Documentation
 
-Welcome to the comprehensive documentation for the iNEAT ERP system. This documentation covers all aspects of the system from development to deployment.
+Welcome to the comprehensive documentation for the TidyGen ERP system. This documentation covers all aspects of the system from development to deployment.
 
 ## 📚 **Documentation Index**
 
@@ -129,4 +129,4 @@ This documentation is maintained alongside the codebase. When making changes:
 ---
 
 **Last Updated**: January 2024  
-**Maintained By**: iNEAT ERP Development Team
+**Maintained By**: TidyGen ERP Development Team

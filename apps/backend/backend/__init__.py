@@ -1,1 +1,1 @@
-# iNEAT ERP Platform
+# TidyGen ERP Platform

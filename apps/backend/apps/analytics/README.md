@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Analytics & Reporting module provides comprehensive business intelligence and data analytics capabilities for the iNEAT ERP system. It enables organizations to create, manage, and analyze business data through reports, KPIs, dashboards, and real-time analytics.
+The Analytics & Reporting module provides comprehensive business intelligence and data analytics capabilities for the TidyGen ERP system. It enables organizations to create, manage, and analyze business data through reports, KPIs, dashboards, and real-time analytics.
 
 ## Features
 
@@ -685,4 +685,4 @@ For support and questions:
 
 ## License
 
-This module is part of the iNEAT ERP system and follows the same licensing terms.
+This module is part of the TidyGen ERP system and follows the same licensing terms.

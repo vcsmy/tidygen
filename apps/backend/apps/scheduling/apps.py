@@ -1,5 +1,5 @@
 """
-Scheduling app configuration for iNEAT ERP platform.
+Scheduling app configuration for TidyGen ERP platform.
 """
 from django.apps import AppConfig
 

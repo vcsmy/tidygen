@@ -377,4 +377,4 @@ The Sales module includes comprehensive test coverage for:
 
 ## License
 
-This module is part of the iNEAT ERP platform and follows the same licensing terms as the main project.
+This module is part of the TidyGen ERP platform and follows the same licensing terms as the main project.

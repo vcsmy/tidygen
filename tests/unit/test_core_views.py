@@ -162,7 +162,7 @@ class TestWeb3Views:
         data = {
             'wallet_address': '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6',
             'signature': '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b',
-            'message': 'Welcome to iNEAT ERP! Please sign this message to connect your wallet.'
+            'message': 'Welcome to TidyGen ERP! Please sign this message to connect your wallet.'
         }
         response = authenticated_client.post(url, data)
         assert response.status_code == status.HTTP_200_OK
@@ -175,7 +175,7 @@ class TestWeb3Views:
         data = {
             'wallet_address': 'invalid_address',
             'signature': '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b',
-            'message': 'Welcome to iNEAT ERP! Please sign this message to connect your wallet.'
+            'message': 'Welcome to TidyGen ERP! Please sign this message to connect your wallet.'
         }
         response = authenticated_client.post(url, data)
         assert response.status_code == status.HTTP_400_BAD_REQUEST

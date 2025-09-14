@@ -1,5 +1,5 @@
 """
-Test settings for iNEAT ERP.
+Test settings for TidyGen ERP.
 """
 from .base import *
 

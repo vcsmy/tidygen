@@ -58,15 +58,15 @@ class Command(BaseCommand):
     def create_organization(self):
         """Create the demo organization."""
         organization, created = Organization.objects.get_or_create(
-            name='iNEAT Demo Corp',
+            name='TidyGen Demo Corp',
             defaults={
-                'slug': 'ineat-demo-corp',
-                'description': 'iNEAT ERP System - Demonstration Organization',
+                'slug': 'tidygen-demo-corp',
+                'description': 'TidyGen ERP System - Demonstration Organization',
                 'industry': 'Technology',
                 'size': 'medium',
-                'website': 'https://ineat-demo.com',
+                'website': 'https://tidygen-demo.com',
                 'phone': '+1-555-DEMO',
-                'email': 'demo@ineat-corp.com',
+                'email': 'demo@tidygen-corp.com',
                 'address': '123 Demo Street',
                 'city': 'San Francisco',
                 'state': 'CA',
@@ -128,7 +128,7 @@ class Command(BaseCommand):
         admin_user, created = User.objects.get_or_create(
             username='admin',
             defaults={
-                'email': 'admin@ineat-demo.com',
+                'email': 'admin@tidygen-demo.com',
                 'first_name': 'Admin',
                 'last_name': 'User',
                 'is_staff': True,
@@ -152,9 +152,9 @@ class Command(BaseCommand):
 
         # Create demo users for different roles
         demo_users_data = [
-            ('demo1', 'demo1@ineat-demo.com', 'John', 'Doe', 'finance', 'Finance Manager'),
-            ('demo2', 'demo2@ineat-demo.com', 'Jane', 'Smith', 'sales', 'Sales Manager'),
-            ('demo3', 'demo3@ineat-demo.com', 'Mike', 'Johnson', 'hr', 'HR Manager'),
+            ('demo1', 'demo1@tidygen-demo.com', 'John', 'Doe', 'finance', 'Finance Manager'),
+            ('demo2', 'demo2@tidygen-demo.com', 'Jane', 'Smith', 'sales', 'Sales Manager'),
+            ('demo3', 'demo3@tidygen-demo.com', 'Mike', 'Johnson', 'hr', 'HR Manager'),
         ]
         
         for username, email, first_name, last_name, role_name, position in demo_users_data:

@@ -1,5 +1,5 @@
 """
-Custom filters for iNEAT ERP platform.
+Custom filters for TidyGen ERP platform.
 """
 
 import django_filters

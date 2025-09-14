@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# iNEAT ERP Staging Deployment Script
-# This script deploys the iNEAT ERP platform to the staging environment
+# TidyGen ERP Staging Deployment Script
+# This script deploys the TidyGen ERP platform to the staging environment
 
 set -e  # Exit on any error
 
@@ -15,8 +15,8 @@ NC='\033[0m' # No Color
 # Configuration
 STAGING_ENV="staging"
 DOCKER_COMPOSE_FILE="infra/docker/staging/docker-compose.yml"
-BACKUP_DIR="/var/backups/ineat"
-LOG_FILE="/var/log/ineat/deployment.log"
+BACKUP_DIR="/var/backups/tidygen"
+LOG_FILE="/var/log/tidygen/deployment.log"
 
 # Logging functions
 log_info() {
@@ -81,7 +81,7 @@ backup_current_deployment() {
     # Backup database
     if docker-compose -f "$DOCKER_COMPOSE_FILE" ps | grep -q "db.*Up"; then
         log_info "Backing up database..."
-        docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T db pg_dump -U postgres ineat_erp > "$BACKUP_DIR/db_backup_$(date +%Y%m%d_%H%M%S).sql"
+        docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T db pg_dump -U postgres tidygen_erp > "$BACKUP_DIR/db_backup_$(date +%Y%m%d_%H%M%S).sql"
         log_success "Database backup completed"
     else
         log_warning "Database container not running, skipping backup"
@@ -209,14 +209,14 @@ send_notification() {
     # Send Slack notification (if webhook is configured)
     if [ -n "$SLACK_WEBHOOK_URL" ]; then
         curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"iNEAT ERP Staging Deployment $status: $message\"}" \
+            --data "{\"text\":\"TidyGen ERP Staging Deployment $status: $message\"}" \
             "$SLACK_WEBHOOK_URL" >/dev/null 2>&1 || true
     fi
     
     # Send email notification (if configured)
     if [ -n "$NOTIFICATION_EMAIL" ]; then
-        echo "iNEAT ERP Staging Deployment $status: $message" | \
-            mail -s "iNEAT ERP Deployment $status" "$NOTIFICATION_EMAIL" 2>/dev/null || true
+        echo "TidyGen ERP Staging Deployment $status: $message" | \
+            mail -s "TidyGen ERP Deployment $status" "$NOTIFICATION_EMAIL" 2>/dev/null || true
     fi
     
     log_success "Notification sent"
@@ -234,7 +234,7 @@ rollback_deployment() {
         log_info "Restoring database from backup..."
         docker-compose -f "$DOCKER_COMPOSE_FILE" up -d db
         sleep 30
-        docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T db psql -U postgres -d ineat_erp < "$BACKUP_DIR/db_backup_latest.sql"
+        docker-compose -f "$DOCKER_COMPOSE_FILE" exec -T db psql -U postgres -d tidygen_erp < "$BACKUP_DIR/db_backup_latest.sql"
     fi
     
     # Start previous version
@@ -257,7 +257,7 @@ cleanup_backups() {
 
 # Main deployment function
 main() {
-    log_info "Starting iNEAT ERP staging deployment..."
+    log_info "Starting TidyGen ERP staging deployment..."
     
     # Set up error handling
     trap 'rollback_deployment; exit 1' ERR

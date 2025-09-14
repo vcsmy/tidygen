@@ -1,6 +1,6 @@
 # Tools Directory
 
-This directory contains development tools, configurations, and utilities for code quality, consistency, and productivity in the iNEAT ERP platform.
+This directory contains development tools, configurations, and utilities for code quality, consistency, and productivity in the TidyGen ERP platform.
 
 ## 📁 Structure
 
@@ -143,7 +143,7 @@ from django.core.management import execute_from_command_line
 
 def generate_app(app_name):
     """Generate a new Django app with standard structure."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ineat_erp.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tidygen_erp.settings')
     
     # Create app
     execute_from_command_line(['manage.py', 'startapp', app_name])

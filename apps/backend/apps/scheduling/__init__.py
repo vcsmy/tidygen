@@ -1,1 +1,1 @@
-# Scheduling app for iNEAT ERP platform
+# Scheduling app for TidyGen ERP platform

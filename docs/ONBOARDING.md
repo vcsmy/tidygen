@@ -1,6 +1,6 @@
-# iNEAT ERP - Developer Onboarding Guide
+# TidyGen ERP - Developer Onboarding Guide
 
-Welcome to the iNEAT ERP development team! This guide will help you get up and running quickly with our Web3-enabled ERP platform.
+Welcome to the TidyGen ERP development team! This guide will help you get up and running quickly with our Web3-enabled ERP platform.
 
 ## 📋 **Table of Contents**
 
@@ -66,8 +66,8 @@ code --install-extension ms-vscode.vscode-docker
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/ineat-erp.git
-cd ineat-erp
+git clone https://github.com/your-org/tidygen-erp.git
+cd tidygen-erp
 
 # Verify you're in the correct directory
 ls -la
@@ -190,7 +190,7 @@ VITE_POLYGON_RPC_URL=https://mumbai.infura.io/v3/your_key
 ## 📁 **Project Structure**
 
 ```
-iNEAT/
+TidyGen/
 ├── apps/                          # Main applications
 │   ├── backend/                   # Django REST API
 │   │   ├── apps/                  # Django apps
@@ -199,7 +199,7 @@ iNEAT/
 │   │   │   ├── organizations/    # Multi-tenancy
 │   │   │   ├── web3/             # Web3 integration
 │   │   │   └── ...               # Other ERP modules
-│   │   ├── ineat_erp/            # Django project settings
+│   │   ├── tidygen_erp/            # Django project settings
 │   │   ├── tests/                # Backend tests
 │   │   └── requirements*.txt     # Dependencies
 │   └── frontend/                 # React + TypeScript
@@ -693,7 +693,7 @@ npm run build
 
 ## 🎉 **Welcome to the Team!**
 
-You're now ready to start contributing to iNEAT ERP! Remember:
+You're now ready to start contributing to TidyGen ERP! Remember:
 
 - ✅ **Ask Questions**: Don't hesitate to ask for help
 - ✅ **Follow Guidelines**: Stick to our coding standards

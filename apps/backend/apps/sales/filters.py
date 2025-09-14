@@ -1,5 +1,5 @@
 """
-Sales and client management filters for iNEAT ERP platform.
+Sales and client management filters for TidyGen ERP platform.
 """
 import django_filters
 from django.db.models import Q

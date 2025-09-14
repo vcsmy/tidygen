@@ -1,5 +1,5 @@
 """
-Custom permissions for iNEAT ERP platform.
+Custom permissions for TidyGen ERP platform.
 """
 
 from rest_framework import permissions

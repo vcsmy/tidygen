@@ -4,26 +4,26 @@ services:
   # PostgreSQL Database
   db:
     image: postgres:15-alpine
-    container_name: ineat_erp_db_prod
+    container_name: tidygen_erp_db_prod
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-ineat_erp}
-      POSTGRES_USER: ${POSTGRES_USER:-ineat_user}
+      POSTGRES_DB: ${POSTGRES_DB:-tidygen_erp}
+      POSTGRES_USER: ${POSTGRES_USER:-tidygen_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ineat_user} -d ${POSTGRES_DB:-ineat_erp}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tidygen_user} -d ${POSTGRES_DB:-tidygen_erp}"]
       interval: 10s
       timeout: 5s
       retries: 5
     restart: unless-stopped
     networks:
-      - ineat_network
+      - tidygen_network
 
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: ineat_erp_redis_prod
+    container_name: tidygen_erp_redis_prod
     volumes:
       - redis_data:/data
     healthcheck:
@@ -33,19 +33,19 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
-      - ineat_network
+      - tidygen_network
 
   # Django Backend
   backend:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile.prod
-    container_name: ineat_erp_backend_prod
+    container_name: tidygen_erp_backend_prod
     environment:
       - DJANGO_ENV=production
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY}
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-ineat_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ineat_erp}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-tidygen_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-tidygen_erp}
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
@@ -70,19 +70,19 @@ services:
              gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     restart: unless-stopped
     networks:
-      - ineat_network
+      - tidygen_network
 
   # Celery Worker
   celery:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile.prod
-    container_name: ineat_erp_celery_prod
+    container_name: tidygen_erp_celery_prod
     environment:
       - DJANGO_ENV=production
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY}
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-ineat_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ineat_erp}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-tidygen_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-tidygen_erp}
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
@@ -96,12 +96,12 @@ services:
     command: celery -A backend worker --loglevel=info --concurrency=2
     restart: unless-stopped
     networks:
-      - ineat_network
+      - tidygen_network
 
   # Nginx
   nginx:
     image: nginx:alpine
-    container_name: ineat_erp_nginx_prod
+    container_name: tidygen_erp_nginx_prod
     ports:
       - "80:80"
       - "443:443"
@@ -114,10 +114,10 @@ services:
       - backend
     restart: unless-stopped
     networks:
-      - ineat_network
+      - tidygen_network
 
 networks:
-  ineat_network:
+  tidygen_network:
     driver: bridge
 
 volumes:

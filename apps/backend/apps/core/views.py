@@ -1,5 +1,5 @@
 """
-Core views for iNEAT ERP platform.
+Core views for TidyGen ERP platform.
 """
 
 from rest_framework import generics, status, permissions, viewsets

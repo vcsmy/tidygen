@@ -1,5 +1,5 @@
 """
-Finance URL configuration for iNEAT ERP platform.
+Finance URL configuration for TidyGen ERP platform.
 """
 
 from django.urls import path, include

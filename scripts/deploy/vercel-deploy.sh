@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# iNeat ERP Community Edition - Vercel Deployment Script
+# TidyGen ERP Community Edition - Vercel Deployment Script
 # This script deploys the frontend to Vercel and provides instructions for backend deployment
 
 set -e
 
-echo "🚀 iNeat ERP Community Edition - Vercel Deployment"
+echo "🚀 TidyGen ERP Community Edition - Vercel Deployment"
 echo "=================================================="
 
 # Check if Vercel CLI is installed

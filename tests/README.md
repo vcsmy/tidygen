@@ -1,6 +1,6 @@
 # Tests Directory
 
-This directory contains end-to-end tests, integration tests, and performance testing suites for the iNEAT ERP platform.
+This directory contains end-to-end tests, integration tests, and performance testing suites for the TidyGen ERP platform.
 
 ## 📁 Structure
 

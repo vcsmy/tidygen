@@ -2,7 +2,7 @@
 
 ## 🎯 **Overview**
 
-Successfully reorganized all documentation files into the `docs/` folder, removed duplicates, and created a comprehensive documentation structure for the iNEAT ERP project.
+Successfully reorganized all documentation files into the `docs/` folder, removed duplicates, and created a comprehensive documentation structure for the TidyGen ERP project.
 
 ## ✅ **Completed Tasks**
 

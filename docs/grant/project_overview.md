@@ -1,8 +1,8 @@
-# iNeat ERP Community Edition - Project Overview
+# TidyGen ERP Community Edition - Project Overview
 
 ## Executive Summary
 
-iNeat ERP Community Edition is an open-source, single-tenant Enterprise Resource Planning (ERP) system designed to democratize access to enterprise-grade business management tools. Built with modern web technologies and integrated Web3 capabilities, it provides small to medium businesses with comprehensive business management functionality while maintaining data sovereignty and cost-effectiveness.
+TidyGen ERP Community Edition is an open-source, single-tenant Enterprise Resource Planning (ERP) system designed to democratize access to enterprise-grade business management tools. Built with modern web technologies and integrated Web3 capabilities, it provides small to medium businesses with comprehensive business management functionality while maintaining data sovereignty and cost-effectiveness.
 
 ## Project Purpose
 
@@ -153,6 +153,6 @@ To provide accessible, self-hosted ERP solutions that empower businesses to mana
 
 ## Conclusion
 
-iNeat ERP Community Edition represents a paradigm shift in business management software, combining traditional ERP functionality with cutting-edge Web3 technologies. By providing an open-source, self-hosted solution, we empower businesses to take control of their operations while embracing the future of decentralized business processes.
+TidyGen ERP Community Edition represents a paradigm shift in business management software, combining traditional ERP functionality with cutting-edge Web3 technologies. By providing an open-source, self-hosted solution, we empower businesses to take control of their operations while embracing the future of decentralized business processes.
 
-The project addresses critical needs in the SMB market for accessible, customizable, and cost-effective business management solutions while pioneering the integration of blockchain technologies in enterprise software. Through community-driven development and open-source principles, iNeat ERP Community Edition will democratize access to enterprise-grade business tools and drive innovation in the ERP industry.
+The project addresses critical needs in the SMB market for accessible, customizable, and cost-effective business management solutions while pioneering the integration of blockchain technologies in enterprise software. Through community-driven development and open-source principles, TidyGen ERP Community Edition will democratize access to enterprise-grade business tools and drive innovation in the ERP industry.

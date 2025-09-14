@@ -1,5 +1,5 @@
 """
-ASGI config for iNEAT ERP project.
+ASGI config for TidyGen ERP project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

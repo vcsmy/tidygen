@@ -1,5 +1,5 @@
 """
-Pytest configuration and fixtures for iNEAT ERP tests.
+Pytest configuration and fixtures for TidyGen ERP tests.
 """
 
 import pytest
@@ -128,7 +128,7 @@ def web3_signature():
 @pytest.fixture
 def web3_message():
     """Test Web3 message."""
-    return 'Welcome to iNEAT ERP! Please sign this message to connect your wallet.'
+    return 'Welcome to TidyGen ERP! Please sign this message to connect your wallet.'
 
 
 class APITestCase(TestCase):

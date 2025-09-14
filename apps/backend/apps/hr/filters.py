@@ -1,5 +1,5 @@
 """
-HR management filters for iNEAT ERP platform.
+HR management filters for TidyGen ERP platform.
 """
 import django_filters
 from django.db.models import Q

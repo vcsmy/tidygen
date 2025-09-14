@@ -1,5 +1,5 @@
 """
-Base settings for iNEAT ERP project.
+Base settings for TidyGen ERP project.
 """
 
 import os
@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 DATABASES = {
     'default': dj_database_url.parse(
-        config('DATABASE_URL', default='postgresql://ineat_user:ineat_password@localhost:5432/backend')
+        config('DATABASE_URL', default='postgresql://tidygen_user:tidygen_password@localhost:5432/backend')
     )
 }
 
@@ -239,9 +239,149 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
+# Web3 Configuration
+WEB3_CONTRACTS = {
+    'TidyGenERP': {
+        'address': config('TIDYGEN_ERP_CONTRACT_ADDRESS', default=''),
+        'abi': [],  # Will be loaded from contract artifacts
+    },
+    'TidyGenToken': {
+        'address': config('TIDYGEN_TOKEN_CONTRACT_ADDRESS', default=''),
+        'abi': [],  # Will be loaded from contract artifacts
+    },
+    'TidyGenDAO': {
+        'address': config('TIDYGEN_DAO_CONTRACT_ADDRESS', default=''),
+        'abi': [],  # Will be loaded from contract artifacts
+    },
+    'ERC20': {
+        'abi': [
+            {
+                "constant": True,
+                "inputs": [{"name": "_owner", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "balance", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{"name": "", "type": "uint8"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [{"name": "", "type": "string"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [],
+                "name": "name",
+                "outputs": [{"name": "", "type": "string"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "_to", "type": "address"},
+                    {"name": "_value", "type": "uint256"}
+                ],
+                "name": "transfer",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "_spender", "type": "address"},
+                    {"name": "_value", "type": "uint256"}
+                ],
+                "name": "approve",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            },
+            {
+                "constant": True,
+                "inputs": [
+                    {"name": "_owner", "type": "address"},
+                    {"name": "_spender", "type": "address"}
+                ],
+                "name": "allowance",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": False,
+                "inputs": [
+                    {"name": "_from", "type": "address"},
+                    {"name": "_to", "type": "address"},
+                    {"name": "_value", "type": "uint256"}
+                ],
+                "name": "transferFrom",
+                "outputs": [{"name": "", "type": "bool"}],
+                "type": "function"
+            }
+        ]
+    }
+}
+
+# Web3 Network Configuration
+WEB3_NETWORKS = {
+    'ethereum': {
+        'rpc_url': config('ETHEREUM_RPC_URL', default='https://mainnet.infura.io/v3/YOUR_INFURA_KEY'),
+        'chain_id': 1,
+        'name': 'Ethereum Mainnet'
+    },
+    'sepolia': {
+        'rpc_url': config('SEPOLIA_RPC_URL', default='https://sepolia.infura.io/v3/YOUR_INFURA_KEY'),
+        'chain_id': 11155111,
+        'name': 'Ethereum Sepolia'
+    },
+    'polygon': {
+        'rpc_url': config('POLYGON_RPC_URL', default='https://polygon-rpc.com'),
+        'chain_id': 137,
+        'name': 'Polygon'
+    },
+    'mumbai': {
+        'rpc_url': config('MUMBAI_RPC_URL', default='https://rpc-mumbai.maticvigil.com'),
+        'chain_id': 80001,
+        'name': 'Polygon Mumbai'
+    },
+    'moonbeam': {
+        'rpc_url': config('MOONBEAM_RPC_URL', default='https://rpc.api.moonbeam.network'),
+        'chain_id': 1284,
+        'name': 'Moonbeam'
+    },
+    'moonbase': {
+        'rpc_url': config('MOONBASE_RPC_URL', default='https://rpc.api.moonbase.moonbeam.network'),
+        'chain_id': 1287,
+        'name': 'Moonbase Alpha'
+    },
+    'astar': {
+        'rpc_url': config('ASTAR_RPC_URL', default='https://evm.astar.network'),
+        'chain_id': 592,
+        'name': 'Astar'
+    },
+    'shiden': {
+        'rpc_url': config('SHIDEN_RPC_URL', default='https://evm.shiden.astar.network'),
+        'chain_id': 336,
+        'name': 'Shiden'
+    }
+}
+
+# IPFS Configuration
+IPFS_URL = config('IPFS_URL', default='http://localhost:5001')
+IPFS_GATEWAY = config('IPFS_GATEWAY', default='https://ipfs.io/ipfs/')
+
+# Web3 Message Configuration
+WEB3_MESSAGE_PREFIX = config('WEB3_MESSAGE_PREFIX', default='TidyGen ERP Login')
+
 # API Documentation
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'iNEAT ERP API',
+    'TITLE': 'TidyGen ERP API',
     'DESCRIPTION': 'Web3-enabled Enterprise Resource Planning API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
@@ -249,7 +389,7 @@ SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_PREFIX': '/api/',
     'SERVERS': [
         {'url': 'http://localhost:8000', 'description': 'Development server'},
-        {'url': 'https://api.ineat.com', 'description': 'Production server'},
+        {'url': 'https://api.tidygen.com', 'description': 'Production server'},
     ],
     'TAGS': [
         {'name': 'Authentication', 'description': 'User authentication and authorization'},
@@ -343,7 +483,7 @@ EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@ineat.com')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@tidygen.com')
 
 # File Storage
 DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE', default='django.core.files.storage.FileSystemStorage')

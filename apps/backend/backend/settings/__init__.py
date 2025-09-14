@@ -1,5 +1,5 @@
 """
-Settings package for iNEAT ERP.
+Settings package for TidyGen ERP.
 Dynamically loads environment-specific settings.
 """
 

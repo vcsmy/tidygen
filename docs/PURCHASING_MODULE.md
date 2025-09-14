@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Purchasing Management module provides comprehensive functionality for managing all aspects of procurement and vendor relationships in the iNEAT ERP system. This module handles vendor management, purchase requisitions, purchase orders, contract management, and vendor performance evaluation.
+The Purchasing Management module provides comprehensive functionality for managing all aspects of procurement and vendor relationships in the TidyGen ERP system. This module handles vendor management, purchase requisitions, purchase orders, contract management, and vendor performance evaluation.
 
 ## Features
 
@@ -296,4 +296,4 @@ coverage html
 
 ## License
 
-This module is part of the iNEAT ERP system and is licensed under the same terms as the main project.
+This module is part of the TidyGen ERP system and is licensed under the same terms as the main project.

@@ -1,8 +1,8 @@
-# iNEAT ERP Product Roadmap
+# TidyGen ERP Product Roadmap
 
 ## 🎯 Executive Summary
 
-This roadmap outlines the **12-month product development strategy** for iNEAT ERP, a Web3-enabled Enterprise Resource Planning platform. The roadmap focuses on delivering core ERP functionality with integrated blockchain capabilities, targeting enterprise customers who need modern, secure, and scalable business management solutions.
+This roadmap outlines the **12-month product development strategy** for TidyGen ERP, a Web3-enabled Enterprise Resource Planning platform. The roadmap focuses on delivering core ERP functionality with integrated blockchain capabilities, targeting enterprise customers who need modern, secure, and scalable business management solutions.
 
 > 📅 **Timeline**: January 2024 - December 2024  
 > 🎯 **Goal**: Production-ready Web3-enabled ERP platform with comprehensive business modules
@@ -39,6 +39,27 @@ This roadmap outlines the **12-month product development strategy** for iNEAT ER
   - Role-based access control (RBAC) framework
   - User registration and password reset flows
 
+**Milestone 1 Deliverables:**
+- [ ] Complete Django REST Framework setup with modular architecture
+- [ ] PostgreSQL database with multi-tenant schema design implemented
+- [ ] Redis caching layer fully functional
+- [ ] Docker containerization and CI/CD pipeline operational
+- [ ] JWT-based authentication system with refresh tokens
+- [ ] Multi-factor authentication (MFA) support implemented
+- [ ] Role-based access control (RBAC) framework complete
+- [ ] User registration and password reset flows functional
+- [ ] API documentation with 100% endpoint coverage
+- [ ] Unit tests with 90%+ coverage
+- [ ] Security audit report with no critical issues
+
+**Acceptance Criteria:**
+- All authentication endpoints functional and tested
+- Multi-tenant data isolation verified through testing
+- CI/CD pipeline successfully deploys to staging environment
+- Security audit passed with no critical vulnerabilities
+- API documentation complete and accurate
+- All unit tests passing with 90%+ coverage
+
 #### **Month 2: Tenant Management & Web3 Integration**
 - **Multi-Tenant Architecture**
   - Organization-based data isolation
@@ -50,6 +71,27 @@ This roadmap outlines the **12-month product development strategy** for iNEAT ER
   - Wallet signature verification
   - Basic transaction handling
   - Network switching (Ethereum, Polygon, testnets)
+
+**Milestone 2 Deliverables:**
+- [ ] Multi-tenant architecture with organization-based data isolation
+- [ ] Tenant-aware middleware and routing implemented
+- [ ] Organization settings and configuration system
+- [ ] Department and team management functionality
+- [ ] MetaMask wallet connection integration
+- [ ] Wallet signature verification system
+- [ ] Basic transaction handling capabilities
+- [ ] Network switching (Ethereum, Polygon, testnets)
+- [ ] Web3 integration documentation
+- [ ] Integration tests for Web3 functionality
+- [ ] Security audit for Web3 components
+
+**Acceptance Criteria:**
+- Multi-tenant data isolation verified through comprehensive testing
+- Web3 wallet connection working on all supported networks
+- Transaction handling functional with proper error handling
+- Network switching working seamlessly
+- Security audit passed for Web3 components
+- Integration tests passing for all Web3 functionality
 
 #### **Month 3: Core Platform Features**
 - **Dashboard & Navigation**
@@ -428,9 +470,9 @@ This roadmap outlines the **12-month product development strategy** for iNEAT ER
 
 ---
 
-> 📝 **Note**: This roadmap is a living document updated quarterly based on user feedback, market conditions, and technological advancements. The iNEAT team is committed to delivering a world-class Web3-enabled ERP platform that meets the evolving needs of modern businesses.
+> 📝 **Note**: This roadmap is a living document updated quarterly based on user feedback, market conditions, and technological advancements. The TidyGen team is committed to delivering a world-class Web3-enabled ERP platform that meets the evolving needs of modern businesses.
 
 **Last Updated**: January 2024  
 **Next Review**: April 2024  
-**Product Owner**: iNEAT Product Team  
+**Product Owner**: TidyGen Product Team  
 **Stakeholders**: Engineering, Design, Marketing, Sales, Customer Success

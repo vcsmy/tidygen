@@ -278,6 +278,6 @@ class RecurringInvoiceAdmin(admin.ModelAdmin):
 
 
 # Customize admin site
-admin.site.site_header = "iNEAT ERP Finance Management"
-admin.site.site_title = "iNEAT Finance Admin"
+admin.site.site_header = "TidyGen ERP Finance Management"
+admin.site.site_title = "TidyGen Finance Admin"
 admin.site.index_title = "Finance Administration"

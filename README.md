@@ -1,8 +1,8 @@
-# iNeat ERP Community Edition
+# TidyGen ERP Community Edition
 
 <div align="center">
 
-![iNeat ERP](https://img.shields.io/badge/iNeat%20ERP-Community%20Edition-blue)
+![TidyGen ERP](https://img.shields.io/badge/TidyGen%20ERP-Community%20Edition-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Python](https://img.shields.io/badge/Python-3.12+-blue)
 ![Django](https://img.shields.io/badge/Django-4.2+-green)
@@ -10,15 +10,15 @@
 
 **A comprehensive, single-tenant ERP system designed for small to medium businesses. Built with Django REST Framework and modern web technologies.**
 
-[🚀 Quick Start](#quick-start) • [📖 Documentation](DEPLOYMENT.md) • [🤝 Contributing](#contributing) • [💬 Community](https://github.com/your-org/ineat-erp-community/discussions)
+[🚀 Quick Start](#quick-start) • [📖 Documentation](DEPLOYMENT.md) • [🤝 Contributing](#contributing) • [💬 Community](https://github.com/your-org/tidygen-erp-community/discussions)
 
 </div>
 
 ---
 
-## 🎯 Why iNeat ERP Community Edition?
+## 🎯 Why TidyGen ERP Community Edition?
 
-**iNeat ERP Community Edition** is a powerful, self-hosted ERP solution that gives you complete control over your business data and operations. Perfect for businesses that want enterprise-grade functionality without the complexity of multi-tenant systems.
+**TidyGen ERP Community Edition** is a powerful, self-hosted ERP solution that gives you complete control over your business data and operations. Perfect for businesses that want enterprise-grade functionality without the complexity of multi-tenant systems.
 
 ### ✨ Key Benefits
 
@@ -46,7 +46,7 @@
 | **📱 Mobile Apps** | Web-based | Native mobile apps |
 | **🔌 Third-party Integrations** | Manual integration | Pre-built integrations |
 
-> **💡 Need multi-tenant, dealer/reseller portals, or enterprise support?** Check out our [Commercial Edition](https://ineat-erp.com/commercial) for advanced features and professional support.
+> **💡 Need multi-tenant, dealer/reseller portals, or enterprise support?** Check out our [Commercial Edition](https://tidygen-erp.com/commercial) for advanced features and professional support.
 
 ## 🚀 Features
 
@@ -57,11 +57,11 @@
 - **💰 Financial Management** - Accounting, invoicing, expense tracking
 - **📅 Project Management** - Task scheduling, resource allocation
 - **📊 Analytics & Reporting** - Business intelligence and insights
-- **⛓️ Web3 Integration** - Optional blockchain features for modern businesses
+- **⛓️ Web3 Integration** - **REAL blockchain features with smart contracts, multi-chain support**
 
 ## 🚀 Quick Start
 
-Get iNeat ERP Community Edition running in minutes with Docker!
+Get TidyGen ERP Community Edition running in minutes with Docker!
 
 ### Prerequisites
 
@@ -73,8 +73,8 @@ Get iNeat ERP Community Edition running in minutes with Docker!
 
    ```bash
 # Clone and setup in one command
-git clone https://github.com/your-org/ineat-erp-community.git
-cd ineat-erp-community
+git clone https://github.com/your-org/tidygen-erp-community.git
+cd tidygen-erp-community
 chmod +x setup.sh
 ./setup.sh
 ```
@@ -83,8 +83,8 @@ chmod +x setup.sh
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-org/ineat-erp-community.git
-   cd ineat-erp-community
+   git clone https://github.com/your-org/tidygen-erp-community.git
+   cd tidygen-erp-community
    ```
 
 2. **Create environment file:**
@@ -121,7 +121,7 @@ The setup process automatically:
 
 ### 🎉 You're Ready!
 
-Your iNeat ERP Community Edition is now running! Start by:
+Your TidyGen ERP Community Edition is now running! Start by:
 1. Setting up your organization details
 2. Adding your first employees
 3. Configuring your inventory
@@ -129,7 +129,7 @@ Your iNeat ERP Community Edition is now running! Start by:
 
 ## 🏗️ Architecture
 
-iNeat ERP Community Edition is built with a modern, scalable architecture:
+TidyGen ERP Community Edition is built with a modern, scalable architecture:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -200,8 +200,8 @@ cp .env.example .env
 ### Getting Help
 
 - 📖 **Documentation**: Check [DEPLOYMENT.md](DEPLOYMENT.md) for detailed guides
-- 🐛 **Bug Reports**: [Create an issue](https://github.com/your-org/ineat-erp-community/issues)
-- 💬 **Community**: [Join discussions](https://github.com/your-org/ineat-erp-community/discussions)
+- 🐛 **Bug Reports**: [Create an issue](https://github.com/your-org/tidygen-erp-community/issues)
+- 💬 **Community**: [Join discussions](https://github.com/your-org/tidygen-erp-community/discussions)
 
 ## 🛠️ Development
 
@@ -242,7 +242,7 @@ docker-compose exec backend python manage.py test
 
 ## ☁️ Cloud Deployment
 
-Deploy iNeat ERP Community Edition to popular cloud platforms with one-click deployment!
+Deploy TidyGen ERP Community Edition to popular cloud platforms with one-click deployment!
 
 ### 🚀 One-Click Deploy Options
 
@@ -383,14 +383,14 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ### Community Support
 
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-org/ineat-erp-community/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/ineat-erp-community/discussions)
-- 📖 **Documentation**: [Read the docs](https://docs.ineat-erp.com)
-- 🌐 **Community Forum**: [Join the discussion](https://community.ineat-erp.com)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-org/tidygen-erp-community/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/tidygen-erp-community/discussions)
+- 📖 **Documentation**: [Read the docs](https://docs.tidygen-erp.com)
+- 🌐 **Community Forum**: [Join the discussion](https://community.tidygen-erp.com)
 
 ### Commercial Support
 
-For enterprise features, multi-tenant support, dealer/reseller portals, and professional support, check out our [Commercial Edition](https://ineat-erp.com/commercial).
+For enterprise features, multi-tenant support, dealer/reseller portals, and professional support, check out our [Commercial Edition](https://tidygen-erp.com/commercial).
 
 ## 🗺️ Roadmap
 
@@ -406,14 +406,14 @@ For enterprise features, multi-tenant support, dealer/reseller portals, and prof
 
 ### Community Requests
 
-Have a feature request? [Submit it here](https://github.com/your-org/ineat-erp-community/issues/new?template=feature_request.md)!
+Have a feature request? [Submit it here](https://github.com/your-org/tidygen-erp-community/issues/new?template=feature_request.md)!
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by the iNeat ERP Community**
+**Made with ❤️ by the TidyGen ERP Community**
 
-[⭐ Star us on GitHub](https://github.com/your-org/ineat-erp-community) • [🐦 Follow us on Twitter](https://twitter.com/ineat_erp) • [💼 Visit our website](https://ineat-erp.com)
+[⭐ Star us on GitHub](https://github.com/your-org/tidygen-erp-community) • [🐦 Follow us on Twitter](https://twitter.com/tidygen_erp) • [💼 Visit our website](https://tidygen-erp.com)
 
 </div>

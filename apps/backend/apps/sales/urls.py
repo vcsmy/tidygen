@@ -1,5 +1,5 @@
 """
-Sales and client management URL configuration for iNEAT ERP platform.
+Sales and client management URL configuration for TidyGen ERP platform.
 """
 
 from django.urls import path, include

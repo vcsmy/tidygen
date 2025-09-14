@@ -271,7 +271,7 @@ reward_data = {
     'description': 'Fixed critical security vulnerability in authentication system',
     'token_amount': '100.0',
     'token_contract': 1,  # ERC-20 token contract ID
-    'contribution_url': 'https://github.com/ineat/erp/pull/123'
+    'contribution_url': 'https://github.com/tidygen/erp/pull/123'
 }
 
 response = requests.post('/api/v1/web3/api/rewards/', json=reward_data)
@@ -413,7 +413,7 @@ python manage.py runserver
 ### **Configuration**
 ```python
 # settings.py
-WEB3_MESSAGE_PREFIX = 'iNEAT ERP Login'
+WEB3_MESSAGE_PREFIX = 'TidyGen ERP Login'
 WEB3_NETWORK_URL = 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
 WEB3_PRIVATE_KEY = 'YOUR_PRIVATE_KEY'  # For automated operations
 IPFS_GATEWAY_URL = 'https://ipfs.io/ipfs/'
@@ -466,7 +466,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Documentation**: Check the documentation first
 - **Issues**: Report issues on GitHub
 - **Discord**: Join our Discord community
-- **Email**: Contact us at support@ineat.com
+- **Email**: Contact us at support@tidygen.com
 
 ---
 

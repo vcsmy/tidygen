@@ -1,5 +1,5 @@
 """
-Custom exceptions for iNEAT ERP platform.
+Custom exceptions for TidyGen ERP platform.
 """
 
 from rest_framework.views import exception_handler

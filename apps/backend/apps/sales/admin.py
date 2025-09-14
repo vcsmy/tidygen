@@ -345,6 +345,6 @@ class ClientSegmentAssignmentAdmin(admin.ModelAdmin):
 
 
 # Customize admin site
-admin.site.site_header = "iNEAT ERP Client Management"
-admin.site.site_title = "iNEAT Client Admin"
+admin.site.site_header = "TidyGen ERP Client Management"
+admin.site.site_title = "TidyGen Client Admin"
 admin.site.index_title = "Client Management Administration"

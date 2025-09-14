@@ -12,7 +12,7 @@ I’ll structure it into **three core parts**:
 
 **Project Name:** InEAT ERP
 **Tagline:** *The First Web3-Enabled ERP for SMEs & Cooperatives*
-**Repository:** [github.com/vcsmy/ineat-erp](https://github.com/vcsmy/ineat-erp)
+**Repository:** [github.com/vcsmy/tidygen-erp](https://github.com/vcsmy/tidygen-erp)
 
 **Vision:**
 To empower SMEs and cooperatives worldwide with a **cost-effective, transparent, and decentralized ERP system** that bridges traditional enterprise workflows with **Web3 technologies**.

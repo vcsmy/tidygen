@@ -1,5 +1,5 @@
 """
-WSGI config for iNEAT ERP project.
+WSGI config for TidyGen ERP project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

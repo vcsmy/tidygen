@@ -13,7 +13,7 @@
 1. **Clone and start the system**
    ```bash
    git clone <repository-url>
-   cd ineat
+   cd tidygen
    make dev
    ```
 
@@ -78,7 +78,7 @@ apps/backend/
 │   ├── sales/              # Sales management
 │   ├── purchasing/         # Purchasing management
 │   └── web3/               # Web3 integration
-├── ineat_erp/              # Django project settings
+├── tidygen_erp/              # Django project settings
 ├── manage.py               # Django management script
 ├── requirements.txt        # Python dependencies
 └── Dockerfile              # Docker configuration
@@ -245,7 +245,7 @@ cp apps/backend/env.example apps/backend/.env
 DJANGO_ENV=development
 DEBUG=True
 SECRET_KEY=your-secret-key
-DATABASE_URL=postgresql://user:pass@localhost:5432/ineat_erp
+DATABASE_URL=postgresql://user:pass@localhost:5432/tidygen_erp
 REDIS_URL=redis://localhost:6379/1
 ```
 

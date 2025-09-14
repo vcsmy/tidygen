@@ -2,7 +2,7 @@
 
 ## ⛓️ **Overview**
 
-The iNEAT ERP system includes comprehensive Web3 integration, enabling blockchain functionality, cryptocurrency management, and decentralized application features. This guide covers all Web3 capabilities and implementation details.
+The TidyGen ERP system includes comprehensive Web3 integration, enabling blockchain functionality, cryptocurrency management, and decentralized application features. This guide covers all Web3 capabilities and implementation details.
 
 ## 🏗️ **Web3 Architecture**
 
@@ -796,7 +796,7 @@ IPFS_GATEWAY_URL=https://ipfs.io/ipfs/
 services:
   ganache:
     image: trufflesuite/ganache-cli:latest
-    container_name: ineat_ganache
+    container_name: tidygen_ganache
     command: ganache-cli --host 0.0.0.0 --port 8545 --networkId 1337 --gasLimit 10000000 --gasPrice 20000000000 --accounts 10 --defaultBalanceEther 1000 --deterministic
     ports:
       - "8545:8545"

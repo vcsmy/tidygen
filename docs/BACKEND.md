@@ -1,8 +1,8 @@
-# iNEAT ERP Backend Development Documentation
+# TidyGen ERP Backend Development Documentation
 
 ## 🎯 **Project Overview**
 
-The iNEAT ERP backend is a comprehensive Django REST Framework application that provides a complete enterprise resource planning solution with Web3 integration. The backend is **100% complete** with 10 fully implemented modules, comprehensive API endpoints, and production-ready features.
+The TidyGen ERP backend is a comprehensive Django REST Framework application that provides a complete enterprise resource planning solution with Web3 integration. The backend is **100% complete** with 10 fully implemented modules, comprehensive API endpoints, and production-ready features.
 
 ## 🏗️ **Architecture Overview**
 
@@ -29,7 +29,7 @@ apps/backend/
 │   ├── finance/                   # Financial management
 │   ├── hr/                        # Human resources
 │   └── projects/                  # Project management
-├── ineat_erp/                     # Django project settings
+├── tidygen_erp/                     # Django project settings
 │   ├── settings/                  # Environment-specific settings
 │   └── urls.py                   # Main URL configuration
 ├── tests/                         # Test suite
@@ -578,7 +578,7 @@ Complete project management system with task management, time tracking, and reso
 
 ## 🚀 **Ready for Production**
 
-The iNEAT ERP backend is **production-ready** with:
+The TidyGen ERP backend is **production-ready** with:
 
 ✅ **Complete Feature Set**: All 10 ERP modules fully implemented  
 ✅ **Robust Security**: JWT authentication, RBAC, audit logging  

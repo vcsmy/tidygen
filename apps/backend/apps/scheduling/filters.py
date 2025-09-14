@@ -1,5 +1,5 @@
 """
-Comprehensive scheduling management filters for iNEAT ERP platform.
+Comprehensive scheduling management filters for TidyGen ERP platform.
 """
 import django_filters
 from django.db.models import Q

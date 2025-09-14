@@ -1,6 +1,6 @@
 # Finance Management Module
 
-A comprehensive finance management system for the iNEAT ERP platform that handles invoicing, payments, expenses, budgeting, and financial reporting.
+A comprehensive finance management system for the TidyGen ERP platform that handles invoicing, payments, expenses, budgeting, and financial reporting.
 
 ## Features
 

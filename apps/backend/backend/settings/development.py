@@ -1,5 +1,5 @@
 """
-Development settings for iNEAT ERP project.
+Development settings for TidyGen ERP project.
 """
 
 from .base import *

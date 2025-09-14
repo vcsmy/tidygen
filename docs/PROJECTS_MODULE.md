@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Projects module provides comprehensive project management functionality for the iNEAT ERP platform. It includes project planning, task management, resource allocation, time tracking, and client management capabilities.
+The Projects module provides comprehensive project management functionality for the TidyGen ERP platform. It includes project planning, task management, resource allocation, time tracking, and client management capabilities.
 
 ## Features
 

@@ -1,5 +1,5 @@
 """
-Core serializers for iNEAT ERP platform.
+Core serializers for TidyGen ERP platform.
 """
 
 from rest_framework import serializers

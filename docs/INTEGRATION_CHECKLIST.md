@@ -1,8 +1,8 @@
-# iNEAT ERP Frontend-Backend Integration Checklist
+# TidyGen ERP Frontend-Backend Integration Checklist
 
 ## 🎯 **Integration Analysis Report**
 
-This document provides a comprehensive comparison between the frontend and backend implementations to identify matches, mismatches, and integration gaps in the iNEAT ERP system.
+This document provides a comprehensive comparison between the frontend and backend implementations to identify matches, mismatches, and integration gaps in the TidyGen ERP system.
 
 ---
 
@@ -396,7 +396,7 @@ This document provides a comprehensive comparison between the frontend and backe
 
 ## 📝 **Conclusion**
 
-The iNEAT ERP system has **excellent frontend and backend implementations** but is **completely disconnected**. The frontend provides a beautiful, complete user interface, and the backend provides a robust, complete API system. However, **no integration exists** between them.
+The TidyGen ERP system has **excellent frontend and backend implementations** but is **completely disconnected**. The frontend provides a beautiful, complete user interface, and the backend provides a robust, complete API system. However, **no integration exists** between them.
 
 **Key Findings:**
 - ✅ **Frontend**: 100% complete with beautiful UI

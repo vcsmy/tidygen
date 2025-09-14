@@ -4,18 +4,18 @@ services:
   # PostgreSQL Database
   db:
     image: postgres:15-alpine
-    container_name: ineat_db_dev
+    container_name: tidygen_db_dev
     environment:
-      POSTGRES_DB: ineat_erp
-      POSTGRES_USER: ineat_user
-      POSTGRES_PASSWORD: ineat_password
+      POSTGRES_DB: tidygen_erp
+      POSTGRES_USER: tidygen_user
+      POSTGRES_PASSWORD: tidygen_password
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ineat_user -d ineat_erp"]
+      test: ["CMD-SHELL", "pg_isready -U tidygen_user -d tidygen_erp"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,7 +23,7 @@ services:
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: ineat_redis_dev
+    container_name: tidygen_redis_dev
     ports:
       - "6379:6379"
     volumes:
@@ -40,12 +40,12 @@ services:
       context: ../../../
       dockerfile: apps/backend/Dockerfile
       target: development
-    container_name: ineat_backend_dev
+    container_name: tidygen_backend_dev
     environment:
       - DJANGO_ENV=development
       - DEBUG=True
       - SECRET_KEY=dev-secret-key-change-in-production
-      - DATABASE_URL=postgresql://ineat_user:ineat_password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://tidygen_user:tidygen_password@db:5432/tidygen_erp
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -74,12 +74,12 @@ services:
       context: ../../../
       dockerfile: apps/backend/Dockerfile
       target: development
-    container_name: ineat_celery_dev
+    container_name: tidygen_celery_dev
     environment:
       - DJANGO_ENV=development
       - DEBUG=True
       - SECRET_KEY=dev-secret-key-change-in-production
-      - DATABASE_URL=postgresql://ineat_user:ineat_password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://tidygen_user:tidygen_password@db:5432/tidygen_erp
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -92,7 +92,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: celery -A ineat_erp worker --loglevel=info
+    command: celery -A tidygen_erp worker --loglevel=info
 
   # Celery Beat Scheduler
   celery-beat:
@@ -100,12 +100,12 @@ services:
       context: ../../../
       dockerfile: apps/backend/Dockerfile
       target: development
-    container_name: ineat_celery_beat_dev
+    container_name: tidygen_celery_beat_dev
     environment:
       - DJANGO_ENV=development
       - DEBUG=True
       - SECRET_KEY=dev-secret-key-change-in-production
-      - DATABASE_URL=postgresql://ineat_user:ineat_password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://tidygen_user:tidygen_password@db:5432/tidygen_erp
       - REDIS_URL=redis://redis:6379/1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -117,12 +117,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: celery -A ineat_erp beat --loglevel=info
+    command: celery -A tidygen_erp beat --loglevel=info
 
   # Ganache (Ethereum testnet)
   ganache:
     image: trufflesuite/ganache-cli:latest
-    container_name: ineat_ganache_dev
+    container_name: tidygen_ganache_dev
     command: ganache-cli --host 0.0.0.0 --port 8545 --networkId 1337 --gasLimit 10000000 --gasPrice 20000000000 --accounts 10 --defaultBalanceEther 1000 --deterministic
     ports:
       - "8545:8545"
@@ -130,7 +130,7 @@ services:
   # Nginx (Optional for development)
   nginx:
     image: nginx:alpine
-    container_name: ineat_nginx_dev
+    container_name: tidygen_nginx_dev
     ports:
       - "80:80"
     volumes:

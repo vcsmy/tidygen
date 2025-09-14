@@ -2,7 +2,7 @@
 
 ## 🎯 **Testing Overview**
 
-This document provides a comprehensive guide to the frontend testing setup for the iNEAT ERP system. The testing infrastructure includes unit tests, integration tests, and end-to-end tests with full coverage reporting.
+This document provides a comprehensive guide to the frontend testing setup for the TidyGen ERP system. The testing infrastructure includes unit tests, integration tests, and end-to-end tests with full coverage reporting.
 
 ## 🧪 **Testing Stack**
 
@@ -456,4 +456,4 @@ describe('Your Feature', () => {
 
 ---
 
-**The frontend testing infrastructure is now fully implemented and ready for comprehensive testing of the iNEAT ERP system!** 🚀
+**The frontend testing infrastructure is now fully implemented and ready for comprehensive testing of the TidyGen ERP system!** 🚀

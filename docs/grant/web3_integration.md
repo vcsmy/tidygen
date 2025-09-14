@@ -1,8 +1,8 @@
-# Web3 Integration in iNeat ERP Community Edition
+# Web3 Integration in TidyGen ERP Community Edition
 
 ## Executive Summary
 
-iNeat ERP Community Edition pioneers the integration of Web3 technologies into traditional Enterprise Resource Planning systems. This document outlines our comprehensive approach to incorporating blockchain, smart contracts, and decentralized technologies to enhance business operations, improve transparency, and create new value propositions for modern businesses.
+TidyGen ERP Community Edition pioneers the integration of Web3 technologies into traditional Enterprise Resource Planning systems. This document outlines our comprehensive approach to incorporating blockchain, smart contracts, and decentralized technologies to enhance business operations, improve transparency, and create new value propositions for modern businesses.
 
 ## Web3 Integration Philosophy
 
@@ -147,21 +147,21 @@ Implement a comprehensive Decentralized Identity system that provides secure, pr
 ```json
 {
   "@context": ["https://www.w3.org/ns/did/v1"],
-  "id": "did:ineat:employee:12345",
+  "id": "did:tidygen:employee:12345",
   "verificationMethod": [
     {
-      "id": "did:ineat:employee:12345#key-1",
+      "id": "did:tidygen:employee:12345#key-1",
       "type": "EcdsaSecp256k1VerificationKey2019",
-      "controller": "did:ineat:employee:12345",
+      "controller": "did:tidygen:employee:12345",
       "publicKeyMultibase": "zQ3shZc2QzApp2oymGvQbzP8eKheVshBHbU4ZYjeXqwSKEn6N"
     }
   ],
-  "authentication": ["did:ineat:employee:12345#key-1"],
+  "authentication": ["did:tidygen:employee:12345#key-1"],
   "service": [
     {
-      "id": "did:ineat:employee:12345#vcs",
+      "id": "did:tidygen:employee:12345#vcs",
       "type": "VerifiableCredentialService",
-      "serviceEndpoint": "https://api.ineat-erp.com/vc/employee/12345"
+      "serviceEndpoint": "https://api.tidygen-erp.com/vc/employee/12345"
     }
   ]
 }
@@ -269,6 +269,6 @@ Implement a comprehensive Decentralized Identity system that provides secure, pr
 
 ## Conclusion
 
-The Web3 integration in iNeat ERP Community Edition represents a paradigm shift in enterprise software, combining the reliability and functionality of traditional ERP systems with the transparency, security, and innovation of blockchain technology. Through smart contract-based financial records, tokenized reward systems, and decentralized identity management, we are creating a new generation of business management tools that empower organizations while maintaining the highest standards of security and privacy.
+The Web3 integration in TidyGen ERP Community Edition represents a paradigm shift in enterprise software, combining the reliability and functionality of traditional ERP systems with the transparency, security, and innovation of blockchain technology. Through smart contract-based financial records, tokenized reward systems, and decentralized identity management, we are creating a new generation of business management tools that empower organizations while maintaining the highest standards of security and privacy.
 
-This integration not only enhances the capabilities of traditional ERP systems but also opens new possibilities for business collaboration, transparency, and innovation. By pioneering these technologies in the ERP space, iNeat ERP Community Edition positions itself at the forefront of the Web3 revolution in enterprise software.
+This integration not only enhances the capabilities of traditional ERP systems but also opens new possibilities for business collaboration, transparency, and innovation. By pioneering these technologies in the ERP space, TidyGen ERP Community Edition positions itself at the forefront of the Web3 revolution in enterprise software.
