@@ -482,7 +482,7 @@ response = requests.post(f'/api/v1/hr/employees/{employee_id}/conduct_review/', 
 
 The HR module integrates with:
 
-- **Organizations**: Multi-tenant support
+- **Organizations**: Self-hosted support
 - **Users**: User authentication and permissions
 - **Core**: Base models and permissions
 - **Finance**: Payroll integration

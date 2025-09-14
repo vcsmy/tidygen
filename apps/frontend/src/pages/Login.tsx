@@ -65,7 +65,7 @@ export default function Login() {
               <Building className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-foreground">iNEAT</h1>
+              <h1 className="text-2xl font-bold text-foreground">TidyGen</h1>
               <p className="text-sm text-muted-foreground">ERP System</p>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function Login() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="manager@ineat-cleaning.com"
+                    placeholder="manager@tidygen.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
@@ -203,8 +203,8 @@ export default function Login() {
             <div className="mt-6 p-4 bg-muted/30 rounded-lg">
               <p className="text-sm text-muted-foreground mb-2">Demo Credentials:</p>
               <div className="space-y-1 text-xs">
-                <p><strong>Manager:</strong> manager@ineat.com / manager123</p>
-                <p><strong>Supervisor:</strong> supervisor@ineat.com / super123</p>
+                <p><strong>Manager:</strong> manager@tidygen.com / manager123</p>
+                <p><strong>Supervisor:</strong> supervisor@tidygen.com / super123</p>
               </div>
             </div>
 
@@ -220,7 +220,7 @@ export default function Login() {
 
         {/* Additional Info */}
         <div className="mt-6 text-center text-xs text-muted-foreground">
-          <p>© 2024 iNEAT ERP System. All rights reserved.</p>
+          <p>© 2024 TidyGen ERP System. All rights reserved.</p>
           <p className="mt-1">
             Secure enterprise-grade cleaning service management
           </p>

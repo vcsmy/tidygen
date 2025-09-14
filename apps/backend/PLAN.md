@@ -92,10 +92,10 @@ Deliver a modular, scalable ERP platform with:
 **Business Model:**
 
 * **Community Edition** → Free, Open Source, community-driven.
-* **Commercial SaaS** → Subscription-based multi-tenant ERP.
+* **Commercial SaaS** → Subscription-based enterprise ERP.
 
-  * Starter: \$99/tenant/month
-  * Business: \$249/tenant/month
+  * Starter: \$99/organization/month
+  * Business: \$249/organization/month
   * Enterprise: Custom pricing
 * **Additional Services:** Hosting, training, customization, integrations.
 

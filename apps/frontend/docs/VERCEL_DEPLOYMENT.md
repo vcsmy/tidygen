@@ -1,6 +1,6 @@
-# Vercel Deployment Guide for iNEAT-ERP Frontend
+# Vercel Deployment Guide for TidyGen Frontend
 
-This guide will help you deploy your iNEAT-ERP frontend application to Vercel.
+This guide will help you deploy your TidyGen frontend application to Vercel.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ This guide will help you deploy your iNEAT-ERP frontend application to Vercel.
 
 3. **Deploy from your project directory**:
    ```bash
-   cd /Users/vijayababubollavarapu/dev/ineat/apps/frontend
+   cd /Users/vijayababubollavarapu/dev/tidygen/apps/frontend
    vercel
    ```
 
@@ -56,7 +56,7 @@ Set these in your Vercel project settings:
 ```bash
 # API Configuration
 VITE_API_BASE_URL=https://your-backend-api.vercel.app/api/v1
-VITE_APP_NAME=iNEAT-ERP
+VITE_APP_NAME=TidyGen
 VITE_APP_VERSION=1.0.0
 
 # Payment Integration

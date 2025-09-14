@@ -63,7 +63,7 @@ const services: Service[] = [
   {
     id: 'self-hosted-support',
     title: 'Self-Hosted Support',
-    description: 'Expert support for your self-hosted iNEAT-ERP installation',
+    description: 'Expert support for your self-hosted TidyGen installation',
     features: [
       'Installation assistance',
       'Configuration guidance',
@@ -107,7 +107,7 @@ const services: Service[] = [
   {
     id: 'basic-training',
     title: 'Basic Training',
-    description: 'Essential training for your team to get started with iNEAT-ERP',
+    description: 'Essential training for your team to get started with TidyGen',
     features: [
       '2-hour live session',
       'Core module overview',
@@ -150,7 +150,7 @@ const services: Service[] = [
   {
     id: 'certification-program',
     title: 'Certification Program',
-    description: 'Official certification program for iNEAT-ERP administrators and developers',
+    description: 'Official certification program for TidyGen administrators and developers',
     features: [
       'Comprehensive curriculum',
       'Hands-on labs',
@@ -260,7 +260,7 @@ const services: Service[] = [
   {
     id: 'migration-services',
     title: 'Migration Services',
-    description: 'Seamless migration from your existing ERP system to iNEAT-ERP',
+    description: 'Seamless migration from your existing ERP system to TidyGen',
     features: [
       'Data analysis',
       'Migration planning',
@@ -281,7 +281,7 @@ const services: Service[] = [
   {
     id: 'consulting',
     title: 'Business Consulting',
-    description: 'Strategic consulting to optimize your business processes with iNEAT-ERP',
+    description: 'Strategic consulting to optimize your business processes with TidyGen',
     features: [
       'Process analysis',
       'Workflow optimization',
@@ -329,11 +329,11 @@ export default function Services() {
           Professional Services
         </Badge>
         <h1 className="text-4xl font-bold mb-4">
-          Get Expert Help with iNEAT-ERP
+          Get Expert Help with TidyGen
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
           Whether you need hosting, training, support, or custom development, 
-          our team of experts is here to help you succeed with iNEAT-ERP.
+          our team of experts is here to help you succeed with TidyGen.
         </p>
       </div>
 

@@ -34,7 +34,7 @@ export function AboutSection() {
     },
     {
       icon: <Database className="h-6 w-6" />,
-      title: "Single-Tenant Architecture",
+      title: "Self-Hosted Architecture",
       description: "Simplified architecture perfect for small businesses and individual organizations."
     },
     {
@@ -62,7 +62,7 @@ export function AboutSection() {
             </div>
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold">
-            Why Choose iNeat Community Edition?
+            Why Choose TidyGen Community Edition?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A free, open-source ERP system designed for developers, small businesses, and grant foundations. 

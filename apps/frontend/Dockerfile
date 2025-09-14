@@ -1,4 +1,4 @@
-# Multi-stage build for iNEAT-ERP Frontend
+# Multi-stage build for TidyGen Frontend
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed

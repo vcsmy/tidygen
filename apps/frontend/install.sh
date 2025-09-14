@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# iNEAT-ERP Community Edition Installer
-# Single-tenant setup script for self-hosted deployment
+# TidyGen Community Edition Installer
+# Self-hosted setup script for Community Edition deployment
 
 set -e
 
@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_NAME="ineat-erp"
+PROJECT_NAME="tidygen"
 DOMAIN=""
 EMAIL=""
 ADMIN_USER=""
@@ -29,8 +29,8 @@ IPFS_GATEWAY="https://ipfs.io/ipfs/"
 print_header() {
     echo -e "${BLUE}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║                    iNEAT-ERP Installer                      ║"
-    echo "║              Community Edition - Single Tenant              ║"
+    echo "║                    TidyGen Installer                       ║"
+    echo "║              Community Edition - Self-Hosted                ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
 }
@@ -83,14 +83,14 @@ check_requirements() {
     if command_exists free; then
         MEMORY_GB=$(free -g | awk '/^Mem:/{print $2}')
         if [ "$MEMORY_GB" -lt 2 ]; then
-            print_warning "Less than 2GB RAM detected. iNEAT-ERP requires at least 2GB."
+            print_warning "Less than 2GB RAM detected. TidyGen requires at least 2GB."
         fi
     fi
     
     # Check available disk space
     DISK_SPACE=$(df -BG . | awk 'NR==2 {print $4}' | sed 's/G//')
     if [ "$DISK_SPACE" -lt 10 ]; then
-        print_warning "Less than 10GB disk space available. iNEAT-ERP requires at least 10GB."
+        print_warning "Less than 10GB disk space available. TidyGen requires at least 10GB."
     fi
 }
 
@@ -213,18 +213,18 @@ create_project() {
 
 # Download and setup application
 setup_application() {
-    print_step "Setting up iNEAT-ERP application..."
+    print_step "Setting up TidyGen application..."
     
     # Clone repository
-    print_info "Downloading iNEAT-ERP..."
-    git clone https://github.com/vcsmy/ineat-erp.git .
+    print_info "Downloading TidyGen..."
+    git clone https://github.com/vcsmy/tidygen.git .
     
     # Create environment file
     print_info "Creating environment configuration..."
     cat > .env << EOF
 # Database Configuration
-POSTGRES_DB=ineat_erp
-POSTGRES_USER=ineat_user
+POSTGRES_DB=tidygen
+POSTGRES_USER=tidygen_user
 POSTGRES_PASSWORD=$DATABASE_PASSWORD
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
@@ -337,7 +337,7 @@ EOF
 
 # Start services
 start_services() {
-    print_step "Starting iNEAT-ERP services..."
+    print_step "Starting TidyGen services..."
     
     # Start services
     docker-compose up -d
@@ -389,7 +389,7 @@ DATE=$(date +%Y%m%d_%H%M%S)
 mkdir -p $BACKUP_DIR
 
 # Backup database
-docker-compose exec -T db pg_dump -U ineat_user ineat_erp > $BACKUP_DIR/database_$DATE.sql
+docker-compose exec -T db pg_dump -U tidygen_user tidygen > $BACKUP_DIR/database_$DATE.sql
 
 # Backup uploaded files
 tar -czf $BACKUP_DIR/files_$DATE.tar.gz -C apps/backend media/
@@ -402,7 +402,7 @@ EOF
     # Create update script
     cat > update.sh << 'EOF'
 #!/bin/bash
-echo "Updating iNEAT-ERP..."
+echo "Updating TidyGen..."
 
 # Pull latest changes
 git pull origin main
@@ -476,10 +476,10 @@ show_completion_info() {
     echo "2. Access the application and complete initial setup"
     echo "3. Configure your business settings"
     echo "4. Set up regular backups"
-    echo "5. Join our community for support: https://discord.gg/ineat-erp"
+    echo "5. Join our community for support: https://discord.gg/tidygen-community"
     echo ""
     
-    echo -e "${GREEN}Thank you for choosing iNEAT-ERP!${NC}"
+    echo -e "${GREEN}Thank you for choosing TidyGen!${NC}"
 }
 
 # Main installation process

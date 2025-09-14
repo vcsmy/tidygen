@@ -372,7 +372,7 @@ AUTHENTICATION_BACKENDS = [
 # AUDITLOG_INCLUDE_ALL_MODELS = True
 # AUDITLOG_EXCLUDE_TRACKING_FIELDS = ['password', 'secret_key', 'token']
 
-# Single-tenant Configuration (Community Edition)
+# Self-hosted Configuration (Community Edition)
 # All users belong to the same organization context
 
 # Web3 Configuration

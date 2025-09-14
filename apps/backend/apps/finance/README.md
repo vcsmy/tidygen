@@ -329,7 +329,7 @@ BudgetItem.objects.create(
 
 The finance module integrates with:
 
-- **Organizations**: Multi-tenant support
+- **Organizations**: Self-hosted support
 - **Users**: User authentication and permissions
 - **Core**: Base models and permissions
 - **Inventory**: Product information for invoicing

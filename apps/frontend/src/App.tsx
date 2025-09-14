@@ -5,9 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "./components/layout/MainLayout";
 import { EnhancedAuthProvider } from "./contexts/EnhancedAuthContext";
-import { TenantProvider } from "./contexts/TenantContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { PartnerProvider } from "./contexts/PartnerContext";
 import { ProtectedRoute, InventoryRoute, FinanceRoute, HRRoute, StaffRoute } from "./components/auth/ProtectedRoute";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { GlobalErrorProvider } from "./components/common/GlobalErrorHandler";
@@ -22,18 +20,9 @@ import HRManagement from "./pages/HRManagement";
 import Analytics from "./pages/Analytics";
 import Scheduling from "./pages/Scheduling";
 import Login from "./pages/Login";
-import SubscriptionSuccess from "./pages/SubscriptionSuccess";
-import SubscriptionCancelled from "./pages/SubscriptionCancelled";
-import TenantManagement from "./pages/TenantManagement";
 import Services from "./pages/Services";
 import ThemeManager from "./components/theme/ThemeManager";
 import IPFSManager from "./components/ipfs/IPFSManager";
-import PartnerLogin from "./pages/partner/PartnerLogin";
-import PartnerDashboard from "./pages/partner/PartnerDashboard";
-import ResellerManagement from "./pages/partner/ResellerManagement";
-import CommissionReports from "./pages/partner/CommissionReports";
-import PartnerSettings from "./pages/partner/PartnerSettings";
-import { PartnerLayout } from "./components/partner/PartnerLayout";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -70,10 +59,8 @@ const App = () => (
       <GlobalErrorProvider>
         <BrowserRouter>
           <EnhancedAuthProvider>
-            <TenantProvider>
-              <ThemeProvider>
-                <PartnerProvider>
-                  <TooltipProvider>
+            <ThemeProvider>
+              <TooltipProvider>
                     <Toaster />
                     <Sonner />
                     <Routes>
@@ -158,16 +145,7 @@ const App = () => (
                           </MainLayout>
                         </ProtectedRoute>
                       } />
-                      <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-                      <Route path="/subscription/cancelled" element={<SubscriptionCancelled />} />
                       <Route path="/services" element={<Services />} />
-                      <Route path="/admin/tenants" element={
-                        <StaffRoute>
-                          <MainLayout>
-                            <TenantManagement />
-                          </MainLayout>
-                        </StaffRoute>
-                      } />
                       <Route path="/admin/themes" element={
                         <StaffRoute>
                           <MainLayout>
@@ -183,36 +161,11 @@ const App = () => (
                         </ProtectedRoute>
                       } />
                       
-                      {/* Partner Routes */}
-                      <Route path="/partner/login" element={<PartnerLogin />} />
-                      <Route path="/partner/dashboard" element={
-                        <PartnerLayout>
-                          <PartnerDashboard />
-                        </PartnerLayout>
-                      } />
-                      <Route path="/partner/customers" element={
-                        <PartnerLayout>
-                          <ResellerManagement />
-                        </PartnerLayout>
-                      } />
-                      <Route path="/partner/commissions" element={
-                        <PartnerLayout>
-                          <CommissionReports />
-                        </PartnerLayout>
-                      } />
-                      <Route path="/partner/settings" element={
-                        <PartnerLayout>
-                          <PartnerSettings />
-                        </PartnerLayout>
-                      } />
-                      
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </TooltipProvider>
-                </PartnerProvider>
               </ThemeProvider>
-            </TenantProvider>
           </EnhancedAuthProvider>
         </BrowserRouter>
       </GlobalErrorProvider>

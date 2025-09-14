@@ -350,7 +350,7 @@ The module uses the following permission classes:
 ### Dependencies
 The module depends on:
 - **apps.core**: Base models and permissions
-- **apps.organizations**: Multi-tenant organization support
+- **apps.organizations**: Self-hosted organization support
 - **apps.inventory**: Product and supplier models
 - **django-filter**: Advanced filtering capabilities
 - **django-rest-framework**: API functionality

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PricingTable } from "@/components/landing/PricingTable";
+// PricingTable removed for Community Edition
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +35,7 @@ import {
 import { HeroSection } from "@/components/landing/HeroSection";
 import { AboutSection } from "@/components/landing/AboutSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
-import { PricingSection } from "@/components/landing/PricingSection";
+// PricingSection removed for Community Edition
 import { ServicesSection } from "@/components/landing/ServicesSection";
 // PartnersSection removed for Community Edition
 import { FooterSection } from "@/components/landing/FooterSection";
@@ -67,7 +67,7 @@ export default function LandingPage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                 <Building2 className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">iNEAT-ERP</span>
+              <span className="text-xl font-bold">TidyGen</span>
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
@@ -80,7 +80,7 @@ export default function LandingPage() {
               <a href="#services" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 Services
               </a>
-              <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <a href="https://github.com/tidygen/tidygen-community" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                 GitHub
               </a>
             </div>
@@ -90,7 +90,7 @@ export default function LandingPage() {
                 Sign In
               </Button>
               <Button size="sm" asChild>
-                <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/tidygen/tidygen-community" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
                   GitHub
                 </a>
@@ -118,10 +118,10 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold">
-              Deploy iNeat Community Edition
+              Deploy TidyGen Community Edition
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Get started with iNeat Community Edition in minutes. Choose your preferred deployment method.
+              Get started with TidyGen Community Edition in minutes. Choose your preferred deployment method.
             </p>
           </div>
 
@@ -136,7 +136,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <Button className="w-full" asChild>
-                  <a href="https://github.com/ineat/ineat-erp-community#quick-start" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/tidygen/tidygen-community#quick-start" target="_blank" rel="noopener noreferrer">
                     <Download className="h-4 w-4 mr-2" />
                     Deploy with Docker
                     <ExternalLink className="h-4 w-4 ml-2" />
@@ -155,7 +155,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <Button className="w-full" variant="outline" asChild>
-                  <a href="https://vercel.com/new/clone?repository-url=https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                  <a href="https://vercel.com/new/clone?repository-url=https://github.com/tidygen/tidygen-community" target="_blank" rel="noopener noreferrer">
                     <Cloud className="h-4 w-4 mr-2" />
                     Deploy to Vercel
                     <ExternalLink className="h-4 w-4 ml-2" />
@@ -174,7 +174,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <Button className="w-full" variant="outline" asChild>
-                  <a href="https://docs.ineat.io/community-edition/installation" target="_blank" rel="noopener noreferrer">
+                  <a href="https://docs.tidygen.io/community-edition/installation" target="_blank" rel="noopener noreferrer">
                     <BookOpen className="h-4 w-4 mr-2" />
                     View Docs
                     <ExternalLink className="h-4 w-4 ml-2" />

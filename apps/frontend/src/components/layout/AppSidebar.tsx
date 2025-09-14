@@ -77,7 +77,7 @@ export function AppSidebar() {
           </div>
           {!isCollapsed && (
             <div>
-              <h2 className="text-lg font-bold text-sidebar-foreground">iNEAT</h2>
+              <h2 className="text-lg font-bold text-sidebar-foreground">TidyGen</h2>
               <p className="text-sm text-sidebar-foreground/70">ERP System</p>
             </div>
           )}

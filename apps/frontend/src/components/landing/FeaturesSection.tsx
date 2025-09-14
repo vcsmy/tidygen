@@ -32,7 +32,7 @@ export function FeaturesSection() {
   const coreFeatures = [
     {
       icon: <Building2 className="h-6 w-6" />,
-      title: "Single-Tenant Architecture",
+      title: "Self-Hosted Architecture",
       description: "Simplified architecture perfect for individual businesses and organizations.",
       benefits: ["Data Security", "Easy Setup", "Full Control"]
     },
@@ -220,18 +220,18 @@ export function FeaturesSection() {
           <div className="space-y-6">
             <h3 className="text-2xl font-bold">Ready to Get Started?</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Join the community of developers and small businesses using iNeat Community Edition 
+              Join the community of developers and small businesses using TidyGen Community Edition 
               to manage their operations with complete data control and privacy.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/tidygen/tidygen-community" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
                   Get on GitHub
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="https://docs.ineat.io/community-edition/installation" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.tidygen.io/community-edition/installation" target="_blank" rel="noopener noreferrer">
                   <FileText className="h-4 w-4 mr-2" />
                   Installation Guide
                 </a>

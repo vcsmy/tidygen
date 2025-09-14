@@ -12,8 +12,8 @@
 
 Ineat-ERP is a modular, open-source ERP system designed to serve both enterprises and communities.  
 We propose two versions:  
-- **Community Edition (Single-Tenant):** Open-source, self-hostable ERP solution.  
-- **Commercial Edition (Multi-Tenant):** Enterprise-grade SaaS with dealer, partner, and reseller support.  
+- **Community Edition (Self-Hosted):** Open-source, self-hostable ERP solution.  
+- **Commercial Edition (Enterprise):** Enterprise-grade SaaS with dealer, partner, and reseller support.  
 
 This grant focuses on extending Ineat-ERP with **Web3-native capabilities**, making it a core open-source ERP for decentralized ecosystems.  
 
@@ -91,7 +91,7 @@ We request **$45,000 USD equivalent in DOT** to deliver the above milestones acr
 ## Future Plans
 
 - **Community Edition:** Free, open-source, self-hosted.  
-- **Commercial Edition:** SaaS with multi-tenant, reseller features.  
+- **Commercial Edition:** SaaS with enterprise, reseller features.  
 - **Monetization of Community Edition:** Hosting services, support packages, training, enterprise add-ons.  
 - Apply to ecosystems (Polkadot parachains, DAOs) as official ERP tooling.
 

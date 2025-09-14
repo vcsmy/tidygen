@@ -1,59 +1,118 @@
-.PHONY: help install dev build test lint format clean docker-up docker-down docker-build
+# iNeat ERP Community Edition - Makefile
+# Common commands for development and deployment
 
-help: ## Show this help message
-	@echo 'Usage: make [target]'
-	@echo ''
-	@echo 'Targets:'
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+.PHONY: help setup start stop restart logs clean deploy-vercel deploy-render deploy-digitalocean
 
-install: ## Install all dependencies
-	cd backend && pip install -r requirements.txt
-	cd frontend && npm install
+# Default target
+help:
+	@echo "🚀 iNeat ERP Community Edition - Available Commands"
+	@echo "=================================================="
+	@echo ""
+	@echo "📦 Setup & Installation:"
+	@echo "  setup          - Quick setup with Docker"
+	@echo "  start          - Start all services"
+	@echo "  stop           - Stop all services"
+	@echo "  restart        - Restart all services"
+	@echo ""
+	@echo "🔍 Monitoring:"
+	@echo "  logs           - View all logs"
+	@echo "  logs-backend   - View backend logs"
+	@echo "  logs-db        - View database logs"
+	@echo "  status         - Show service status"
+	@echo ""
+	@echo "🧹 Maintenance:"
+	@echo "  clean          - Clean up containers and volumes"
+	@echo "  reset-db       - Reset database (WARNING: deletes all data)"
+	@echo ""
+	@echo "☁️ Deployment:"
+	@echo "  deploy-vercel      - Deploy frontend to Vercel"
+	@echo "  deploy-render      - Get Render deployment instructions"
+	@echo "  deploy-digitalocean - Get DigitalOcean deployment instructions"
+	@echo ""
 
-dev: ## Start development environment
-	docker-compose up -d db redis
-	cd backend && python manage.py runserver &
-	cd frontend && npm run dev
+# Setup and installation
+setup:
+	@echo "🚀 Setting up iNeat ERP Community Edition..."
+	@chmod +x setup.sh
+	@./setup.sh
 
-build: ## Build production images
-	docker-compose -f docker-compose.prod.yml build
+start:
+	@echo "🐳 Starting iNeat ERP services..."
+	@docker-compose up -d
+	@echo "✅ Services started! Access at http://localhost:8000"
 
-test: ## Run all tests
-	cd backend && python -m pytest
-	cd frontend && npm run test
+stop:
+	@echo "🛑 Stopping iNeat ERP services..."
+	@docker-compose down
+	@echo "✅ Services stopped"
 
-lint: ## Run linting
-	cd backend && flake8 . && black --check .
-	cd frontend && npm run lint
+restart: stop start
 
-format: ## Format code
-	cd backend && black . && isort .
-	cd frontend && npm run format
+# Monitoring
+logs:
+	@docker-compose logs -f
 
-clean: ## Clean up containers and volumes
-	docker-compose down -v
-	docker system prune -f
+logs-backend:
+	@docker-compose logs -f backend
 
-docker-up: ## Start all services with Docker
-	docker-compose up -d
+logs-db:
+	@docker-compose logs -f db
 
-docker-down: ## Stop all Docker services
-	docker-compose down
+status:
+	@docker-compose ps
 
-docker-build: ## Build Docker images
-	docker-compose build
+# Maintenance
+clean:
+	@echo "🧹 Cleaning up containers and volumes..."
+	@docker-compose down -v
+	@docker system prune -f
+	@echo "✅ Cleanup complete"
 
-migrate: ## Run database migrations
-	cd backend && python manage.py migrate
+reset-db:
+	@echo "⚠️  WARNING: This will delete all data!"
+	@read -p "Are you sure? (y/N): " confirm && [ "$$confirm" = "y" ]
+	@docker-compose down -v
+	@docker-compose up -d
+	@echo "✅ Database reset complete"
 
-makemigrations: ## Create database migrations
-	cd backend && python manage.py makemigrations
+# Deployment
+deploy-vercel:
+	@echo "🚀 Deploying to Vercel..."
+	@chmod +x scripts/deploy/vercel-deploy.sh
+	@./scripts/deploy/vercel-deploy.sh
 
-superuser: ## Create Django superuser
-	cd backend && python manage.py createsuperuser
+deploy-render:
+	@echo "🚀 Getting Render deployment instructions..."
+	@chmod +x scripts/deploy/render-deploy.sh
+	@./scripts/deploy/render-deploy.sh
 
-shell: ## Open Django shell
-	cd backend && python manage.py shell
+deploy-digitalocean:
+	@echo "🚀 Getting DigitalOcean deployment instructions..."
+	@chmod +x scripts/deploy/digitalocean-deploy.sh
+	@./scripts/deploy/digitalocean-deploy.sh
 
-logs: ## View Docker logs
-	docker-compose logs -f
+# Development helpers
+dev:
+	@echo "🛠️ Starting development environment..."
+	@docker-compose up -d
+	@echo "✅ Development environment ready!"
+	@echo "🌐 Backend: http://localhost:8000"
+	@echo "📚 API Docs: http://localhost:8000/api/docs"
+	@echo "⚙️ Admin: http://localhost:8000/admin"
+
+test:
+	@echo "🧪 Running tests..."
+	@docker-compose exec backend python manage.py test
+
+migrate:
+	@echo "🗄️ Running database migrations..."
+	@docker-compose exec backend python manage.py migrate
+
+shell:
+	@echo "🐚 Opening Django shell..."
+	@docker-compose exec backend python manage.py shell
+
+# Quick commands
+up: start
+down: stop
+ps: status

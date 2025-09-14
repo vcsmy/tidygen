@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useTenant } from './TenantContext';
+// Tenant context removed for Community Edition
 import { toast } from '@/components/ui/enhanced-notifications';
 
 // Theme Types
@@ -123,7 +123,7 @@ export interface WhiteLabelSettings {
 const defaultTheme: CustomTheme = {
   id: 'default',
   name: 'Default Theme',
-  description: 'Standard iNEAT-ERP theme',
+  description: 'Standard TidyGen theme',
   colors: {
     primary: 'hsl(221.2 83.2% 53.3%)',
     secondary: 'hsl(210 40% 98%)',
@@ -250,19 +250,20 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const { currentTenant } = useTenant();
+  // Tenant context removed for Community Edition
   const [currentTheme, setCurrentTheme] = useState<CustomTheme>(defaultTheme);
   const [whiteLabelSettings, setWhiteLabelSettings] = useState<WhiteLabelSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch white-label settings
   useEffect(() => {
-    if (currentTenant?.settings.features.white_label) {
+    // White label disabled for Community Edition
+    if (false) {
       fetchWhiteLabelSettings();
     } else {
       setIsLoading(false);
     }
-  }, [currentTenant]);
+  }, []);
 
   const fetchWhiteLabelSettings = async () => {
     try {

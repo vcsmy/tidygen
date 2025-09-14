@@ -1,8 +1,8 @@
-# iNEAT-ERP Community Edition Setup Guide
+# TidyGen Community Edition Setup Guide
 
 ## Overview
 
-The iNEAT-ERP Community Edition is a free, open-source, self-hosted ERP solution optimized for Web3 Foundation grant requirements. This guide will help you set up and deploy your own instance.
+The TidyGen Community Edition is a free, open-source, self-hosted ERP solution optimized for Web3 Foundation grant requirements. This guide will help you set up and deploy your own instance.
 
 ## Features
 
@@ -31,8 +31,8 @@ The iNEAT-ERP Community Edition is a free, open-source, self-hosted ERP solution
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/vcsmy/ineat-erp.git
-cd ineat-erp
+git clone https://github.com/vcsmy/tidygen.git
+cd tidygen
 ```
 
 ### 2. Environment Configuration
@@ -41,8 +41,8 @@ Create a `.env` file in the root directory:
 
 ```env
 # Database
-POSTGRES_DB=ineat_erp
-POSTGRES_USER=ineat_user
+POSTGRES_DB=tidygen
+POSTGRES_USER=tidygen_user
 POSTGRES_PASSWORD=your_secure_password
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
@@ -246,8 +246,8 @@ GET /api/v1/audit/logs/?tenant_id=uuid&limit=100
 
 ```bash
 # Create dedicated database user
-CREATE USER ineat_user WITH PASSWORD 'secure_password';
-GRANT ALL PRIVILEGES ON DATABASE ineat_erp TO ineat_user;
+CREATE USER tidygen_user WITH PASSWORD 'secure_password';
+GRANT ALL PRIVILEGES ON DATABASE tidygen TO tidygen_user;
 ```
 
 ### 3. Web3 Security
@@ -292,10 +292,10 @@ sudo certbot --nginx -d your-domain.com
 ```bash
 # Create backup script
 #!/bin/bash
-pg_dump -h localhost -U ineat_user ineat_erp > backup_$(date +%Y%m%d_%H%M%S).sql
+pg_dump -h localhost -U tidygen_user tidygen > backup_$(date +%Y%m%d_%H%M%S).sql
 
 # Restore from backup
-psql -h localhost -U ineat_user ineat_erp < backup_file.sql
+psql -h localhost -U tidygen_user tidygen < backup_file.sql
 ```
 
 ## Monitoring and Maintenance
@@ -318,7 +318,7 @@ docker-compose logs -f backend
 docker-compose logs -f frontend
 
 # Log rotation
-sudo logrotate /etc/logrotate.d/ineat-erp
+sudo logrotate /etc/logrotate.d/tidygen
 ```
 
 ### 3. Performance Monitoring
@@ -357,10 +357,10 @@ sudo logrotate /etc/logrotate.d/ineat-erp
 
 ### Support
 
-- **Documentation**: [GitHub Wiki](https://github.com/vcsmy/ineat-erp/wiki)
-- **Issues**: [GitHub Issues](https://github.com/vcsmy/ineat-erp/issues)
-- **Community**: [Discord Server](https://discord.gg/ineat-erp)
-- **Email**: support@ineat-erp.com
+- **Documentation**: [GitHub Wiki](https://github.com/vcsmy/tidygen/wiki)
+- **Issues**: [GitHub Issues](https://github.com/vcsmy/tidygen/issues)
+- **Community**: [Discord Server](https://discord.gg/tidygen-community)
+- **Email**: support@tidygen.io
 
 ## Contributing
 

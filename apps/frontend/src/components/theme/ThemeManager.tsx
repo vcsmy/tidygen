@@ -23,10 +23,10 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useTenant } from '@/contexts/TenantContext';
+// Tenant context removed for Community Edition
 
 export default function ThemeManager() {
-  const { currentTenant } = useTenant();
+  // Tenant context removed for Community Edition
   const { 
     currentTheme, 
     whiteLabelSettings, 
@@ -45,7 +45,7 @@ export default function ThemeManager() {
   const [copied, setCopied] = useState(false);
 
   // Check if white-label is enabled
-  const isWhiteLabelEnabled = currentTenant?.settings.features.white_label || false;
+  const isWhiteLabelEnabled = false; // Disabled for Community Edition
 
   if (!isWhiteLabelEnabled) {
     return (
@@ -253,7 +253,7 @@ export default function ThemeManager() {
                     checked={whiteLabelSettings?.removeBranding || false}
                     onCheckedChange={toggleBranding}
                   />
-                  <Label htmlFor="remove-branding">Remove iNEAT-ERP Branding</Label>
+                  <Label htmlFor="remove-branding">Remove TidyGen Branding</Label>
                 </div>
               </div>
             </div>

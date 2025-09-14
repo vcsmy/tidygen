@@ -17,30 +17,30 @@ export function FooterSection() {
     product: [
       { name: "Features", href: "#features" },
       { name: "Deploy", href: "#deploy" },
-      { name: "GitHub", href: "https://github.com/ineat/ineat-erp-community" },
-      { name: "API Documentation", href: "https://docs.ineat.io/api" },
-      { name: "Self-Hosting Guide", href: "https://docs.ineat.io/community-edition/self-hosting" }
+      { name: "GitHub", href: "https://github.com/tidygen/tidygen-community" },
+      { name: "API Documentation", href: "https://docs.tidygen.io/api" },
+      { name: "Self-Hosting Guide", href: "https://docs.tidygen.io/community-edition/self-hosting" }
     ],
     community: [
-      { name: "Discord", href: "https://discord.gg/ineat-community" },
-      { name: "GitHub Discussions", href: "https://github.com/ineat/ineat-erp-community/discussions" },
-      { name: "Contributing", href: "https://github.com/ineat/ineat-erp-community/blob/main/CONTRIBUTING.md" },
-      { name: "Bug Reports", href: "https://github.com/ineat/ineat-erp-community/issues" },
-      { name: "Feature Requests", href: "https://github.com/ineat/ineat-erp-community/issues" }
+      { name: "Discord", href: "https://discord.gg/tidygen-community" },
+      { name: "GitHub Discussions", href: "https://github.com/tidygen/tidygen-community/discussions" },
+      { name: "Contributing", href: "https://github.com/tidygen/tidygen-community/blob/main/CONTRIBUTING.md" },
+      { name: "Bug Reports", href: "https://github.com/tidygen/tidygen-community/issues" },
+      { name: "Feature Requests", href: "https://github.com/tidygen/tidygen-community/issues" }
     ],
     resources: [
-      { name: "Documentation", href: "https://docs.ineat.io/community-edition" },
-      { name: "Installation Guide", href: "https://docs.ineat.io/community-edition/installation" },
-      { name: "Configuration", href: "https://docs.ineat.io/community-edition/configuration" },
-      { name: "Troubleshooting", href: "https://docs.ineat.io/community-edition/troubleshooting" },
-      { name: "FAQ", href: "https://docs.ineat.io/community-edition/faq" }
+      { name: "Documentation", href: "https://docs.tidygen.io/community-edition" },
+      { name: "Installation Guide", href: "https://docs.tidygen.io/community-edition/installation" },
+      { name: "Configuration", href: "https://docs.tidygen.io/community-edition/configuration" },
+      { name: "Troubleshooting", href: "https://docs.tidygen.io/community-edition/troubleshooting" },
+      { name: "FAQ", href: "https://docs.tidygen.io/community-edition/faq" }
     ],
     legal: [
-      { name: "License", href: "https://github.com/ineat/ineat-erp-community/blob/main/LICENSE" },
+      { name: "License", href: "https://github.com/tidygen/tidygen-community/blob/main/LICENSE" },
       { name: "Privacy Policy", href: "#" },
       { name: "Terms of Service", href: "#" },
-      { name: "Security", href: "https://github.com/ineat/ineat-erp-community/security" },
-      { name: "Code of Conduct", href: "https://github.com/ineat/ineat-erp-community/blob/main/CODE_OF_CONDUCT.md" }
+      { name: "Security", href: "https://github.com/tidygen/tidygen-community/security" },
+      { name: "Code of Conduct", href: "https://github.com/tidygen/tidygen-community/blob/main/CODE_OF_CONDUCT.md" }
     ]
   };
 
@@ -88,7 +88,7 @@ export function FooterSection() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                   <Building2 className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold">iNEAT-ERP</span>
+                <span className="text-xl font-bold">TidyGen</span>
               </div>
               <p className="text-sm text-muted-foreground max-w-xs">
                 Free, open-source, self-hosted ERP system perfect for developers, small businesses, 
@@ -189,7 +189,7 @@ export function FooterSection() {
               <Mail className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium">Email</p>
-                <p className="text-sm text-muted-foreground">support@ineat-erp.com</p>
+                <p className="text-sm text-muted-foreground">support@tidygen.io</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -213,18 +213,18 @@ export function FooterSection() {
         <div className="py-6 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              © 2024 iNeat Community Edition. Open source under MIT License.
+              © 2024 TidyGen Community Edition. Open source under MIT License.
             </div>
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <span>Free & open-source ERP solution</span>
               <a
-                href="https://ineat.io"
+                href="https://tidygen.io"
                 className="flex items-center space-x-1 hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <ExternalLink className="h-4 w-4" />
-                <span>Need multi-tenant SaaS? Visit the Commercial Edition →</span>
+                <span>Need enterprise SaaS? Visit the Commercial Edition →</span>
               </a>
             </div>
           </div>

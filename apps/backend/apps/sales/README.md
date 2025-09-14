@@ -342,7 +342,7 @@ response = requests.post(f'/api/v1/sales/clients/{client_id}/change_status/', js
 
 The sales module integrates with:
 
-- **Organizations**: Multi-tenant support
+- **Organizations**: Self-hosted support
 - **Users**: User authentication and permissions
 - **Core**: Base models and permissions
 - **Finance**: Client financial information and invoicing

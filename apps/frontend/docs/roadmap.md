@@ -1,6 +1,6 @@
-# iNEAT-ERP Roadmap
+# TidyGen Roadmap
 
-This roadmap outlines the development plan for iNEAT-ERP, with a focus on Web3 Foundation grant alignment and enterprise features.
+This roadmap outlines the development plan for TidyGen, with a focus on Web3 Foundation grant alignment and enterprise features.
 
 ## 🎯 Vision
 
@@ -334,8 +334,8 @@ To create the most comprehensive, Web3-native ERP solution that bridges traditio
 ### Roadmap Feedback
 - **GitHub Issues**: Submit feature requests and feedback
 - **Discord**: Join our community discussions
-- **Email**: roadmap@ineat-erp.com
-- **Twitter**: [@ineat_erp](https://twitter.com/ineat_erp)
+- **Email**: roadmap@tidygen.io
+- **Twitter**: [@tidygen_io](https://twitter.com/tidygen_io)
 
 ### Stay Updated
 - **Newsletter**: Subscribe to our monthly updates

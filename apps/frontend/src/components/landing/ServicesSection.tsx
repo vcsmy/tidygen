@@ -32,7 +32,7 @@ export function ServicesSection() {
     },
     {
       icon: <Cloud className="h-8 w-8" />,
-      title: "iNeat.Cloud",
+      title: "TidyGen.Cloud",
       description: "Turnkey hosted instance with updates and monitoring included.",
       features: [
         "Fully managed instance",
@@ -95,7 +95,7 @@ export function ServicesSection() {
             Need Help Getting Started?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            While iNeat Community Edition is completely free and open source, we offer optional 
+            While TidyGen Community Edition is completely free and open source, we offer optional 
             professional services to help you get the most out of your deployment.
           </p>
           <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 max-w-2xl mx-auto">

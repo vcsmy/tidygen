@@ -1,22 +1,22 @@
-# iNEAT-ERP: Intelligent Enterprise Resource Planning
+# TidyGen: Intelligent Enterprise Resource Planning
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Web3](https://img.shields.io/badge/Web3-F16822?logo=web3.js&logoColor=white)](https://web3.foundation/)
 
-A comprehensive, multi-tenant ERP solution with Web3 integration, designed for modern enterprises and optimized for Web3 Foundation grants.
+A comprehensive, self-hosted ERP solution with Web3 integration, designed for developers, small businesses, and grant foundations.
 
 ## 🚀 Overview
 
-iNEAT-ERP is a full-stack enterprise resource planning system that combines traditional business management with cutting-edge Web3 technologies. It offers both Community and Commercial editions to serve different market needs.
+TidyGen is a full-stack enterprise resource planning system that combines traditional business management with cutting-edge Web3 technologies. It offers both Community and Commercial editions to serve different market needs.
 
 ### Key Features
 
-- **Multi-Tenant Architecture**: Complete data isolation and tenant management
+- **Self-Hosted Architecture**: Complete data control and privacy
 - **Web3 Integration**: Decentralized identity, on-chain audit logs, and IPFS storage
-- **Partner/Reseller Portal**: Comprehensive partner management with commission tracking
-- **White-Label Theming**: Custom branding and theming for resellers
+- **Community Support**: Active community and open-source development
+- **Custom Theming**: Flexible theming and customization options
 - **Role-Based Access Control**: Granular permissions and security
 - **Real-Time Analytics**: Advanced reporting and business intelligence
 - **API-First Design**: RESTful APIs with comprehensive documentation
@@ -37,7 +37,7 @@ iNEAT-ERP is a full-stack enterprise resource planning system that combines trad
 - **Target**: Enterprise customers, partners, resellers
 - **Features**:
   - All Community features
-  - Multi-tenant SaaS platform
+  - Self-hosted ERP platform
   - Partner/reseller portal
   - White-label theming
   - Priority support
@@ -87,8 +87,8 @@ iNEAT-ERP is a full-stack enterprise resource planning system that combines trad
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-org/ineat-erp.git
-   cd ineat-erp
+   git clone https://github.com/your-org/tidygen.git
+   cd tidygen
    ```
 
 2. **Run the installer**
@@ -124,7 +124,7 @@ iNEAT-ERP is a full-stack enterprise resource planning system that combines trad
 ## 📁 Project Structure
 
 ```
-ineat-erp/
+tidygen/
 ├── apps/
 │   ├── frontend/                 # React frontend
 │   │   ├── src/
@@ -137,7 +137,7 @@ ineat-erp/
 │   │   ├── public/              # Static assets
 │   │   └── package.json
 │   └── backend/                 # Django backend
-│       ├── ineat_erp/          # Main Django project
+│       ├── tidygen/          # Main Django project
 │       ├── apps/               # Django applications
 │       │   ├── core/           # Core functionality
 │       │   ├── accounts/       # User management
@@ -247,10 +247,10 @@ Access the interactive API documentation at:
 - `POST /api/auth/logout/` - User logout
 - `POST /api/auth/refresh/` - Refresh JWT token
 
-#### Multi-Tenant
-- `GET /api/tenants/` - List tenants
-- `POST /api/tenants/` - Create tenant
-- `PATCH /api/tenants/{id}/` - Update tenant
+#### Organization
+- `GET /api/organizations/` - List organizations
+- `POST /api/organizations/` - Create organization
+- `PATCH /api/organizations/{id}/` - Update organization
 
 #### Partner Management
 - `GET /api/partners/` - List partners
@@ -272,7 +272,7 @@ Access the interactive API documentation at:
 - API rate limiting
 
 ### Data Protection
-- Multi-tenant data isolation
+- Self-hosted data control
 - Encryption at rest and in transit
 - GDPR compliance features
 - Audit logging
@@ -330,12 +330,12 @@ See [LICENSE](LICENSE) for details.
 ## 🆘 Support
 
 ### Community Support
-- GitHub Issues: [Report bugs and request features](https://github.com/your-org/ineat-erp/issues)
+- GitHub Issues: [Report bugs and request features](https://github.com/your-org/tidygen/issues)
 - Discord: [Join our community](https://discord.gg/your-discord)
-- Documentation: [Read the docs](https://docs.ineat-erp.com)
+- Documentation: [Read the docs](https://docs.tidygen.io)
 
 ### Commercial Support
-- Email: support@ineat-erp.com
+- Email: support@tidygen.io
 - Phone: +1 (555) 123-4567
 - Priority support for Enterprise customers
 
@@ -359,10 +359,10 @@ See our [Roadmap](docs/roadmap.md) for upcoming features and Web3 Foundation gra
 
 ## 📞 Contact
 
-- **Website**: https://ineat-erp.com
-- **Email**: info@ineat-erp.com
-- **Twitter**: [@ineat_erp](https://twitter.com/ineat_erp)
-- **LinkedIn**: [iNEAT-ERP](https://linkedin.com/company/ineat-erp)
+- **Website**: https://tidygen.io
+- **Email**: info@tidygen.io
+- **Twitter**: [@tidygen_io](https://twitter.com/tidygen_io)
+- **LinkedIn**: [TidyGen](https://linkedin.com/company/tidygen)
 
 ---
 

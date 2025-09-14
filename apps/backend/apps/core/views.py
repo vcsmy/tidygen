@@ -37,7 +37,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """
-        Override to add organization filtering for single-tenant setup.
+        Override to add organization filtering for self-hosted setup.
         In community edition, all data belongs to the same organization context.
         """
         return super().get_queryset()

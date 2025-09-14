@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { DataTable } from '@/components/common/DataTable';
-import { useTenant } from '@/contexts/TenantContext';
+// Tenant context removed for Community Edition
 import { ipfsService, IPFSFile, IPFSDirectory } from '@/services/ipfsService';
 
 export default function IPFSManager() {
@@ -40,10 +40,10 @@ export default function IPFSManager() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { currentTenant } = useTenant();
+  // Tenant context removed for Community Edition
 
   // Check if IPFS is enabled
-  const isIPFSEnabled = currentTenant?.settings.features.ipfs_storage || false;
+  const isIPFSEnabled = true; // Always enabled for Community Edition
 
   useEffect(() => {
     if (isIPFSEnabled) {

@@ -15,7 +15,7 @@ export interface SubstrateAccount {
 
 export interface AuditLogEntry {
   id: string;
-  tenant_id: string;
+  organization_id: string;
   user_id: number;
   action: string;
   resource: string;
@@ -141,7 +141,7 @@ class SubstrateApiClient {
     }
   }
 
-  async getAuditLogs(tenantId: string, limit = 100): Promise<AuditLogEntry[]> {
+  async getAuditLogs(limit = 100): Promise<AuditLogEntry[]> {
     if (!this.isConnected) {
       throw new Error('Not connected to Substrate node');
     }
@@ -149,7 +149,6 @@ class SubstrateApiClient {
     // Mock audit logs retrieval
     const storedLogs = this.getStoredAuditLogs();
     return storedLogs
-      .filter(log => log.tenant_id === tenantId)
       .slice(0, limit)
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   }
@@ -296,9 +295,9 @@ class SubstrateService {
     return this.apiClient.submitAuditLog(auditLog);
   }
 
-  async getAuditLogs(tenantId: string, limit?: number): Promise<AuditLogEntry[]> {
+  async getAuditLogs(limit?: number): Promise<AuditLogEntry[]> {
     this.ensureInitialized();
-    return this.apiClient.getAuditLogs(tenantId, limit);
+    return this.apiClient.getAuditLogs(limit);
   }
 
   async getTransaction(hash: string): Promise<SubstrateTransaction> {

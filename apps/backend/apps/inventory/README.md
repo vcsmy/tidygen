@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Inventory Management module provides comprehensive functionality for managing products, stock levels, suppliers, and purchase orders in a multi-tenant ERP system. It includes real-time stock tracking, automated alerts, and integrated procurement workflows.
+The Inventory Management module provides comprehensive functionality for managing products, stock levels, suppliers, and purchase orders in a self-hosted ERP system. It includes real-time stock tracking, automated alerts, and integrated procurement workflows.
 
 ## Features
 

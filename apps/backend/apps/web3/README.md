@@ -193,7 +193,7 @@ A comprehensive Web3-first ERP system that integrates decentralized technologies
 - **Inventory Module**: Smart contract-based supply chain tracking
 - **Sales Module**: Smart contract-based client verification
 
-### **Multi-Tenant Support**
+### **Self-Hosted Support**
 - **Organization Isolation**: All Web3 data isolated by organization
 - **Cross-Organization Governance**: Community-wide governance for shared modules
 - **Shared Infrastructure**: Common smart contracts and protocols
@@ -382,7 +382,7 @@ response = requests.post('/api/v1/web3/api/storage/', json=storage_data)
 - **Community Impact**: Open-source, community-driven development
 - **Ecosystem Integration**: Polkadot/Substrate ecosystem integration
 - **Real-World Application**: Practical business use cases
-- **Scalability**: Multi-tenant, enterprise-ready solution
+- **Scalability**: Self-hosted, enterprise-ready solution
 - **Transparency**: Public verification and audit trails
 
 ## 🚀 **Getting Started**

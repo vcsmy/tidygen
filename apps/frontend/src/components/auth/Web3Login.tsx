@@ -161,7 +161,7 @@ export function Web3Login({ onSuccess, onError, className }: Web3LoginProps) {
     }
 
     // Enable the provider
-    const extension = await provider.enable('iNEAT-ERP');
+    const extension = await provider.enable('TidyGen');
     
     if (!extension) {
       throw new Error('Failed to enable Polkadot.js extension');
@@ -196,7 +196,7 @@ export function Web3Login({ onSuccess, onError, className }: Web3LoginProps) {
     setDidDocument(didDoc);
 
     // Sign a message to prove ownership
-    const message = `iNEAT-ERP Login: ${Date.now()}`;
+    const message = `TidyGen Login: ${Date.now()}`;
     const signature = await extension.signer.signRaw({
       address: account.address,
       data: message,
@@ -248,7 +248,7 @@ export function Web3Login({ onSuccess, onError, className }: Web3LoginProps) {
     setDidDocument(didDoc);
 
     // Sign a message
-    const message = `iNEAT-ERP Login: ${Date.now()}`;
+    const message = `TidyGen Login: ${Date.now()}`;
     const signature = await ethereum.request({
       method: 'personal_sign',
       params: [message, account],

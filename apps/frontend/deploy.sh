@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# iNEAT-ERP Frontend Deployment Script for Vercel
+# TidyGen Frontend Deployment Script for Vercel
 # This script helps deploy the frontend application to Vercel
 
 set -e
 
-echo "🚀 Starting iNEAT-ERP Frontend Deployment to Vercel..."
+echo "🚀 Starting TidyGen Frontend Deployment to Vercel..."
 
 # Colors for output
 RED='\033[0;31m'

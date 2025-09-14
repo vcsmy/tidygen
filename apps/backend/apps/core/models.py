@@ -138,7 +138,7 @@ class SystemSettings(BaseModel):
 class Organization(BaseModel):
     """
     Single organization model for community edition.
-    This replaces the multi-tenant organization system.
+    This replaces the multi-organization system.
     """
     name = models.CharField(_('organization name'), max_length=200)
     description = models.TextField(_('description'), blank=True)

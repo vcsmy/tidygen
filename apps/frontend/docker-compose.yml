@@ -15,7 +15,7 @@ services:
     depends_on:
       - backend
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Backend Service
@@ -28,7 +28,7 @@ services:
     environment:
       - DEBUG=1
       - SECRET_KEY=your-secret-key-here
-      - DATABASE_URL=postgresql://postgres:password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://postgres:password@db:5432/tidygen
       - REDIS_URL=redis://redis:6379/0
       - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://frontend:3000
     depends_on:
@@ -38,14 +38,14 @@ services:
       - ./media:/app/media
       - ./static:/app/static
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Database Service
   db:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_DB=ineat_erp
+      - POSTGRES_DB=tidygen
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     volumes:
@@ -54,7 +54,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Redis Service
@@ -65,7 +65,7 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Nginx Reverse Proxy
@@ -81,7 +81,7 @@ services:
       - frontend
       - backend
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Celery Worker
@@ -89,11 +89,11 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    command: celery -A ineat_erp worker -l info
+    command: celery -A tidygen worker -l info
     environment:
       - DEBUG=1
       - SECRET_KEY=your-secret-key-here
-      - DATABASE_URL=postgresql://postgres:password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://postgres:password@db:5432/tidygen
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - db
@@ -101,7 +101,7 @@ services:
     volumes:
       - ./media:/app/media
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Celery Beat (Scheduler)
@@ -109,11 +109,11 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    command: celery -A ineat_erp beat -l info
+    command: celery -A tidygen beat -l info
     environment:
       - DEBUG=1
       - SECRET_KEY=your-secret-key-here
-      - DATABASE_URL=postgresql://postgres:password@db:5432/ineat_erp
+      - DATABASE_URL=postgresql://postgres:password@db:5432/tidygen
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - db
@@ -121,7 +121,7 @@ services:
     volumes:
       - ./media:/app/media
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # IPFS Node (for Web3 features)
@@ -136,7 +136,7 @@ services:
     environment:
       - IPFS_PROFILE=server
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
   # Substrate Node (for blockchain features)
@@ -148,7 +148,7 @@ services:
       - substrate_data:/data
     command: --dev --ws-external --rpc-external --rpc-cors all
     networks:
-      - ineat-network
+      - tidygen-network
     restart: unless-stopped
 
 volumes:
@@ -158,5 +158,5 @@ volumes:
   substrate_data:
 
 networks:
-  ineat-network:
+  tidygen-network:
     driver: bridge

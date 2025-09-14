@@ -69,7 +69,17 @@ Get iNeat ERP Community Edition running in minutes with Docker!
 - [Git](https://git-scm.com/downloads)
 - 4GB RAM minimum (8GB recommended)
 
-### Installation
+### 🎯 One-Click Setup (Recommended)
+
+   ```bash
+# Clone and setup in one command
+git clone https://github.com/your-org/ineat-erp-community.git
+cd ineat-erp-community
+chmod +x setup.sh
+./setup.sh
+```
+
+### 📋 Manual Installation
 
 1. **Clone the repository:**
    ```bash
@@ -77,20 +87,37 @@ Get iNeat ERP Community Edition running in minutes with Docker!
    cd ineat-erp-community
    ```
 
-2. **Start the application:**
+2. **Create environment file:**
+   ```bash
+   cp .env.example .env
+   # Edit .env if you need custom settings
+   ```
+
+3. **Start the application:**
    ```bash
    docker-compose up -d
    ```
 
-3. **Access your ERP system:**
+4. **Access your ERP system:**
    - 🌐 **Web Application**: http://localhost:8000
    - ⚙️ **Admin Interface**: http://localhost:8000/admin
    - 📚 **API Documentation**: http://localhost:8000/api/docs
 
-4. **Default login credentials:**
+5. **Default login credentials:**
    - **Username**: `admin`
    - **Password**: `admin123`
    - ⚠️ **Important**: Change the default password after first login!
+
+### 🔧 What Happens During Setup
+
+The setup process automatically:
+- ✅ Creates and configures PostgreSQL database
+- ✅ Sets up Redis for caching
+- ✅ Runs database migrations
+- ✅ Creates default organization
+- ✅ Sets up admin user
+- ✅ Collects static files
+- ✅ Starts the Django development server
 
 ### 🎉 You're Ready!
 
@@ -125,6 +152,56 @@ iNeat ERP Community Edition is built with a modern, scalable architecture:
 - **🐳 Deployment**: Docker, Docker Compose, Nginx
 - **🔐 Authentication**: JWT tokens, Role-based access control
 - **📊 Monitoring**: Built-in health checks, logging, and metrics
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Docker Issues
+```bash
+# If containers won't start
+docker-compose down
+docker-compose up -d
+
+# If you get permission errors
+sudo chown -R $USER:$USER .
+
+# If database connection fails
+docker-compose logs db
+```
+
+#### Port Conflicts
+```bash
+# If port 8000 is already in use
+# Edit docker-compose.yml and change the port mapping:
+# ports:
+#   - "8001:8000"  # Use port 8001 instead
+```
+
+#### Database Issues
+```bash
+# Reset the database
+docker-compose down -v
+docker-compose up -d
+
+# View database logs
+docker-compose logs db
+```
+
+#### Environment Issues
+```bash
+# Check if .env file exists
+ls -la .env
+
+# Recreate .env file
+cp .env.example .env
+```
+
+### Getting Help
+
+- 📖 **Documentation**: Check [DEPLOYMENT.md](DEPLOYMENT.md) for detailed guides
+- 🐛 **Bug Reports**: [Create an issue](https://github.com/your-org/ineat-erp-community/issues)
+- 💬 **Community**: [Join discussions](https://github.com/your-org/ineat-erp-community/discussions)
 
 ## 🛠️ Development
 
@@ -163,22 +240,64 @@ docker-compose logs -f backend
 docker-compose exec backend python manage.py test
 ```
 
-## 🚀 Deployment
+## ☁️ Cloud Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+Deploy iNeat ERP Community Edition to popular cloud platforms with one-click deployment!
 
-### Simple Production Deployment
+### 🚀 One-Click Deploy Options
 
-1. **Set up environment:**
+#### Vercel (Frontend)
+```bash
+# Deploy frontend to Vercel
+./scripts/deploy/vercel-deploy.sh
+```
+
+#### Render (Full Stack)
+```bash
+# Get deployment instructions for Render
+./scripts/deploy/render-deploy.sh
+```
+
+#### DigitalOcean App Platform (Full Stack)
+```bash
+# Get deployment instructions for DigitalOcean
+./scripts/deploy/digitalocean-deploy.sh
+```
+
+### 📋 Quick Cloud Setup
+
+1. **Choose your platform:**
+   - **Vercel**: Best for frontend-only deployment
+   - **Render**: Great for full-stack with free tier
+   - **DigitalOcean**: Professional hosting with managed databases
+
+2. **Run the deployment script:**
    ```bash
-   cp apps/backend/env.example apps/backend/.env.prod
-   # Edit .env.prod with your production settings
+   # For Vercel
+   ./scripts/deploy/vercel-deploy.sh
+   
+   # For Render
+   ./scripts/deploy/render-deploy.sh
+   
+   # For DigitalOcean
+   ./scripts/deploy/digitalocean-deploy.sh
    ```
 
-2. **Deploy:**
-   ```bash
-   docker-compose -f docker-compose.prod.yml --env-file apps/backend/.env.prod up -d
-   ```
+3. **Follow the platform-specific instructions**
+
+### 🔧 Production Deployment
+
+For advanced production setups, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+#### Docker Production
+```bash
+# Set up production environment
+cp .env.example .env.prod
+# Edit .env.prod with your production settings
+
+# Deploy with production Docker Compose
+docker-compose -f docker-compose.prod.yml --env-file .env.prod up -d
+```
 
 ## ⚙️ Configuration
 

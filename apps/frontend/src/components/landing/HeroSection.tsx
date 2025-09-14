@@ -41,20 +41,20 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
               </div>
               
               <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
-                iNeat Community Edition
+                TidyGen Community Edition
                 <span className="text-primary"> – Free, Open Source, and Self-Hosted</span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl">
-                A simplified, single-tenant version of iNeat ERP perfect for developers, small businesses, 
-                and grant foundations. Self-host your own Web3-aligned ERP system with full control over your data.
+                A simplified, self-hosted version of TidyGen ERP perfect for developers, small businesses, 
+                and grant foundations. Host your own Web3-aligned ERP system with complete control over your data.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="group" asChild>
-                <a href="https://github.com/ineat/ineat-erp-community" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/tidygen/tidygen-community" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
                   Get on GitHub
                   <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -73,7 +73,7 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
             {/* Secondary CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="ghost" size="sm" className="group" asChild>
-                <a href="https://docs.ineat.io/community-edition/self-hosting" target="_blank" rel="noopener noreferrer">
+                <a href="https://docs.tidygen.io/community-edition/self-hosting" target="_blank" rel="noopener noreferrer">
                   <BookOpen className="h-4 w-4 mr-2" />
                   Self-Host Guide
                   <ExternalLink className="h-3 w-3 ml-2" />
@@ -81,7 +81,7 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
               </Button>
               
               <Button variant="ghost" size="sm" className="group" asChild>
-                <a href="https://discord.gg/ineat-community" target="_blank" rel="noopener noreferrer">
+                <a href="https://discord.gg/tidygen-community" target="_blank" rel="noopener noreferrer">
                   <Users className="h-4 w-4 mr-2" />
                   Join Community
                   <ExternalLink className="h-3 w-3 ml-2" />
@@ -120,7 +120,7 @@ export function HeroSection({ onEnterApp, onRequestDemo, onStartTrial }: HeroSec
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span className="ml-4 text-sm text-muted-foreground">iNeat Community Edition</span>
+                    <span className="ml-4 text-sm text-muted-foreground">TidyGen Community Edition</span>
                     <Badge variant="outline" className="ml-auto text-xs">Self-Hosted</Badge>
                   </div>
                 </div>
