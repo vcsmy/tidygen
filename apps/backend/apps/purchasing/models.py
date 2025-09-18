@@ -39,7 +39,7 @@ class PurchaseOrder(BaseModel):
     ]
     
     po_number = models.CharField(max_length=50, unique=True, help_text="Unique purchase order number")
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='purchase_orders')
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='purchasing_orders')
     requested_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requested_purchase_orders')
     approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_purchase_orders')
     
@@ -69,7 +69,7 @@ class PurchaseOrder(BaseModel):
     tracking_number = models.CharField(max_length=100, blank=True, help_text="Shipping tracking number")
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "Purchase Order"
         verbose_name_plural = "Purchase Orders"
     
@@ -117,7 +117,7 @@ class PurchaseOrderItem(BaseModel):
     expected_delivery_date = models.DateTimeField(null=True, blank=True)
     
     class Meta:
-        ordering = ['created_at']
+        ordering = ['created']
         verbose_name = "Purchase Order Item"
         verbose_name_plural = "Purchase Order Items"
     
@@ -203,7 +203,7 @@ class PurchaseReceiptItem(BaseModel):
     expiry_date = models.DateTimeField(null=True, blank=True)
     
     class Meta:
-        ordering = ['created_at']
+        ordering = ['created']
         verbose_name = "Purchase Receipt Item"
         verbose_name_plural = "Purchase Receipt Items"
     
@@ -302,7 +302,7 @@ class ProcurementRequestItem(BaseModel):
     specifications = models.TextField(blank=True, help_text="Technical specifications or requirements")
     
     class Meta:
-        ordering = ['created_at']
+        ordering = ['created']
         verbose_name = "Procurement Request Item"
         verbose_name_plural = "Procurement Request Items"
     

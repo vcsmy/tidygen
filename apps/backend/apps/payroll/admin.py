@@ -22,7 +22,7 @@ from .models import (
 class PayrollConfigurationAdmin(admin.ModelAdmin):
     """Admin for PayrollConfiguration."""
     list_display = [
-        'organization', 'currency', 'pay_frequency', 'tax_year',
+        'currency', 'pay_frequency', 'tax_year',
         'federal_tax_rate', 'state_tax_rate', 'social_security_rate',
         'auto_process_payroll', 'require_approval'
     ]
@@ -30,12 +30,12 @@ class PayrollConfigurationAdmin(admin.ModelAdmin):
         'currency', 'pay_frequency', 'tax_year', 'auto_process_payroll',
         'require_approval', 'allow_manual_adjustments'
     ]
-    search_fields = ['organization__name']
-    readonly_fields = ['created_at', 'modified_at']
+    search_fields = ['name']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Basic Settings', {
-            'fields': ('organization', 'currency', 'pay_frequency', 'tax_year')
+            'fields': ('currency', 'pay_frequency', 'tax_year')
         }),
         ('Tax Rates', {
             'fields': (
@@ -65,7 +65,7 @@ class PayrollConfigurationAdmin(admin.ModelAdmin):
             )
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -75,20 +75,20 @@ class PayrollConfigurationAdmin(admin.ModelAdmin):
 class PayrollComponentAdmin(admin.ModelAdmin):
     """Admin for PayrollComponent."""
     list_display = [
-        'name', 'organization', 'component_type', 'calculation_type',
+        'name', 'component_type', 'calculation_type',
         'amount', 'percentage', 'is_taxable', 'is_active', 'is_mandatory', 'sort_order'
     ]
     list_filter = [
         'component_type', 'calculation_type', 'is_taxable', 'is_pretax',
         'is_active', 'is_mandatory', 'category'
     ]
-    search_fields = ['name', 'description', 'category', 'organization__name']
+    search_fields = ['name', 'description', 'category', 'name']
     list_editable = ['sort_order', 'is_active', 'is_mandatory']
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'component_type', 'description', 'category')
+            'fields': ('name', 'component_type', 'description', 'category')
         }),
         ('Calculation Settings', {
             'fields': ('calculation_type', 'amount', 'percentage')
@@ -100,7 +100,7 @@ class PayrollComponentAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'is_mandatory', 'sort_order')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -118,9 +118,9 @@ class EmployeePayrollProfileAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'employee__user__first_name', 'employee__user__last_name',
-        'employee__employee_id', 'employee__organization__name'
+        'employee__employee_id', 'employee__name'
     ]
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Employee Information', {
@@ -151,7 +151,7 @@ class EmployeePayrollProfileAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -163,7 +163,7 @@ class PayrollItemInline(admin.TabularInline):
     """Inline admin for PayrollItem."""
     model = PayrollItem
     extra = 0
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     fields = [
         'component', 'item_type', 'quantity', 'rate', 'amount',
         'is_taxable', 'is_pretax', 'description', 'reference'
@@ -174,7 +174,7 @@ class PayrollAdjustmentInline(admin.TabularInline):
     """Inline admin for PayrollAdjustment."""
     model = PayrollAdjustment
     extra = 0
-    readonly_fields = ['created_at', 'modified_at', 'approved_at']
+    readonly_fields = ['created', 'modified', 'approved_at']
     fields = [
         'adjustment_type', 'amount', 'is_positive', 'is_taxable',
         'reason', 'reference_document', 'approved_by', 'approved_at'
@@ -185,24 +185,24 @@ class PayrollAdjustmentInline(admin.TabularInline):
 class PayrollRunAdmin(admin.ModelAdmin):
     """Admin for PayrollRun."""
     list_display = [
-        'run_name', 'organization', 'payroll_period', 'run_type', 'status',
+        'run_name', 'payroll_period', 'run_type', 'status',
         'total_employees', 'total_gross_pay', 'total_net_pay', 'processed_at'
     ]
     list_filter = [
-        'run_type', 'status', 'organization', 'processed_at', 'approved_at'
+        'run_type', 'status', 'processed_at', 'approved_at'
     ]
     search_fields = [
-        'run_name', 'notes', 'organization__name', 'payroll_period__name'
+        'run_name', 'notes', 'name', 'payroll_periodname'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'processed_at', 'approved_at',
+        'created', 'modified', 'processed_at', 'approved_at',
         'total_employees', 'total_gross_pay', 'total_deductions', 'total_net_pay', 'total_taxes'
     ]
     inlines = [PayrollItemInline, PayrollAdjustmentInline]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'payroll_period', 'run_name', 'run_type', 'status')
+            'fields': ('payroll_period', 'run_name', 'run_type', 'status')
         }),
         ('Processing Information', {
             'fields': (
@@ -220,7 +220,7 @@ class PayrollRunAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -228,7 +228,7 @@ class PayrollRunAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         """Optimize queryset with select_related."""
         return super().get_queryset(request).select_related(
-            'organization', 'payroll_period', 'processed_by', 'approved_by'
+            '', 'payroll_period', 'processed_by', 'approved_by'
         )
 
 
@@ -244,9 +244,9 @@ class PayrollItemAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'payroll__employee__user__first_name', 'payroll__employee__user__last_name',
-        'component__name', 'description', 'reference'
+        'componentname', 'description', 'reference'
     ]
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     
     def payroll_employee(self, obj):
         """Display employee name."""
@@ -267,7 +267,7 @@ class PayrollItemAdmin(admin.ModelAdmin):
             'fields': ('description', 'reference')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -278,17 +278,17 @@ class PayrollAdjustmentAdmin(admin.ModelAdmin):
     """Admin for PayrollAdjustment."""
     list_display = [
         'payroll_employee', 'adjustment_type', 'amount', 'is_positive',
-        'is_taxable', 'approved_by', 'approved_at', 'created_at'
+        'is_taxable', 'approved_by', 'approved_at', 'created'
     ]
     list_filter = [
         'adjustment_type', 'is_positive', 'is_taxable', 'is_pretax',
-        'approved_at', 'created_at'
+        'approved_at', 'created'
     ]
     search_fields = [
         'payroll__employee__user__first_name', 'payroll__employee__user__last_name',
         'reason', 'reference_document'
     ]
-    readonly_fields = ['created_at', 'modified_at', 'approved_at']
+    readonly_fields = ['created', 'modified', 'approved_at']
     
     def payroll_employee(self, obj):
         """Display employee name."""
@@ -312,7 +312,7 @@ class PayrollAdjustmentAdmin(admin.ModelAdmin):
             'fields': ('reason', 'reference_document')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -324,16 +324,16 @@ class PayrollAdjustmentAdmin(admin.ModelAdmin):
 class TaxYearAdmin(admin.ModelAdmin):
     """Admin for TaxYear."""
     list_display = [
-        'year', 'organization', 'federal_tax_rate', 'state_tax_rate',
+        'year', 'federal_tax_rate', 'state_tax_rate',
         'social_security_rate', 'medicare_rate', 'is_active'
     ]
-    list_filter = ['year', 'is_active', 'organization']
-    search_fields = ['organization__name']
-    readonly_fields = ['created_at', 'modified_at']
+    list_filter = ['year', 'is_active']
+    search_fields = ['name']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'year', 'is_active')
+            'fields': ('year', 'is_active')
         }),
         ('Tax Rates', {
             'fields': (
@@ -352,7 +352,7 @@ class TaxYearAdmin(admin.ModelAdmin):
             'fields': ('standard_deduction_single', 'standard_deduction_married')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -370,9 +370,9 @@ class EmployeeTaxInfoAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'employee__user__first_name', 'employee__user__last_name',
-        'employee__employee_id', 'employee__organization__name'
+        'employee__employee_id', 'employee__name'
     ]
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Employee Information', {
@@ -399,7 +399,7 @@ class EmployeeTaxInfoAdmin(admin.ModelAdmin):
             )
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -411,22 +411,22 @@ class EmployeeTaxInfoAdmin(admin.ModelAdmin):
 class PayrollReportAdmin(admin.ModelAdmin):
     """Admin for PayrollReport."""
     list_display = [
-        'report_name', 'organization', 'report_type', 'start_date',
+        'report_name', 'report_type', 'start_date',
         'end_date', 'status', 'generated_by', 'generated_at'
     ]
     list_filter = [
         'report_type', 'status', 'generated_at', 'start_date', 'end_date'
     ]
     search_fields = [
-        'report_name', 'organization__name', 'generated_by__username'
+        'report_name', 'name', 'generated_by__username'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'generated_at', 'report_data', 'totals'
+        'created', 'modified', 'generated_at', 'report_data', 'totals'
     ]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'report_name', 'report_type', 'status')
+            'fields': ('report_name', 'report_type', 'status')
         }),
         ('Date Range', {
             'fields': ('start_date', 'end_date')
@@ -443,7 +443,7 @@ class PayrollReportAdmin(admin.ModelAdmin):
             'fields': ('generated_by', 'generated_at')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -453,15 +453,15 @@ class PayrollReportAdmin(admin.ModelAdmin):
 class PayrollAnalyticsAdmin(admin.ModelAdmin):
     """Admin for PayrollAnalytics."""
     list_display = [
-        'organization', 'period_start', 'period_end', 'period_type',
+        'period_start', 'period_end', 'period_type',
         'total_employees', 'total_gross_pay', 'total_net_pay', 'average_gross_pay'
     ]
     list_filter = [
-        'period_type', 'period_start', 'period_end', 'organization'
+        'period_type', 'period_start', 'period_end'
     ]
-    search_fields = ['organization__name']
+    search_fields = ['name']
     readonly_fields = [
-        'created_at', 'modified_at', 'total_employees', 'total_gross_pay',
+        'created', 'modified', 'total_employees', 'total_gross_pay',
         'total_net_pay', 'total_taxes', 'total_benefits', 'total_overtime',
         'average_gross_pay', 'average_net_pay', 'average_hours_worked',
         'gross_pay_trend', 'employee_count_trend'
@@ -469,7 +469,7 @@ class PayrollAnalyticsAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'period_start', 'period_end', 'period_type')
+            'fields': ('period_start', 'period_end', 'period_type')
         }),
         ('Employee Statistics', {
             'fields': ('total_employees', 'average_gross_pay', 'average_net_pay', 'average_hours_worked')
@@ -488,7 +488,7 @@ class PayrollAnalyticsAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -500,22 +500,22 @@ class PayrollAnalyticsAdmin(admin.ModelAdmin):
 class PayrollIntegrationAdmin(admin.ModelAdmin):
     """Admin for PayrollIntegration."""
     list_display = [
-        'integration_name', 'organization', 'integration_type',
+        'integration_name', 'integration_type',
         'provider_name', 'is_active', 'sync_status', 'last_sync'
     ]
     list_filter = [
         'integration_type', 'is_active', 'sync_status', 'last_sync'
     ]
     search_fields = [
-        'integration_name', 'provider_name', 'organization__name'
+        'integration_name', 'provider_name', 'name'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'last_sync', 'token_expires_at'
+        'created', 'modified', 'last_sync', 'token_expires_at'
     ]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'integration_name', 'integration_type')
+            'fields': ('integration_name', 'integration_type')
         }),
         ('Provider Information', {
             'fields': ('provider_name', 'provider_url')
@@ -534,7 +534,7 @@ class PayrollIntegrationAdmin(admin.ModelAdmin):
             'fields': ('sync_status', 'last_sync', 'error_message')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -554,7 +554,7 @@ class PayrollWebhookAdmin(admin.ModelAdmin):
         'event_type', 'webhook_url', 'integration__integration_name'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'total_calls', 'successful_calls',
+        'created', 'modified', 'total_calls', 'successful_calls',
         'failed_calls', 'last_called'
     ]
     
@@ -568,7 +568,7 @@ class PayrollWebhookAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'integration', 'event_type', 'webhook_url')
+            'fields': ('integration', 'event_type', 'webhook_url')
         }),
         ('Security', {
             'fields': ('secret_key', 'is_active'),
@@ -580,7 +580,7 @@ class PayrollWebhookAdmin(admin.ModelAdmin):
             )
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -592,22 +592,22 @@ class PayrollWebhookAdmin(admin.ModelAdmin):
 class PayrollNotificationAdmin(admin.ModelAdmin):
     """Admin for PayrollNotification."""
     list_display = [
-        'notification_type', 'subject', 'organization', 'delivery_method',
-        'status', 'scheduled_at', 'sent_at', 'created_at'
+        'notification_type', 'subject', 'delivery_method',
+        'status', 'scheduled_at', 'sent_at', 'created'
     ]
     list_filter = [
         'notification_type', 'delivery_method', 'status', 'scheduled_at', 'sent_at'
     ]
     search_fields = [
-        'subject', 'message', 'organization__name'
+        'subject', 'message', 'name'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'sent_at'
+        'created', 'modified', 'sent_at'
     ]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'notification_type', 'subject', 'message')
+            'fields': ('notification_type', 'subject', 'message')
         }),
         ('Recipients', {
             'fields': ('recipients',)
@@ -620,7 +620,7 @@ class PayrollNotificationAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )

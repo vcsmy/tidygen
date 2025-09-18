@@ -21,18 +21,18 @@ from .models import (
 class ScheduleTemplateAdmin(admin.ModelAdmin):
     """Admin for ScheduleTemplate."""
     list_display = [
-        'name', 'organization', 'schedule_type', 'start_time', 'end_time',
+        'name', 'schedule_type', 'start_time', 'end_time',
         'duration_minutes', 'max_capacity', 'base_price', 'is_active', 'is_default'
     ]
     list_filter = [
-        'schedule_type', 'is_active', 'is_default', 'currency', 'created_at'
+        'schedule_type', 'is_active', 'is_default', 'currency', 'created'
     ]
-    search_fields = ['name', 'description', 'organization__name']
-    readonly_fields = ['created_at', 'modified_at']
+    search_fields = ['name', 'description', 'name']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'description', 'schedule_type')
+            'fields': ('name', 'description', 'schedule_type')
         }),
         ('Schedule Settings', {
             'fields': (
@@ -55,7 +55,7 @@ class ScheduleTemplateAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'is_default')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -67,18 +67,18 @@ class ScheduleTemplateAdmin(admin.ModelAdmin):
 class ResourceAdmin(admin.ModelAdmin):
     """Admin for Resource."""
     list_display = [
-        'name', 'organization', 'resource_type', 'location', 'capacity',
+        'name', 'resource_type', 'location', 'capacity',
         'is_active', 'is_available', 'hourly_rate', 'daily_rate'
     ]
     list_filter = [
-        'resource_type', 'is_active', 'is_available', 'currency', 'created_at'
+        'resource_type', 'is_active', 'is_available', 'currency', 'created'
     ]
-    search_fields = ['name', 'description', 'location', 'organization__name']
-    readonly_fields = ['created_at', 'modified_at']
+    search_fields = ['name', 'description', 'location', 'name']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'resource_type', 'description', 'location')
+            'fields': ('name', 'resource_type', 'description', 'location')
         }),
         ('Capacity and Specifications', {
             'fields': ('capacity', 'specifications')
@@ -98,7 +98,7 @@ class ResourceAdmin(admin.ModelAdmin):
             'fields': ('image_url', 'documents')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -110,7 +110,7 @@ class TeamMemberInline(admin.TabularInline):
     """Inline admin for TeamMember."""
     model = TeamMember
     extra = 0
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     fields = [
         'user', 'role', 'joined_date', 'is_active', 'skills', 'certifications',
         'max_hours_per_week'
@@ -121,13 +121,13 @@ class TeamMemberInline(admin.TabularInline):
 class TeamAdmin(admin.ModelAdmin):
     """Admin for Team."""
     list_display = [
-        'name', 'organization', 'team_lead', 'member_count', 'is_active', 'created_at'
+        'name', 'team_lead', 'member_count', 'is_active', 'created'
     ]
     list_filter = [
-        'is_active', 'created_at'
+        'is_active', 'created'
     ]
-    search_fields = ['name', 'description', 'organization__name', 'team_lead__first_name']
-    readonly_fields = ['created_at', 'modified_at', 'member_count']
+    search_fields = ['name', 'description', 'name', 'team_lead__first_name']
+    readonly_fields = ['created', 'modified', 'member_count']
     inlines = [TeamMemberInline]
     
     def member_count(self, obj):
@@ -137,7 +137,7 @@ class TeamAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'description')
+            'fields': ('name', 'description')
         }),
         ('Team Settings', {
             'fields': ('is_active', 'max_members', 'team_lead')
@@ -152,7 +152,7 @@ class TeamAdmin(admin.ModelAdmin):
             'fields': ('member_count',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -165,12 +165,12 @@ class TeamMemberAdmin(admin.ModelAdmin):
         'user', 'team', 'role', 'joined_date', 'is_active', 'max_hours_per_week'
     ]
     list_filter = [
-        'role', 'is_active', 'joined_date', 'created_at'
+        'role', 'is_active', 'joined_date', 'created'
     ]
     search_fields = [
-        'user__first_name', 'user__last_name', 'team__name', 'team__organization__name'
+        'user__first_name', 'user__last_name', 'teamname', 'team__name'
     ]
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     
     fieldsets = (
         ('Membership', {
@@ -183,7 +183,7 @@ class TeamMemberAdmin(admin.ModelAdmin):
             'fields': ('availability_schedule', 'max_hours_per_week')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -195,24 +195,24 @@ class TeamMemberAdmin(admin.ModelAdmin):
 class AppointmentAdmin(admin.ModelAdmin):
     """Admin for Appointment."""
     list_display = [
-        'title', 'organization', 'start_datetime', 'end_datetime', 'status',
+        'title', 'start_datetime', 'end_datetime', 'status',
         'priority', 'client_name', 'assigned_team', 'estimated_cost'
     ]
     list_filter = [
         'status', 'priority', 'is_virtual', 'is_recurring', 'is_billable',
-        'start_datetime', 'created_at'
+        'start_datetime', 'created'
     ]
     search_fields = [
-        'title', 'description', 'client_name', 'client_email', 'organization__name'
+        'title', 'description', 'client_name', 'client_email', 'name'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'is_overdue', 'is_upcoming'
+        'created', 'modified', 'is_overdue', 'is_upcoming'
     ]
     filter_horizontal = ['assigned_users', 'required_resources']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'title', 'description')
+            'fields': ('title', 'description')
         }),
         ('Scheduling', {
             'fields': ('start_datetime', 'end_datetime', 'duration_minutes')
@@ -250,7 +250,7 @@ class AppointmentAdmin(admin.ModelAdmin):
             'fields': ('is_overdue', 'is_upcoming')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -276,7 +276,7 @@ class AppointmentAdmin(admin.ModelAdmin):
 class ScheduleConflictAdmin(admin.ModelAdmin):
     """Admin for ScheduleConflict."""
     list_display = [
-        'conflict_type', 'organization', 'primary_appointment', 'conflicting_appointment',
+        'conflict_type', 'primary_appointment', 'conflicting_appointment',
         'status', 'impact_level', 'conflict_datetime', 'resolved_by', 'resolved_at'
     ]
     list_filter = [
@@ -284,14 +284,14 @@ class ScheduleConflictAdmin(admin.ModelAdmin):
     ]
     search_fields = [
         'conflict_description', 'primary_appointment__title', 'conflicting_appointment__title',
-        'organization__name'
+        'name'
     ]
-    readonly_fields = ['created_at', 'modified_at']
+    readonly_fields = ['created', 'modified']
     filter_horizontal = ['affected_resources', 'affected_users']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'conflict_type', 'status', 'impact_level')
+            'fields': ('conflict_type', 'status', 'impact_level')
         }),
         ('Conflicting Appointments', {
             'fields': ('primary_appointment', 'conflicting_appointment')
@@ -306,7 +306,7 @@ class ScheduleConflictAdmin(admin.ModelAdmin):
             'fields': ('resolution_notes', 'resolved_by', 'resolved_at')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -318,19 +318,19 @@ class ScheduleConflictAdmin(admin.ModelAdmin):
 class ScheduleRuleAdmin(admin.ModelAdmin):
     """Admin for ScheduleRule."""
     list_display = [
-        'name', 'organization', 'rule_type', 'is_active', 'is_global',
+        'name', 'rule_type', 'is_active', 'is_global',
         'start_date', 'end_date', 'start_time', 'end_time'
     ]
     list_filter = [
         'rule_type', 'is_active', 'is_global', 'is_recurring', 'start_date', 'end_date'
     ]
-    search_fields = ['name', 'description', 'organization__name']
-    readonly_fields = ['created_at', 'modified_at']
+    search_fields = ['name', 'description', 'name']
+    readonly_fields = ['created', 'modified']
     filter_horizontal = ['applies_to_resources', 'applies_to_users', 'applies_to_teams']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'rule_type', 'description')
+            'fields': ('name', 'rule_type', 'description')
         }),
         ('Rule Settings', {
             'fields': ('is_active', 'is_global')
@@ -348,7 +348,7 @@ class ScheduleRuleAdmin(admin.ModelAdmin):
             'fields': ('parameters',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -360,21 +360,21 @@ class ScheduleRuleAdmin(admin.ModelAdmin):
 class ScheduleNotificationAdmin(admin.ModelAdmin):
     """Admin for ScheduleNotification."""
     list_display = [
-        'notification_type', 'organization', 'subject', 'delivery_method',
-        'status', 'scheduled_at', 'sent_at', 'created_at'
+        'notification_type', 'subject', 'delivery_method',
+        'status', 'scheduled_at', 'sent_at', 'created'
     ]
     list_filter = [
         'notification_type', 'delivery_method', 'status', 'scheduled_at', 'sent_at'
     ]
     search_fields = [
-        'subject', 'message', 'organization__name'
+        'subject', 'message', 'name'
     ]
-    readonly_fields = ['created_at', 'modified_at', 'sent_at']
+    readonly_fields = ['created', 'modified', 'sent_at']
     filter_horizontal = ['recipients']
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'notification_type', 'delivery_method', 'status')
+            'fields': ('notification_type', 'delivery_method', 'status')
         }),
         ('Content', {
             'fields': ('subject', 'message')
@@ -389,7 +389,7 @@ class ScheduleNotificationAdmin(admin.ModelAdmin):
             'fields': ('scheduled_at', 'sent_at', 'delivery_details', 'error_message')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -401,16 +401,16 @@ class ScheduleNotificationAdmin(admin.ModelAdmin):
 class ScheduleAnalyticsAdmin(admin.ModelAdmin):
     """Admin for ScheduleAnalytics."""
     list_display = [
-        'organization', 'period_start', 'period_end', 'period_type',
+        'period_start', 'period_end', 'period_type',
         'total_appointments', 'completed_appointments', 'utilization_rate',
         'total_revenue', 'total_conflicts'
     ]
     list_filter = [
-        'period_type', 'period_start', 'period_end', 'created_at'
+        'period_type', 'period_start', 'period_end', 'created'
     ]
-    search_fields = ['organization__name']
+    search_fields = ['name']
     readonly_fields = [
-        'created_at', 'modified_at', 'total_appointments', 'completed_appointments',
+        'created', 'modified', 'total_appointments', 'completed_appointments',
         'cancelled_appointments', 'no_show_appointments', 'total_scheduled_hours',
         'total_available_hours', 'utilization_rate', 'resource_utilization',
         'team_utilization', 'total_conflicts', 'resolved_conflicts',
@@ -419,7 +419,7 @@ class ScheduleAnalyticsAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'period_start', 'period_end', 'period_type')
+            'fields': ('period_start', 'period_end', 'period_type')
         }),
         ('Appointment Statistics', {
             'fields': (
@@ -445,7 +445,7 @@ class ScheduleAnalyticsAdmin(admin.ModelAdmin):
             'fields': ('metrics',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -457,23 +457,23 @@ class ScheduleAnalyticsAdmin(admin.ModelAdmin):
 class ScheduleIntegrationAdmin(admin.ModelAdmin):
     """Admin for ScheduleIntegration."""
     list_display = [
-        'name', 'organization', 'integration_type', 'provider_name',
+        'name', 'integration_type', 'provider_name',
         'is_active', 'sync_enabled', 'sync_status', 'last_sync'
     ]
     list_filter = [
         'integration_type', 'is_active', 'sync_enabled', 'sync_frequency',
-        'sync_status', 'last_sync', 'created_at'
+        'sync_status', 'last_sync', 'created'
     ]
     search_fields = [
-        'name', 'provider_name', 'organization__name'
+        'name', 'provider_name', 'name'
     ]
     readonly_fields = [
-        'created_at', 'modified_at', 'last_sync', 'token_expires_at'
+        'created', 'modified', 'last_sync', 'token_expires_at'
     ]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('organization', 'name', 'integration_type', 'provider_name', 'provider_url')
+            'fields': ('name', 'integration_type', 'provider_name', 'provider_url')
         }),
         ('Configuration', {
             'fields': ('is_active', 'configuration')
@@ -491,7 +491,7 @@ class ScheduleIntegrationAdmin(admin.ModelAdmin):
             'fields': ('error_message', 'retry_count', 'max_retries')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'modified_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )

@@ -2,7 +2,7 @@
  * Finance service for managing invoices, payments, expenses, and financial reporting
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface Invoice {
   id: number;

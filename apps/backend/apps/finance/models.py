@@ -335,7 +335,7 @@ class FinancialReport(BaseModel):
     report_data = models.JSONField(default=dict)
     
     # Generation details
-    generated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='generated_reports')
+    generated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='generated_financial_reports')
     generated_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:

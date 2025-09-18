@@ -27,6 +27,8 @@ urlpatterns = [
     path('api/v1/scheduling/', include('apps.scheduling.urls')),
     path('api/v1/web3/', include('apps.web3.urls')),
     path('api/v1/analytics/', include('apps.analytics.urls')),
+    path('api/v1/facility-management/', include('apps.facility_management.urls')),
+    path('api/v1/field-operations/', include('apps.field_operations.urls')),
     path('api/v1/', include('apps.core.urls')),
 ]
 

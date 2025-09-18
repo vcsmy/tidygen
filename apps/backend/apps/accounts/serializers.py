@@ -18,12 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name', 'full_name',
             'phone', 'avatar', 'timezone', 'language', 'is_verified',
-            'two_factor_enabled', 'wallet_address', 'wallet_verified',
+            'wallet_address', 'wallet_verified',
             'date_joined', 'last_login', 'profile'
         ]
         read_only_fields = [
             'id', 'date_joined', 'last_login', 'is_verified',
-            'two_factor_enabled', 'wallet_verified'
+            'wallet_verified'
         ]
 
     def get_profile(self, obj):

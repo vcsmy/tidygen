@@ -37,6 +37,7 @@ from apps.hr.filters import (
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     """ViewSet for Department model."""
+    queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -46,7 +47,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Department.objects.all().organization
+        return Department.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).select_related('manager', 'parent_department').prefetch_related('employees')
     
     def perform_create(self, serializer):
@@ -56,6 +57,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
 
 class PositionViewSet(viewsets.ModelViewSet):
     """ViewSet for Position model."""
+    queryset = Position.objects.all()
     serializer_class = PositionSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -65,7 +67,7 @@ class PositionViewSet(viewsets.ModelViewSet):
     ordering = ['title']
     
     def get_queryset(self):
-        return Position.objects.all().organization
+        return Position.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).select_related('department', 'reports_to').prefetch_related('employees')
     
     def perform_create(self, serializer):
@@ -75,6 +77,7 @@ class PositionViewSet(viewsets.ModelViewSet):
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     """ViewSet for Employee model."""
+    queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -84,7 +87,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     ordering = ['user__last_name', 'user__first_name']
     
     def get_queryset(self):
-        return Employee.objects.all().organization
+        return Employee.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).select_related('user', 'position', 'department', 'manager').prefetch_related(
             'attendances', 'leave_requests', 'payrolls', 'performance_reviews',
             'training_enrollments', 'documents'
@@ -179,6 +182,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 
 class AttendanceViewSet(viewsets.ModelViewSet):
     """ViewSet for Attendance model."""
+    queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -276,6 +280,7 @@ class AttendanceViewSet(viewsets.ModelViewSet):
 
 class LeaveTypeViewSet(viewsets.ModelViewSet):
     """ViewSet for LeaveType model."""
+    queryset = LeaveType.objects.all()
     serializer_class = LeaveTypeSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -285,7 +290,7 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return LeaveType.objects.all().organization
+        return LeaveType.objects.filter(organization=self.request.user.organization_memberships.first().organization
         )
     
     def perform_create(self, serializer):
@@ -295,6 +300,7 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
 
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     """ViewSet for LeaveRequest model."""
+    queryset = LeaveRequest.objects.all()
     serializer_class = LeaveRequestSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -413,6 +419,7 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
 
 class PayrollPeriodViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollPeriod model."""
+    queryset = PayrollPeriod.objects.all()
     serializer_class = PayrollPeriodSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -422,7 +429,7 @@ class PayrollPeriodViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return PayrollPeriod.objects.all().organization
+        return PayrollPeriod.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).select_related('processed_by').prefetch_related('payrolls')
     
     def perform_create(self, serializer):
@@ -448,6 +455,7 @@ class PayrollPeriodViewSet(viewsets.ModelViewSet):
 
 class PayrollViewSet(viewsets.ModelViewSet):
     """ViewSet for Payroll model."""
+    queryset = Payroll.objects.all()
     serializer_class = PayrollSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -542,6 +550,7 @@ class PayrollViewSet(viewsets.ModelViewSet):
 
 class PerformanceReviewViewSet(viewsets.ModelViewSet):
     """ViewSet for PerformanceReview model."""
+    queryset = PerformanceReview.objects.all()
     serializer_class = PerformanceReviewSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -647,6 +656,7 @@ class PerformanceReviewViewSet(viewsets.ModelViewSet):
 
 class TrainingViewSet(viewsets.ModelViewSet):
     """ViewSet for Training model."""
+    queryset = Training.objects.all()
     serializer_class = TrainingSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -656,7 +666,7 @@ class TrainingViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return Training.objects.all().organization
+        return Training.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).prefetch_related('enrollments')
     
     def perform_create(self, serializer):
@@ -666,6 +676,7 @@ class TrainingViewSet(viewsets.ModelViewSet):
 
 class TrainingEnrollmentViewSet(viewsets.ModelViewSet):
     """ViewSet for TrainingEnrollment model."""
+    queryset = TrainingEnrollment.objects.all()
     serializer_class = TrainingEnrollmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -685,6 +696,7 @@ class TrainingEnrollmentViewSet(viewsets.ModelViewSet):
 
 class DocumentViewSet(viewsets.ModelViewSet):
     """ViewSet for Document model."""
+    queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -714,6 +726,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
 class PolicyViewSet(viewsets.ModelViewSet):
     """ViewSet for Policy model."""
+    queryset = Policy.objects.all()
     serializer_class = PolicySerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -723,7 +736,7 @@ class PolicyViewSet(viewsets.ModelViewSet):
     ordering = ['-effective_date']
     
     def get_queryset(self):
-        return Policy.objects.all().organization
+        return Policy.objects.filter(organization=self.request.user.organization_memberships.first().organization
         ).select_related('approved_by').prefetch_related('acknowledgments')
     
     def perform_create(self, serializer):
@@ -749,6 +762,7 @@ class PolicyViewSet(viewsets.ModelViewSet):
 
 class PolicyAcknowledgmentViewSet(viewsets.ModelViewSet):
     """ViewSet for PolicyAcknowledgment model."""
+    queryset = PolicyAcknowledgment.objects.all()
     serializer_class = PolicyAcknowledgmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]

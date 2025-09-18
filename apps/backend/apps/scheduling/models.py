@@ -345,7 +345,7 @@ class ScheduleConflict(BaseModel):
     class Meta:
         verbose_name = 'Schedule Conflict'
         verbose_name_plural = 'Schedule Conflicts'
-        ordering = ['-created_at']
+        ordering = ['-created']
     
     def __str__(self):
         return f"{self.get_conflict_type_display()} - {self.primary_appointment.title}"
@@ -454,7 +454,7 @@ class ScheduleNotification(BaseModel):
     class Meta:
         verbose_name = 'Schedule Notification'
         verbose_name_plural = 'Schedule Notifications'
-        ordering = ['-created_at']
+        ordering = ['-created']
     
     def __str__(self):
         return f"{self.get_notification_type_display()} - {self.subject}"

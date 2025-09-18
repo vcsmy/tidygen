@@ -133,23 +133,23 @@ class UserLoginView(TokenObtainPairView):
     
     def post(self, request, *args, **kwargs):
         """Login user and return JWT tokens."""
-        serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data['user']
-            
-            # Create or update user session
-            self.create_user_session(user, request)
-            
-            # Generate JWT tokens
-            refresh = RefreshToken.for_user(user)
-            access = refresh.access_token
-            
-            return Response({
-                'access': str(access),
-                'refresh': str(refresh),
-                'user': UserSerializer(user).data
-            })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = UserLoginSerializer(data=request.data)
+            if serializer.is_valid():
+                user = serializer.validated_data['user']
+                
+                # Generate JWT tokens
+                refresh = RefreshToken.for_user(user)
+                access = refresh.access_token
+                
+                return Response({
+                    'access': str(access),
+                    'refresh': str(refresh),
+                    'user': UserSerializer(user).data
+                })
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def create_user_session(self, user, request):
         """Create or update user session."""

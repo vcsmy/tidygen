@@ -2,7 +2,7 @@
  * Analytics service for comprehensive reporting and business intelligence
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface RevenueAnalytics {
   period: string;

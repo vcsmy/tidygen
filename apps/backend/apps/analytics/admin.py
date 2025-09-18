@@ -21,7 +21,7 @@ class KPIMeasurementInline(admin.TabularInline):
     model = KPIMeasurement
     extra = 0
     fields = ['value', 'measurement_date', 'notes']
-    readonly_fields = ['created_at']
+    readonly_fields = ['created']
 
 
 @admin.register(KPI)
@@ -38,11 +38,11 @@ class KPIAdmin(admin.ModelAdmin):
         'name', 'description', 'data_source', 'calculation_method'
     ]
     readonly_fields = [
-        'kpi_id', 'overall_rating', 'last_calculated', 'created_at', 'updated_at'
+        'kpi_id', 'last_calculated', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('kpi_id', 'organization', 'name', 'description', 'kpi_type')
+            'fields': ('kpi_id', 'name', 'description', 'kpi_type')
         }),
         ('Configuration', {
             'fields': ('calculation_method', 'data_source', 'frequency')
@@ -60,13 +60,13 @@ class KPIAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'last_calculated', 'next_calculation')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
     inlines = [KPIMeasurementInline]
-    date_hierarchy = 'last_calculated'
-    ordering = ['-created_at']
+    date_hierarchy = 'created'
+    ordering = ['-created']
     
     def kpi_type_badge(self, obj):
         """Display KPI type as a colored badge."""
@@ -149,12 +149,12 @@ class KPIMeasurementAdmin(admin.ModelAdmin):
         'kpi_link', 'value_display', 'measurement_date', 'notes_preview'
     ]
     list_filter = [
-        'measurement_date', 'kpi__kpi_type', 'kpi__organization'
+        'measurement_date', 'kpi__kpi_type'
     ]
     search_fields = [
         'kpi__name', 'notes'
     ]
-    readonly_fields = ['created_at', 'updated_at']
+    readonly_fields = ['created', 'modified']
     date_hierarchy = 'measurement_date'
     ordering = ['-measurement_date']
     
@@ -186,17 +186,17 @@ class ReportAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         'report_type', 'status', 'format', 'is_scheduled', 'is_public',
-        'created_at', 'last_run'
+        'created', 'last_run'
     ]
     search_fields = [
         'name', 'description', 'created_by__username', 'created_by__email'
     ]
     readonly_fields = [
-        'report_id', 'created_at', 'updated_at', 'execution_time'
+        'report_id', 'created', 'modified', 'execution_time'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('report_id', 'organization', 'name', 'description', 'report_type')
+            'fields': ('report_id', 'name', 'description', 'report_type')
         }),
         ('Status & Format', {
             'fields': ('status', 'format')
@@ -216,12 +216,12 @@ class ReportAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
-    date_hierarchy = 'created_at'
-    ordering = ['-created_at']
+    date_hierarchy = 'created'
+    ordering = ['-created']
     
     def report_type_badge(self, obj):
         """Display report type as a badge."""
@@ -318,17 +318,17 @@ class DashboardAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         'dashboard_type', 'layout', 'is_active', 'is_public', 'auto_refresh',
-        'created_at', 'last_updated'
+        'created', 'last_updated'
     ]
     search_fields = [
         'name', 'description', 'created_by__username', 'created_by__email'
     ]
     readonly_fields = [
-        'dashboard_id', 'last_updated', 'created_at', 'updated_at'
+        'dashboard_id', 'last_updated', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('dashboard_id', 'organization', 'name', 'description', 'dashboard_type')
+            'fields': ('dashboard_id', 'name', 'description', 'dashboard_type')
         }),
         ('Layout & Configuration', {
             'fields': ('layout', 'configuration', 'refresh_interval', 'auto_refresh')
@@ -340,13 +340,13 @@ class DashboardAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'last_updated')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
     inlines = [DashboardWidgetInline]
-    date_hierarchy = 'created_at'
-    ordering = ['-created_at']
+    date_hierarchy = 'created'
+    ordering = ['-created']
     
     def dashboard_type_badge(self, obj):
         """Display dashboard type as a badge."""
@@ -418,8 +418,8 @@ class DashboardWidgetAdmin(admin.ModelAdmin):
     search_fields = [
         'name', 'data_source', 'dashboard__name'
     ]
-    readonly_fields = ['widget_id', 'last_updated', 'created_at', 'updated_at']
-    date_hierarchy = 'created_at'
+    readonly_fields = ['widget_id', 'last_updated', 'created', 'modified']
+    date_hierarchy = 'created'
     ordering = ['dashboard', 'position_y', 'position_x']
     
     def dashboard_link(self, obj):
@@ -495,17 +495,17 @@ class DataSourceAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         'source_type', 'connection_type', 'connection_status', 'is_active',
-        'created_at', 'last_connected'
+        'created', 'last_connected'
     ]
     search_fields = [
         'name', 'description', 'connection_string'
     ]
     readonly_fields = [
-        'source_id', 'last_connected', 'created_at', 'updated_at'
+        'source_id', 'last_connected', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('source_id', 'organization', 'name', 'description')
+            'fields': ('source_id', 'name', 'description')
         }),
         ('Connection Details', {
             'fields': ('source_type', 'connection_type', 'connection_string', 'credentials')
@@ -517,12 +517,12 @@ class DataSourceAdmin(admin.ModelAdmin):
             'fields': ('connection_status', 'last_connected')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
-    date_hierarchy = 'created_at'
-    ordering = ['-created_at']
+    date_hierarchy = 'created'
+    ordering = ['-created']
     
     def source_type_badge(self, obj):
         """Display source type as a badge."""
@@ -591,20 +591,20 @@ class ReportTemplateAdmin(admin.ModelAdmin):
     """Admin for report templates."""
     list_display = [
         'name', 'template_type_badge', 'created_by_link', 'usage_count',
-        'is_public_badge', 'created_at'
+        'is_public_badge', 'created'
     ]
     list_filter = [
-        'template_type', 'is_public', 'created_at'
+        'template_type', 'is_public', 'created'
     ]
     search_fields = [
         'name', 'description', 'created_by__username', 'created_by__email'
     ]
     readonly_fields = [
-        'template_id', 'usage_count', 'created_at', 'updated_at'
+        'template_id', 'usage_count', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('template_id', 'organization', 'name', 'description', 'template_type')
+            'fields': ('template_id', 'name', 'description', 'template_type')
         }),
         ('Configuration', {
             'fields': ('template_config', 'default_parameters', 'required_parameters'),
@@ -614,12 +614,12 @@ class ReportTemplateAdmin(admin.ModelAdmin):
             'fields': ('usage_count', 'is_public', 'created_by')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
-    date_hierarchy = 'created_at'
-    ordering = ['-created_at']
+    date_hierarchy = 'created'
+    ordering = ['-created']
     
     def template_type_badge(self, obj):
         """Display template type as a badge."""
@@ -663,18 +663,18 @@ class AnalyticsEventAdmin(admin.ModelAdmin):
         'duration_display', 'ip_address'
     ]
     list_filter = [
-        'event_type', 'event_timestamp', 'user', 'organization'
+        'event_type', 'event_timestamp', 'user'
     ]
     search_fields = [
         'event_name', 'description', 'user__username', 'user__email',
         'session_id', 'ip_address'
     ]
     readonly_fields = [
-        'event_id', 'event_timestamp', 'created_at', 'updated_at'
+        'event_id', 'event_timestamp', 'created', 'modified'
     ]
     fieldsets = (
         ('Event Information', {
-            'fields': ('event_id', 'organization', 'event_type', 'event_name', 'description')
+            'fields': ('event_id', 'event_type', 'event_name', 'description')
         }),
         ('User Information', {
             'fields': ('user', 'session_id', 'ip_address', 'user_agent')
@@ -687,7 +687,7 @@ class AnalyticsEventAdmin(admin.ModelAdmin):
             'fields': ('event_timestamp',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -744,18 +744,18 @@ class AlertAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         'alert_type', 'severity', 'status', 'triggered_at', 'acknowledged_at',
-        'resolved_at', 'organization'
+        'resolved_at'
     ]
     search_fields = [
         'title', 'message', 'description', 'acknowledged_by__username',
         'acknowledged_by__email'
     ]
     readonly_fields = [
-        'alert_id', 'triggered_at', 'created_at', 'updated_at'
+        'alert_id', 'triggered_at', 'created', 'modified'
     ]
     fieldsets = (
         ('Alert Information', {
-            'fields': ('alert_id', 'organization', 'alert_type', 'severity', 'status')
+            'fields': ('alert_id', 'alert_type', 'severity', 'status')
         }),
         ('Alert Details', {
             'fields': ('title', 'message', 'description')
@@ -774,7 +774,7 @@ class AlertAdmin(admin.ModelAdmin):
             'fields': ('triggered_at', 'resolved_at')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -858,17 +858,17 @@ class AnalyticsCacheAdmin(admin.ModelAdmin):
         'is_expired_badge', 'last_accessed'
     ]
     list_filter = [
-        'cache_type', 'expires_at', 'last_accessed', 'organization'
+        'cache_type', 'expires_at', 'last_accessed'
     ]
     search_fields = [
         'cache_key', 'related_kpi__name', 'related_report__name', 'related_dashboard__name'
     ]
     readonly_fields = [
-        'created_at', 'updated_at'
+        'created', 'modified'
     ]
     fieldsets = (
         ('Cache Information', {
-            'fields': ('cache_key', 'organization', 'cache_type')
+            'fields': ('cache_key', 'cache_type')
         }),
         ('Cache Data', {
             'fields': ('data', 'metadata'),
@@ -881,7 +881,7 @@ class AnalyticsCacheAdmin(admin.ModelAdmin):
             'fields': ('related_kpi', 'related_report', 'related_dashboard')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )

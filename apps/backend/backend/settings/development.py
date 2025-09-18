@@ -68,14 +68,11 @@ LOGGING['loggers']['django']['level'] = 'DEBUG'
 #     }
 # })
 
-# Cache configuration for development
+# Cache configuration for development (using local memory cache)
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://localhost:6379/1',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     }
 }
 

@@ -44,7 +44,7 @@ class PayrollConfigurationViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter configurations by user's organization."""
-                return PayrollConfiguration.objects
+        return PayrollConfiguration.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     @action(detail=True, methods=['post'])
     def test_calculation(self, request, pk=None):
@@ -97,7 +97,7 @@ class PayrollComponentViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter components by user's organization."""
-                return PayrollComponent.objects
+        return PayrollComponent.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     @action(detail=False, methods=['get'])
     def by_type(self, request):
@@ -157,7 +157,7 @@ class EmployeePayrollProfileViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter profiles by user's organization."""
-                return EmployeePayrollProfile.objects.filter(employee__)
+        return EmployeePayrollProfile.objects.filter(employee__)
     
     @action(detail=True, methods=['post'])
     def calculate_pay(self, request, pk=None):
@@ -219,7 +219,7 @@ class PayrollRunViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter runs by user's organization."""
-                return PayrollRun.objects
+        return PayrollRun.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -302,7 +302,7 @@ class PayrollRunViewSet(viewsets.ModelViewSet):
                 payroll_run.status = 'review'
                 payroll_run.save()
                 
-                return Response({
+            return Response({
                     'message': 'Payroll processed successfully.',
                     'totals': {
                         'total_employees': total_employees,
@@ -393,7 +393,7 @@ class PayrollItemViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter items by user's organization."""
-                return PayrollItem.objects.filter(
+        return PayrollItem.objects.filter(
             payroll__employee__
         )
 
@@ -411,7 +411,7 @@ class PayrollAdjustmentViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter adjustments by user's organization."""
-                return PayrollAdjustment.objects.filter(
+        return PayrollAdjustment.objects.filter(
             payroll__employee__
         )
     
@@ -456,7 +456,7 @@ class TaxYearViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter tax years by user's organization."""
-                return TaxYear.objects
+        return TaxYear.objects.filter(organization=self.request.user.organization_memberships.first().organization)
 
 
 class EmployeeTaxInfoViewSet(viewsets.ModelViewSet):
@@ -472,7 +472,7 @@ class EmployeeTaxInfoViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter tax info by user's organization."""
-                return EmployeeTaxInfo.objects.filter(employee__)
+        return EmployeeTaxInfo.objects.filter(employee__)
 
 
 # ==================== PAYROLL REPORTS AND ANALYTICS VIEWS ====================
@@ -490,7 +490,7 @@ class PayrollReportViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         """Filter reports by user's organization."""
-                return PayrollReport.objects
+        return PayrollReport.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     @action(detail=False, methods=['post'])
     def generate_report(self, request):
@@ -539,7 +539,7 @@ class PayrollAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         """Filter analytics by user's organization."""
-                return PayrollAnalytics.objects
+        return PayrollAnalytics.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     @action(detail=False, methods=['post'])
     def generate_analytics(self, request):
@@ -584,7 +584,7 @@ class PayrollIntegrationViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter integrations by user's organization."""
-                return PayrollIntegration.objects
+        return PayrollIntegration.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     @action(detail=True, methods=['post'])
     def test_connection(self, request, pk=None):
@@ -624,7 +624,7 @@ class PayrollWebhookViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter webhooks by user's organization."""
-                return PayrollWebhook.objects
+        return PayrollWebhook.objects.filter(organization=self.request.user.organization_memberships.first().organization)
 
 
 # ==================== PAYROLL NOTIFICATIONS VIEWS ====================
@@ -642,7 +642,7 @@ class PayrollNotificationViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         """Filter notifications by user's organization."""
-                return PayrollNotification.objects
+        return PayrollNotification.objects.filter(organization=self.request.user.organization_memberships.first().organization)
 
 
 # ==================== PAYROLL CALCULATION VIEWS ====================
@@ -801,14 +801,14 @@ class PayrollDashboardView(APIView):
         # Get current period
         current_date = date.today()
         current_period = PayrollPeriod.objects.filter(
-            ,
+            organization=self.request.user.organization_memberships.first().organization,
             start_date__lte=current_date,
             end_date__gte=current_date
         ).first()
         
         # Get recent payroll runs
         recent_runs = PayrollRun.objects.filter(
-            
+            organization=self.request.user.organization_memberships.first().organization
         ).order_by('-created_at')[:5]
         
         # Get payroll statistics
@@ -820,7 +820,7 @@ class PayrollDashboardView(APIView):
             'pending_approvals': PayrollRun.objects.count(),
             'total_paid_this_month': float(
                 PayrollRun.objects.filter(
-                    ,
+                    organization=self.request.user.organization_memberships.first().organization,
                     status='paid',
                     created__month=current_date.month,
                     created__year=current_date.year

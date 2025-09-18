@@ -166,7 +166,7 @@ class IndividualClient(BaseModel):
     middle_name = models.CharField(max_length=100, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=[
             ('male', 'Male'),
             ('female', 'Female'),
@@ -309,7 +309,7 @@ class ClientNote(BaseModel):
         ('other', 'Other'),
     ]
     
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='notes')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='client_notes')
     note_type = models.CharField(max_length=20, choices=NOTE_TYPES, default='general')
     title = models.CharField(max_length=200)
     content = models.TextField()

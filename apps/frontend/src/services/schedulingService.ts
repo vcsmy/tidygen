@@ -2,7 +2,7 @@
  * Scheduling service for managing appointments, services, and team assignments
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface Appointment {
   id: number;

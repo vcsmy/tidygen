@@ -2,7 +2,7 @@
  * Inventory service for managing products, categories, suppliers, and stock
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface Product {
   id: number;

@@ -136,7 +136,7 @@ class Employee(BaseModel):
     # Personal information
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=[
             ('male', 'Male'),
             ('female', 'Female'),

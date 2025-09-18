@@ -3,8 +3,8 @@
  */
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { authApi, apiClient } from '@/lib/api';
-import type { ApiError, User } from '@/lib/types';
+import { apiClient } from '@/services/api';
+import type { ApiError, User, LoginCredentials, LoginResponse } from '@/services/api';
 
 // User interface is imported from @/lib/types
 
@@ -18,7 +18,7 @@ interface AuthContextType {
   tokens: AuthTokens | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<void>;
   register: (userData: {
     email: string;
     password: string;
@@ -52,11 +52,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         
         if (accessToken && refreshToken) {
           setTokens({ access: accessToken, refresh: refreshToken });
-          apiClient.setToken(accessToken);
           
           // Try to get user profile
           try {
-            const response = await authApi.getProfile();
+            const response = await apiClient.getCurrentUser();
             setUser(response.data);
           } catch (error) {
             // If profile fetch fails, try to refresh token
@@ -72,7 +71,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         // Clear invalid tokens
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        apiClient.setToken(null);
       } finally {
         setIsLoading(false);
       }
@@ -88,35 +86,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     try {
-      const response = await authApi.refreshToken(refreshToken);
+      const response = await apiClient.refreshToken();
       const newTokens = {
         access: response.data.access,
-        refresh: response.data.refresh || refreshToken,
+        refresh: refreshToken, // Keep the same refresh token
       };
       
       setTokens(newTokens);
       localStorage.setItem('access_token', newTokens.access);
       localStorage.setItem('refresh_token', newTokens.refresh);
-      apiClient.setToken(newTokens.access);
       
       // Get user profile with new token
-      const profileResponse = await authApi.getProfile();
+      const profileResponse = await apiClient.getCurrentUser();
       setUser(profileResponse.data);
     } catch (error) {
       // Refresh failed, clear all tokens
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      apiClient.setToken(null);
       setTokens(null);
       setUser(null);
       throw error;
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (credentials: LoginCredentials) => {
     try {
       setIsLoading(true);
-      const response = await authApi.login({ email, password });
+      const response = await apiClient.login(credentials);
       
       const newTokens = {
         access: response.data.access,
@@ -126,10 +122,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setTokens(newTokens);
       localStorage.setItem('access_token', newTokens.access);
       localStorage.setItem('refresh_token', newTokens.refresh);
-      apiClient.setToken(newTokens.access);
       
       // Get user profile
-      const profileResponse = await authApi.getProfile();
+      const profileResponse = await apiClient.getCurrentUser();
       setUser(profileResponse.data);
     } catch (error) {
       throw error;
@@ -146,9 +141,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }) => {
     try {
       setIsLoading(true);
-      await authApi.register(userData);
+      // Register user
+      await apiClient.post('/auth/register/', userData);
       // After successful registration, automatically log in
-      await login(userData.email, userData.password);
+      await login({ email: userData.email, password: userData.password });
     } catch (error) {
       throw error;
     } finally {
@@ -159,7 +155,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = async () => {
     try {
       if (tokens) {
-        await authApi.logout();
+        await apiClient.logout();
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -169,7 +165,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setTokens(null);
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      apiClient.setToken(null);
     }
   };
 
@@ -182,7 +177,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const updateProfile = async (data: Partial<User>) => {
     try {
-      const response = await authApi.updateProfile(data);
+      const response = await apiClient.updateProfile(data);
       setUser(response.data);
     } catch (error) {
       throw error;

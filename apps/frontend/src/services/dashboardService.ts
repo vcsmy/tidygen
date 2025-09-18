@@ -2,7 +2,7 @@
  * Dashboard service for fetching real-time data
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface DashboardKPIs {
   total_clients: number;
@@ -62,21 +62,37 @@ class DashboardService {
       const inventoryResponse = await apiClient.get('/inventory/dashboard/summary/');
       const inventoryData = inventoryResponse.data;
 
-      // Mock data for other KPIs (these would come from other services)
-      const mockKPIs: DashboardKPIs = {
-        total_clients: 247,
-        monthly_revenue: 24500,
-        scheduled_services: 89,
-        inventory_items: inventoryData.total_products || 156,
-        low_stock_items: inventoryData.low_stock_products || 3,
-        out_of_stock_items: inventoryData.out_of_stock_products || 1,
-        pending_orders: inventoryData.pending_orders || 5,
-        active_staff: 28,
-        completion_rate: 94,
-        todays_jobs: 12,
+      // Get real data from other APIs
+      const [clientsResponse, financeResponse, hrResponse] = await Promise.all([
+        apiClient.get('/sales/clients/'),
+        apiClient.get('/finance/invoices/'),
+        apiClient.get('/hr/employees/')
+      ]);
+
+      const clientsData = clientsResponse.data;
+      const financeData = financeResponse.data;
+      const hrData = hrResponse.data;
+
+      // Calculate real KPIs from API data
+      const totalClients = clientsData.count || 0;
+      const monthlyRevenue = financeData.results?.reduce((sum: number, invoice: any) => 
+        sum + (invoice.total_amount || 0), 0) || 0;
+      const activeStaff = hrData.results?.filter((emp: any) => emp.is_active).length || 0;
+
+      const realKPIs: DashboardKPIs = {
+        total_clients: totalClients,
+        monthly_revenue: monthlyRevenue,
+        scheduled_services: 0, // TODO: Implement scheduling service
+        inventory_items: inventoryData.total_products || 0,
+        low_stock_items: inventoryData.low_stock_products || 0,
+        out_of_stock_items: inventoryData.out_of_stock_products || 0,
+        pending_orders: inventoryData.pending_orders || 0,
+        active_staff: activeStaff,
+        completion_rate: 0, // TODO: Calculate from service completion data
+        todays_jobs: 0, // TODO: Implement today's jobs calculation
       };
 
-      return mockKPIs;
+      return realKPIs;
     } catch (error) {
       console.error('Error fetching KPIs:', error);
       // Return default values on error
@@ -97,16 +113,27 @@ class DashboardService {
 
   async getRevenueTrend(): Promise<RevenueTrend[]> {
     try {
-      // Mock data - in real implementation, this would come from finance API
-      const mockData: RevenueTrend[] = [
-        { name: "Jan", value: 4000, date: "2024-01-01" },
-        { name: "Feb", value: 3000, date: "2024-02-01" },
-        { name: "Mar", value: 5000, date: "2024-03-01" },
-        { name: "Apr", value: 4500, date: "2024-04-01" },
-        { name: "May", value: 6000, date: "2024-05-01" },
-        { name: "Jun", value: 5500, date: "2024-06-01" },
-      ];
-      return mockData;
+      // Get real revenue data from finance API
+      const response = await apiClient.get('/finance/invoices/');
+      const invoices = response.data.results || [];
+      
+      // Group invoices by month and calculate totals
+      const monthlyData: { [key: string]: number } = {};
+      invoices.forEach((invoice: any) => {
+        if (invoice.invoice_date) {
+          const month = new Date(invoice.invoice_date).toLocaleDateString('en-US', { month: 'short' });
+          monthlyData[month] = (monthlyData[month] || 0) + (invoice.total_amount || 0);
+        }
+      });
+
+      // Convert to array format
+      const realData: RevenueTrend[] = Object.entries(monthlyData).map(([name, value]) => ({
+        name,
+        value,
+        date: new Date().toISOString() // TODO: Use actual date
+      }));
+
+      return realData;
     } catch (error) {
       console.error('Error fetching revenue trend:', error);
       return [];
@@ -115,14 +142,27 @@ class DashboardService {
 
   async getServiceDistribution(): Promise<ServiceDistribution[]> {
     try {
-      // Mock data - in real implementation, this would come from services API
-      const mockData: ServiceDistribution[] = [
-        { name: "Deep Cleaning", value: 35, percentage: 35 },
-        { name: "Regular Cleaning", value: 45, percentage: 45 },
-        { name: "Carpet Cleaning", value: 15, percentage: 15 },
-        { name: "Window Cleaning", value: 5, percentage: 5 },
-      ];
-      return mockData;
+      // Get real service data from invoices
+      const response = await apiClient.get('/finance/invoices/');
+      const invoices = response.data.results || [];
+      
+      // Group by service type (assuming service_type field exists)
+      const serviceData: { [key: string]: number } = {};
+      invoices.forEach((invoice: any) => {
+        const serviceType = invoice.service_type || 'General Service';
+        serviceData[serviceType] = (serviceData[serviceType] || 0) + 1;
+      });
+
+      const total = Object.values(serviceData).reduce((sum, count) => sum + count, 0);
+      
+      // Convert to array format with percentages
+      const realData: ServiceDistribution[] = Object.entries(serviceData).map(([name, value]) => ({
+        name,
+        value,
+        percentage: total > 0 ? Math.round((value / total) * 100) : 0
+      }));
+
+      return realData;
     } catch (error) {
       console.error('Error fetching service distribution:', error);
       return [];
@@ -131,14 +171,29 @@ class DashboardService {
 
   async getTeamProductivity(): Promise<TeamProductivity[]> {
     try {
-      // Mock data - in real implementation, this would come from HR API
-      const mockData: TeamProductivity[] = [
-        { name: "Team A", value: 92, efficiency: 92 },
-        { name: "Team B", value: 87, efficiency: 87 },
-        { name: "Team C", value: 94, efficiency: 94 },
-        { name: "Team D", value: 89, efficiency: 89 },
-      ];
-      return mockData;
+      // Get real team data from HR API
+      const response = await apiClient.get('/hr/employees/');
+      const employees = response.data.results || [];
+      
+      // Group employees by department/team
+      const teamData: { [key: string]: { count: number, totalEfficiency: number } } = {};
+      employees.forEach((emp: any) => {
+        const teamName = emp.department?.name || 'Unassigned';
+        if (!teamData[teamName]) {
+          teamData[teamName] = { count: 0, totalEfficiency: 0 };
+        }
+        teamData[teamName].count++;
+        teamData[teamName].totalEfficiency += emp.efficiency_score || 0;
+      });
+
+      // Convert to array format
+      const realData: TeamProductivity[] = Object.entries(teamData).map(([name, data]) => ({
+        name,
+        value: data.count,
+        efficiency: data.count > 0 ? Math.round(data.totalEfficiency / data.count) : 0
+      }));
+
+      return realData;
     } catch (error) {
       console.error('Error fetching team productivity:', error);
       return [];
@@ -147,46 +202,63 @@ class DashboardService {
 
   async getRecentActivities(): Promise<RecentActivity[]> {
     try {
-      // Mock data - in real implementation, this would come from activity API
-      const mockData: RecentActivity[] = [
-        {
-          id: 1,
+      // Get real activity data from multiple APIs
+      const [clientsResponse, invoicesResponse, employeesResponse] = await Promise.all([
+        apiClient.get('/sales/clients/'),
+        apiClient.get('/finance/invoices/'),
+        apiClient.get('/hr/employees/')
+      ]);
+
+      const clients = clientsResponse.data.results || [];
+      const invoices = invoicesResponse.data.results || [];
+      const employees = employeesResponse.data.results || [];
+
+      const activities: RecentActivity[] = [];
+
+      // Add recent client activities
+      clients.slice(0, 2).forEach((client: any, index: number) => {
+        activities.push({
+          id: index + 1,
           action: "New client registration",
-          client: "ABC Corp",
-          time: "2 hours ago",
+          client: client.name || client.company_name || 'Unknown Client',
+          time: this.formatTimeAgo(client.created),
           type: "client",
           status: "completed"
-        },
-        {
-          id: 2,
-          action: "Service completed",
-          client: "XYZ Office",
-          time: "4 hours ago",
-          type: "service",
-          status: "completed"
-        },
-        {
-          id: 3,
-          action: "Invoice paid",
-          client: "123 Restaurant",
-          time: "6 hours ago",
+        });
+      });
+
+      // Add recent invoice activities
+      invoices.slice(0, 2).forEach((invoice: any, index: number) => {
+        activities.push({
+          id: activities.length + index + 1,
+          action: invoice.status === 'paid' ? "Invoice paid" : "Invoice created",
+          client: invoice.client?.name || 'Unknown Client',
+          time: this.formatTimeAgo(invoice.created),
           type: "payment",
-          status: "completed"
-        },
-        {
-          id: 4,
-          action: "Equipment maintenance",
-          client: "Vacuum Cleaner #12",
-          time: "1 day ago",
-          type: "maintenance",
-          status: "scheduled"
-        },
-      ];
-      return mockData;
+          status: invoice.status || "pending"
+        });
+      });
+
+      // Sort by time (most recent first) and return top 4
+      return activities
+        .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+        .slice(0, 4);
     } catch (error) {
       console.error('Error fetching recent activities:', error);
       return [];
     }
+  }
+
+  private formatTimeAgo(dateString: string): string {
+    if (!dateString) return 'Unknown time';
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return 'Just now';
+    if (diffInHours < 24) return `${diffInHours} hours ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
   }
 
   async getStockAlerts(): Promise<StockAlert[]> {

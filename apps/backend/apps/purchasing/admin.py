@@ -44,11 +44,11 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
         'notes', 'supplier_notes'
     ]
     readonly_fields = [
-        'po_number', 'order_date', 'total_amount', 'created_at', 'updated_at'
+        'po_number', 'order_date', 'total_amount', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('po_number', 'organization', 'supplier', 'requested_by', 'approved_by')
+            'fields': ('po_number', 'supplier', 'requested_by', 'approved_by')
         }),
         ('Status & Priority', {
             'fields': ('status', 'priority')
@@ -64,7 +64,7 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -163,7 +163,7 @@ class PurchaseReceiptAdmin(admin.ModelAdmin):
     search_fields = [
         'receipt_number', 'purchase_order__po_number', 'notes', 'condition_notes'
     ]
-    readonly_fields = ['receipt_number', 'receipt_date', 'created_at', 'updated_at']
+    readonly_fields = ['receipt_number', 'receipt_date', 'created', 'modified']
     inlines = [PurchaseReceiptItemInline]
     date_hierarchy = 'receipt_date'
     ordering = ['-receipt_date']
@@ -245,11 +245,11 @@ class ProcurementRequestAdmin(admin.ModelAdmin):
         'request_number', 'title', 'description', 'justification', 'notes'
     ]
     readonly_fields = [
-        'request_number', 'request_date', 'created_at', 'updated_at'
+        'request_number', 'request_date', 'created', 'modified'
     ]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('request_number', 'organization', 'requested_by', 'reviewed_by')
+            'fields': ('request_number', 'requested_by', 'reviewed_by')
         }),
         ('Status & Priority', {
             'fields': ('status', 'priority')
@@ -268,7 +268,7 @@ class ProcurementRequestAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -351,11 +351,11 @@ class SupplierPerformanceAdmin(admin.ModelAdmin):
         'supplier__name', 'notes'
     ]
     readonly_fields = [
-        'overall_rating', 'evaluation_date', 'created_at', 'updated_at'
+        'overall_rating', 'evaluation_date', 'created', 'modified'
     ]
     fieldsets = (
         ('Supplier Information', {
-            'fields': ('supplier', 'organization', 'evaluated_by')
+            'fields': ('supplier', 'evaluated_by')
         }),
         ('Performance Metrics', {
             'fields': ('on_time_delivery_rate', 'quality_rating', 'communication_rating', 'price_competitiveness')
@@ -368,7 +368,7 @@ class SupplierPerformanceAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )
@@ -419,17 +419,17 @@ class PurchaseAnalyticsAdmin(admin.ModelAdmin):
         'active_suppliers', 'on_time_delivery_rate'
     ]
     list_filter = [
-        'period_start', 'period_end', 'organization'
+        'period_start', 'period_end'
     ]
     search_fields = [
-        'organization__name'
+        'name'
     ]
     readonly_fields = [
-        'created_at', 'updated_at'
+        'created', 'modified'
     ]
     fieldsets = (
         ('Period Information', {
-            'fields': ('organization', 'period_start', 'period_end')
+            'fields': ('period_start', 'period_end')
         }),
         ('Order Metrics', {
             'fields': ('total_orders', 'total_value', 'average_order_value')
@@ -444,7 +444,7 @@ class PurchaseAnalyticsAdmin(admin.ModelAdmin):
             'fields': ('total_savings', 'cost_reduction_percentage')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
+            'fields': ('created', 'modified'),
             'classes': ('collapse',)
         })
     )

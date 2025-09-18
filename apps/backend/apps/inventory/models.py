@@ -111,7 +111,7 @@ class PurchaseOrder(BaseModel):
         ('cancelled', 'Cancelled'),
     ]
     
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='purchase_orders')
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='inventory_purchase_orders')
     order_number = models.CharField(max_length=100, unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     order_date = models.DateField()

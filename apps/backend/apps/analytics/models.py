@@ -77,7 +77,7 @@ class Report(BaseModel):
     execution_time = models.DurationField(null=True, blank=True, help_text="Report execution time")
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "Report"
         verbose_name_plural = "Reports"
     
@@ -149,7 +149,7 @@ class KPI(BaseModel):
     unit = models.CharField(max_length=20, blank=True, help_text="Unit of measurement")
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "KPI"
         verbose_name_plural = "KPIs"
     
@@ -217,7 +217,7 @@ class Dashboard(BaseModel):
     last_updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "Dashboard"
         verbose_name_plural = "Dashboards"
     
@@ -331,7 +331,7 @@ class DataSource(BaseModel):
     connection_status = models.CharField(max_length=20, default='unknown', help_text="Connection status")
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "Data Source"
         verbose_name_plural = "Data Sources"
     
@@ -369,7 +369,7 @@ class ReportTemplate(BaseModel):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_templates')
     
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created']
         verbose_name = "Report Template"
         verbose_name_plural = "Report Templates"
     

@@ -356,7 +356,7 @@ class PayrollCalculationSerializer(serializers.Serializer):
     allowances = serializers.DecimalField(max_digits=12, decimal_places=2, default=0)
     bonuses = serializers.DecimalField(max_digits=12, decimal_places=2, default=0)
     commissions = serializers.DecimalField(max_digits=12, decimal_places=2, default=0)
-    custom_deductions = serializers.JSONField(default=dict, blank=True)
+    custom_deductions = serializers.JSONField(default=dict)
     
     def validate_employee_id(self, value):
         """Validate employee exists and is active."""

@@ -32,6 +32,7 @@ from apps.finance.filters import (
 
 class AccountViewSet(viewsets.ModelViewSet):
     """ViewSet for Account model."""
+    queryset = Account.objects.all()
     serializer_class = AccountSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -41,7 +42,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     ordering = ['code']
     
     def get_queryset(self):
-        return Account.objects.organization)
+        return Account.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -50,6 +51,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """ViewSet for Customer model."""
+    queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -59,7 +61,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Customer.objects.organization)
+        return Customer.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -84,6 +86,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
 class VendorViewSet(viewsets.ModelViewSet):
     """ViewSet for Vendor model."""
+    queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -93,7 +96,7 @@ class VendorViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return Vendor.objects.organization)
+        return Vendor.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -110,6 +113,7 @@ class VendorViewSet(viewsets.ModelViewSet):
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     """ViewSet for Invoice model."""
+    queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -119,7 +123,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     ordering = ['-issue_date']
     
     def get_queryset(self):
-        return Invoice.objects.organization)
+        return Invoice.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -225,6 +229,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
 
 class InvoiceItemViewSet(viewsets.ModelViewSet):
     """ViewSet for InvoiceItem model."""
+    queryset = InvoiceItem.objects.all()
     serializer_class = InvoiceItemSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [filters.OrderingFilter]
@@ -240,6 +245,7 @@ class InvoiceItemViewSet(viewsets.ModelViewSet):
 
 class PaymentViewSet(viewsets.ModelViewSet):
     """ViewSet for Payment model."""
+    queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -249,7 +255,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     ordering = ['-payment_date']
     
     def get_queryset(self):
-        return Payment.objects.organization)
+        return Payment.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -258,6 +264,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
 
 class ExpenseViewSet(viewsets.ModelViewSet):
     """ViewSet for Expense model."""
+    queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -267,7 +274,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     ordering = ['-expense_date']
     
     def get_queryset(self):
-        return Expense.objects.organization)
+        return Expense.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -375,6 +382,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
 
 class BudgetViewSet(viewsets.ModelViewSet):
     """ViewSet for Budget model."""
+    queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -384,7 +392,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
     
     def get_queryset(self):
-        return Budget.objects.organization)
+        return Budget.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -393,6 +401,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
 
 class BudgetItemViewSet(viewsets.ModelViewSet):
     """ViewSet for BudgetItem model."""
+    queryset = BudgetItem.objects.all()
     serializer_class = BudgetItemSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [filters.OrderingFilter]
@@ -408,6 +417,7 @@ class BudgetItemViewSet(viewsets.ModelViewSet):
 
 class TaxRateViewSet(viewsets.ModelViewSet):
     """ViewSet for TaxRate model."""
+    queryset = TaxRate.objects.all()
     serializer_class = TaxRateSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -417,7 +427,7 @@ class TaxRateViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return TaxRate.objects.organization)
+        return TaxRate.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -426,6 +436,7 @@ class TaxRateViewSet(viewsets.ModelViewSet):
 
 class RecurringInvoiceViewSet(viewsets.ModelViewSet):
     """ViewSet for RecurringInvoice model."""
+    queryset = RecurringInvoice.objects.all()
     serializer_class = RecurringInvoiceSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -435,7 +446,7 @@ class RecurringInvoiceViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return RecurringInvoice.objects.organization)
+        return RecurringInvoice.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -479,6 +490,7 @@ class RecurringInvoiceViewSet(viewsets.ModelViewSet):
 
 class RecurringInvoiceItemViewSet(viewsets.ModelViewSet):
     """ViewSet for RecurringInvoiceItem model."""
+    queryset = RecurringInvoiceItem.objects.all()
     serializer_class = RecurringInvoiceItemSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [filters.OrderingFilter]
@@ -494,6 +506,7 @@ class RecurringInvoiceItemViewSet(viewsets.ModelViewSet):
 
 class FinancialReportViewSet(viewsets.ModelViewSet):
     """ViewSet for FinancialReport model."""
+    queryset = FinancialReport.objects.all()
     serializer_class = FinancialReportSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -503,7 +516,7 @@ class FinancialReportViewSet(viewsets.ModelViewSet):
     ordering = ['-generated_at']
     
     def get_queryset(self):
-        return FinancialReport.objects.organization)
+        return FinancialReport.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization

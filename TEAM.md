@@ -11,8 +11,8 @@
   - Led teams in building scalable SaaS platforms
   - Created AI-assisted development workflows
 - **Technical Skills**: Python, Django, React, TypeScript, Solidity, Web3.js, PostgreSQL, Docker, AI Development Tools
-- **GitHub**: [@vijayababubollavarapu](https://github.com/vijayababubollavarapu)
-- **LinkedIn**: [Vijay Babu Bollavarapu](https://linkedin.com/in/vijayababubollavarapu)
+- **GitHub**: [@vjbollavarapu](https://github.com/vjbollavarapu)
+- **LinkedIn**: [Vijay Babu Bollavarapu](https://linkedin.com/in/bollavarapu)
 - **Education**: Computer Science Engineering
 - **Location**: India
 - **Commitment**: Full-time dedication to TidyGen ERP project

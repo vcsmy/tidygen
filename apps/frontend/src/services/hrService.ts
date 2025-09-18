@@ -2,7 +2,7 @@
  * HR service for managing employees, payroll, attendance, and performance
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface Employee {
   id: number;

@@ -28,7 +28,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework_simplejwt.token_blacklist',  # Disabled due to custom user model
     'corsheaders',
     'django_filters',
     'drf_spectacular',
@@ -44,7 +44,7 @@ THIRD_PARTY_APPS = [
     'django_json_widget',
     'jazzmin',
     'axes',
-    'django_ratelimit',
+    # 'django_ratelimit',  # Disabled for development
     'ipware',
 ]
 
@@ -60,6 +60,8 @@ LOCAL_APPS = [
     'apps.payroll',
     'apps.scheduling',
     'apps.analytics',
+    'apps.facility_management',
+    'apps.field_operations',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -75,7 +77,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
-    'ratelimit.middleware.RatelimitMiddleware',
+        # 'django_ratelimit.middleware.RatelimitMiddleware',  # Disabled for development
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -101,9 +103,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 DATABASES = {
     'default': dj_database_url.parse(
-        config('DATABASE_URL', default='postgresql://tidygen_user:tidygen_password@localhost:5432/backend')
+        config('DATABASE_URL', default='sqlite:///db.sqlite3')
     )
 }
+
+# Custom User Model
+AUTH_USER_MODEL = 'core.User'
 
 # Cache Configuration
 CACHES = {

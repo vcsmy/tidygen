@@ -11,8 +11,8 @@ from .models import (
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(admin.ModelAdmin):
     """Product category admin."""
-    list_display = ['name', 'parent', 'products_count', 'organization', 'created']
-    list_filter = ['parent', 'organization', 'created']
+    list_display = ['name', 'parent', 'products_count', 'created']
+    list_filter = ['parent', 'created']
     search_fields = ['name', 'description']
     ordering = ['name']
     
@@ -26,10 +26,10 @@ class ProductAdmin(admin.ModelAdmin):
     """Product admin."""
     list_display = [
         'name', 'sku', 'category', 'current_stock', 'cost_price',
-        'selling_price', 'stock_status', 'is_active', 'organization'
+        'selling_price', 'stock_status', 'is_active'
     ]
     list_filter = [
-        'category', 'is_active', 'is_digital', 'organization', 'created'
+        'category', 'is_active', 'is_digital', 'created'
     ]
     search_fields = ['name', 'sku', 'description', 'barcode']
     ordering = ['name']
@@ -49,12 +49,12 @@ class StockMovementAdmin(admin.ModelAdmin):
     """Stock movement admin."""
     list_display = [
         'product', 'movement_type', 'quantity', 'reference_number',
-        'created', 'product_organization'
+        'created'
     ]
-    list_filter = ['movement_type', 'created', 'product__organization']
+    list_filter = ['movement_type', 'created']
     search_fields = ['product__name', 'reference_number', 'notes']
     ordering = ['-created']
-    readonly_fields = ['created', 'updated']
+    readonly_fields = ['created', 'modified']
     
     def product_organization(self, obj):
         return obj.product.organization.name
@@ -66,9 +66,9 @@ class SupplierAdmin(admin.ModelAdmin):
     """Supplier admin."""
     list_display = [
         'name', 'contact_person', 'email', 'phone',
-        'purchase_orders_count', 'total_spent', 'organization'
+        'purchase_orders_count', 'total_spent'
     ]
-    list_filter = ['organization', 'created']
+    list_filter = ['created']
     search_fields = ['name', 'contact_person', 'email', 'phone']
     ordering = ['name']
     
@@ -94,12 +94,12 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
     """Purchase order admin."""
     list_display = [
         'order_number', 'supplier', 'status', 'order_date',
-        'expected_delivery', 'total_amount', 'items_count', 'organization'
+        'expected_delivery', 'total_amount', 'items_count'
     ]
-    list_filter = ['status', 'order_date', 'organization', 'created']
+    list_filter = ['status', 'order_date', 'created']
     search_fields = ['order_number', 'supplier__name', 'notes']
     ordering = ['-order_date']
-    readonly_fields = ['order_number', 'total_amount', 'created', 'updated']
+    readonly_fields = ['order_number', 'total_amount', 'created', 'modified']
     inlines = [PurchaseOrderItemInline]
     
     def items_count(self, obj):
@@ -112,9 +112,9 @@ class PurchaseOrderItemAdmin(admin.ModelAdmin):
     """Purchase order item admin."""
     list_display = [
         'purchase_order', 'product', 'quantity', 'unit_price',
-        'total_price', 'organization'
+        'total_price'
     ]
-    list_filter = ['purchase_order__status', 'purchase_order__organization']
+    list_filter = ['purchase_order__status']
     search_fields = ['product__name', 'purchase_order__order_number']
     ordering = ['purchase_order', 'product']
     readonly_fields = ['total_price']

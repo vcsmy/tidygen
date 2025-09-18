@@ -35,6 +35,7 @@ from apps.sales.filters import (
 
 class ClientViewSet(viewsets.ModelViewSet):
     """ViewSet for Client model."""
+    queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -296,6 +297,7 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 class IndividualClientViewSet(viewsets.ModelViewSet):
     """ViewSet for IndividualClient model."""
+    queryset = IndividualClient.objects.all()
     serializer_class = IndividualClientSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -312,6 +314,7 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
 
 class CorporateClientViewSet(viewsets.ModelViewSet):
     """ViewSet for CorporateClient model."""
+    queryset = CorporateClient.objects.all()
     serializer_class = CorporateClientSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -328,6 +331,7 @@ class CorporateClientViewSet(viewsets.ModelViewSet):
 
 class ClientContactViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientContact model."""
+    queryset = ClientContact.objects.all()
     serializer_class = ClientContactSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -344,6 +348,7 @@ class ClientContactViewSet(viewsets.ModelViewSet):
 
 class ClientNoteViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientNote model."""
+    queryset = ClientNote.objects.all()
     serializer_class = ClientNoteSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -360,6 +365,7 @@ class ClientNoteViewSet(viewsets.ModelViewSet):
 
 class ClientDocumentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientDocument model."""
+    queryset = ClientDocument.objects.all()
     serializer_class = ClientDocumentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -379,6 +385,7 @@ class ClientDocumentViewSet(viewsets.ModelViewSet):
 
 class ClientTagViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientTag model."""
+    queryset = ClientTag.objects.all()
     serializer_class = ClientTagSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -397,6 +404,7 @@ class ClientTagViewSet(viewsets.ModelViewSet):
 
 class ClientTagAssignmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientTagAssignment model."""
+    queryset = ClientTagAssignment.objects.all()
     serializer_class = ClientTagAssignmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [filters.OrderingFilter]
@@ -411,6 +419,7 @@ class ClientTagAssignmentViewSet(viewsets.ModelViewSet):
 
 class ClientInteractionViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientInteraction model."""
+    queryset = ClientInteraction.objects.all()
     serializer_class = ClientInteractionSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -496,6 +505,7 @@ class ClientInteractionViewSet(viewsets.ModelViewSet):
 
 class ClientSegmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientSegment model."""
+    queryset = ClientSegment.objects.all()
     serializer_class = ClientSegmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -505,8 +515,7 @@ class ClientSegmentViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return ClientSegment.objects.all().organization
-        )
+        return ClientSegment.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def perform_create(self, serializer):
         organization = self.request.user.organization_memberships.first().organization
@@ -515,6 +524,7 @@ class ClientSegmentViewSet(viewsets.ModelViewSet):
 
 class ClientSegmentAssignmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientSegmentAssignment model."""
+    queryset = ClientSegmentAssignment.objects.all()
     serializer_class = ClientSegmentAssignmentSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [filters.OrderingFilter]

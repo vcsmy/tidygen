@@ -9,6 +9,12 @@ import {
   Clock,
   AlertTriangle,
   Loader2,
+  Building,
+  Truck,
+  Route,
+  Wrench,
+  MapPin,
+  Shield,
 } from "lucide-react";
 import { KPICard } from "@/components/dashboard/KPICard";
 import { DashboardChart } from "@/components/dashboard/DashboardChart";
@@ -274,6 +280,148 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       )}
+
+      {/* New Modules Section */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Field Operations & Facility Management</h2>
+          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+            New Features
+          </Badge>
+        </div>
+        
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Field Operations Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Route className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">Field Operations</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Manage mobile cleaning teams and service routes
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <span>Field Teams</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    <span>Route Optimization</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span>Job Scheduling</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Truck className="h-4 w-4 text-muted-foreground" />
+                    <span>Dispatch Management</span>
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Badge className="bg-green-100 text-green-800">
+                    Web3 Integration Ready
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Facility Management Card */}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <CardHeader>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Building className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">Facility Management</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Track facilities, vehicles, equipment, and assets
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <Building className="h-4 w-4 text-muted-foreground" />
+                    <span>Facilities</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Truck className="h-4 w-4 text-muted-foreground" />
+                    <span>Fleet Management</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Wrench className="h-4 w-4 text-muted-foreground" />
+                    <span>Equipment Tracking</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <span>Asset Management</span>
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Badge className="bg-purple-100 text-purple-800">
+                    NFT Asset Tokenization
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Web3 Features Highlight */}
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <CardHeader>
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
+                <Activity className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl text-blue-900">Web3 Integration Features</CardTitle>
+                <p className="text-sm text-blue-700">
+                  Blockchain-powered features for enhanced transparency and automation
+                </p>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-white rounded-lg">
+                <div className="p-2 bg-blue-100 rounded-full w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-blue-900">Asset Tokenization</h3>
+                <p className="text-sm text-blue-700">Convert physical assets to NFTs</p>
+              </div>
+              <div className="text-center p-4 bg-white rounded-lg">
+                <div className="p-2 bg-green-100 rounded-full w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                  <TrendingUp className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-green-900">Smart Contracts</h3>
+                <p className="text-sm text-green-700">Automated payments and verification</p>
+              </div>
+              <div className="text-center p-4 bg-white rounded-lg">
+                <div className="p-2 bg-purple-100 rounded-full w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                  <Activity className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="font-semibold text-purple-900">Blockchain Records</h3>
+                <p className="text-sm text-purple-700">Immutable audit trails</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

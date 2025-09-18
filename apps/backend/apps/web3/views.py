@@ -86,7 +86,6 @@ class WalletViewSet(viewsets.ModelViewSet):
                 wallet.is_verified = True
                 wallet.verification_signature = signature
                 wallet.save()
-                
                 return Response({'message': 'Wallet verified successfully.'})
             else:
                 return Response({'error': 'Signature verification failed'}, status=status.HTTP_400_BAD_REQUEST)
@@ -439,7 +438,7 @@ class DecentralizedIdentityViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter DIDs by user's organization."""
-                return DecentralizedIdentity.objects
+        return DecentralizedIdentity.objects.filter(organization=self.request.user.organization_memberships.first().organization)
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -482,7 +481,7 @@ class OnChainAnchorViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter anchors by user's organization."""
-                return OnChainAnchor.objects
+        return OnChainAnchor.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -527,7 +526,7 @@ class SmartContractModuleViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter modules by user's organization."""
-                return SmartContractModule.objects
+        return SmartContractModule.objects
     
     @action(detail=True, methods=['post'])
     def deploy(self, request, pk=None):
@@ -574,7 +573,7 @@ class DAOGovernanceViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter governance by user's organization."""
-                return DAOGovernance.objects
+        return DAOGovernance.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -654,7 +653,7 @@ class TokenizedRewardViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter rewards by user's organization."""
-                return TokenizedReward.objects
+        return TokenizedReward.objects
     
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -707,7 +706,7 @@ class DecentralizedStorageViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         """Filter storage by user's organization."""
-                return DecentralizedStorage.objects
+        return DecentralizedStorage.objects
     
     @action(detail=True, methods=['post'])
     def upload_to_ipfs(self, request, pk=None):
@@ -750,7 +749,7 @@ class BlockchainAuditLogViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         """Filter audit logs by user's organization."""
-                return BlockchainAuditLog.objects
+        return BlockchainAuditLog.objects
     
     @action(detail=False, methods=['get'])
     def security_events(self, request):

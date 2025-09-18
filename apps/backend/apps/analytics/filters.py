@@ -24,7 +24,7 @@ class ReportFilter(django_filters.FilterSet):
     
     # Type and status filters
     report_type = django_filters.ChoiceFilter(choices=Report.REPORT_TYPE_CHOICES)
-    status = django_filters.ChoiceFilter(choices=Report.STATUS_CHOICES)
+    status = django_filters.ChoiceFilter(choices=Report.REPORT_STATUS_CHOICES)
     format = django_filters.ChoiceFilter(choices=Report.REPORT_FORMAT_CHOICES)
     
     # Date filters

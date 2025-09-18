@@ -2,7 +2,7 @@
  * Client service for managing customers and client relationships
  */
 
-import { apiClient } from '@/lib/api';
+import { apiClient } from '@/services/api';
 
 export interface Client {
   id: number;
