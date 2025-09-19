@@ -26,9 +26,13 @@ urlpatterns = [
     path('api/v1/payroll/', include('apps.payroll.urls')),
     path('api/v1/scheduling/', include('apps.scheduling.urls')),
     path('api/v1/web3/', include('apps.web3.urls')),
+    path('api/v1/ledger/', include('apps.ledger.urls')),
+    path('api/v1/wallet/', include('apps.wallet.urls')),
     path('api/v1/analytics/', include('apps.analytics.urls')),
     path('api/v1/facility-management/', include('apps.facility_management.urls')),
     path('api/v1/field-operations/', include('apps.field_operations.urls')),
+    path('api/v1/audit-trail/', include('apps.audit_trail.urls')),
+    path('api/v1/did-auth/', include('apps.did_auth.urls')), # Added DID authentication
     path('api/v1/', include('apps.core.urls')),
 ]
 

@@ -52,6 +52,10 @@ LOCAL_APPS = [
     'apps.core',
     'apps.accounts',
     'apps.web3',
+    'apps.ledger',
+    'apps.wallet',
+    'apps.audit_trail',
+    'apps.did_auth', # Added DID authentication
     'apps.inventory',
     'apps.sales',
     'apps.purchasing',

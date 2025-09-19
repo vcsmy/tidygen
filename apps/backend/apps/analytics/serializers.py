@@ -35,9 +35,9 @@ class ReportSerializer(serializers.ModelSerializer):
             'schedule_frequency', 'schedule_time', 'next_run', 'last_run',
             'created_by', 'created_by_name', 'is_public', 'allowed_users_count',
             'file_path', 'file_size', 'file_size_display', 'execution_time',
-            'created_at', 'updated_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'report_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'report_id', 'created', 'modified']
     
     def get_allowed_users_count(self, obj):
         return obj.allowed_users.count()
@@ -90,9 +90,9 @@ class KPISerializer(serializers.ModelSerializer):
             'frequency_display', 'target_value', 'warning_threshold', 'critical_threshold',
             'current_value', 'previous_value', 'change_percentage', 'change_percentage_display',
             'trend', 'trend_display', 'is_active', 'last_calculated', 'next_calculation',
-            'chart_type', 'color', 'unit', 'status_display', 'created_at', 'updated_at'
+            'chart_type', 'color', 'unit', 'status_display',             'created', 'modified'
         ]
-        read_only_fields = ['id', 'kpi_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'kpi_id', 'created', 'modified']
     
     def get_change_percentage_display(self, obj):
         if obj.change_percentage is not None:
@@ -132,9 +132,9 @@ class KPIMeasurementSerializer(serializers.ModelSerializer):
         model = KPIMeasurement
         fields = [
             'id', 'kpi', 'kpi_name', 'value', 'measurement_date', 'notes',
-            'context_data', 'created_at', 'updated_at'
+            'context_data', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class DashboardSerializer(serializers.ModelSerializer):
@@ -152,9 +152,9 @@ class DashboardSerializer(serializers.ModelSerializer):
             'dashboard_type_display', 'layout', 'layout_display', 'configuration',
             'refresh_interval', 'auto_refresh', 'created_by', 'created_by_name',
             'is_public', 'allowed_users_count', 'is_active', 'last_updated',
-            'widgets_count', 'created_at', 'updated_at'
+            'widgets_count', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'dashboard_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'dashboard_id', 'created', 'modified']
     
     def get_allowed_users_count(self, obj):
         return obj.allowed_users.count()
@@ -197,9 +197,9 @@ class DashboardWidgetSerializer(serializers.ModelSerializer):
             'widget_type_display', 'configuration', 'data_source', 'query',
             'chart_type', 'chart_type_display', 'chart_config', 'position_x',
             'position_y', 'width', 'height', 'is_active', 'refresh_interval',
-            'last_updated', 'created_at', 'updated_at'
+            'last_updated', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'widget_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'widget_id', 'created', 'modified']
 
 
 class DashboardWidgetCreateSerializer(serializers.ModelSerializer):
@@ -226,9 +226,9 @@ class DataSourceSerializer(serializers.ModelSerializer):
             'id', 'source_id', 'organization', 'name', 'description', 'source_type',
             'source_type_display', 'connection_type', 'connection_type_display',
             'connection_string', 'configuration', 'is_active', 'last_connected',
-            'connection_status', 'connection_status_display', 'created_at', 'updated_at'
+            'connection_status', 'connection_status_display', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'source_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'source_id', 'created', 'modified']
         extra_kwargs = {
             'credentials': {'write_only': True}
         }
@@ -265,9 +265,9 @@ class ReportTemplateSerializer(serializers.ModelSerializer):
             'id', 'template_id', 'organization', 'name', 'description', 'template_type',
             'template_type_display', 'template_config', 'default_parameters',
             'required_parameters', 'usage_count', 'is_public', 'created_by',
-            'created_by_name', 'created_at', 'updated_at'
+            'created_by_name', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'template_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'template_id', 'created', 'modified']
 
 
 class ReportTemplateCreateSerializer(serializers.ModelSerializer):
@@ -293,9 +293,9 @@ class AnalyticsEventSerializer(serializers.ModelSerializer):
             'id', 'event_id', 'organization', 'event_type', 'event_type_display',
             'event_name', 'description', 'user', 'user_name', 'session_id',
             'ip_address', 'user_agent', 'context_data', 'metadata',
-            'event_timestamp', 'duration', 'duration_display', 'created_at', 'updated_at'
+            'event_timestamp', 'duration', 'duration_display', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'event_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'event_id', 'created', 'modified']
     
     def get_duration_display(self, obj):
         if obj.duration:
@@ -330,9 +330,9 @@ class AlertSerializer(serializers.ModelSerializer):
             'related_dashboard_name', 'alert_data', 'threshold_value',
             'current_value', 'is_notified', 'notification_sent_at',
             'acknowledged_by', 'acknowledged_by_name', 'acknowledged_at',
-            'triggered_at', 'resolved_at', 'age_display', 'created_at', 'updated_at'
+            'triggered_at', 'resolved_at', 'age_display', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'alert_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'alert_id', 'created', 'modified']
     
     def get_age_display(self, obj):
         from django.utils import timezone
@@ -374,9 +374,9 @@ class AnalyticsCacheSerializer(serializers.ModelSerializer):
             'data', 'metadata', 'expires_at', 'hit_count', 'last_accessed',
             'related_kpi', 'related_kpi_name', 'related_report', 'related_report_name',
             'related_dashboard', 'related_dashboard_name', 'is_expired',
-            'created_at', 'updated_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_is_expired(self, obj):
         from django.utils import timezone
@@ -436,7 +436,7 @@ class ReportSummarySerializer(serializers.ModelSerializer):
         fields = [
             'id', 'report_id', 'name', 'report_type', 'report_type_display',
             'status', 'status_display', 'format', 'is_scheduled', 'last_run',
-            'created_by_name', 'created_at'
+            'created_by_name', 'created'
         ]
 
 

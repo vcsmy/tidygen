@@ -197,6 +197,7 @@ class Dashboard(BaseModel):
     ]
     
     dashboard_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    organization = models.ForeignKey('core.Organization', on_delete=models.CASCADE, related_name='dashboards')
     name = models.CharField(max_length=200, help_text="Dashboard name")
     description = models.TextField(blank=True, help_text="Dashboard description")
     dashboard_type = models.CharField(max_length=20, choices=DASHBOARD_TYPE_CHOICES, default='custom')
@@ -313,6 +314,7 @@ class DataSource(BaseModel):
     ]
     
     source_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    organization = models.ForeignKey('core.Organization', on_delete=models.CASCADE, related_name='data_sources')
     name = models.CharField(max_length=200, help_text="Data source name")
     description = models.TextField(blank=True, help_text="Data source description")
     source_type = models.CharField(max_length=20, choices=SOURCE_TYPE_CHOICES)
@@ -393,6 +395,7 @@ class AnalyticsEvent(BaseModel):
     ]
     
     event_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    organization = models.ForeignKey('core.Organization', on_delete=models.CASCADE, related_name='analytics_events')
     event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES)
     event_name = models.CharField(max_length=200, help_text="Event name")
     description = models.TextField(blank=True, help_text="Event description")
@@ -460,6 +463,9 @@ class Alert(BaseModel):
     title = models.CharField(max_length=200, help_text="Alert title")
     message = models.TextField(help_text="Alert message")
     description = models.TextField(blank=True, help_text="Detailed alert description")
+    
+    # Organization
+    organization = models.ForeignKey('core.Organization', on_delete=models.CASCADE, related_name='alerts')
     
     # Related objects
     related_kpi = models.ForeignKey(KPI, on_delete=models.SET_NULL, null=True, blank=True, related_name='alerts')
