@@ -1,471 +1,482 @@
-# TidyGen ERP Architecture
+# TidyGen ERP - System Architecture
 
-## 🏗️ Overview
+## 🏗️ High-Level System Overview
 
-TidyGen is a modern **Web3-enabled Enterprise Resource Planning (ERP)** platform built with a **monorepo architecture** that combines traditional ERP functionality with cutting-edge blockchain technology. The system is designed for scalability, maintainability, and enterprise-grade security.
+TidyGen ERP is a comprehensive **Web3-enabled Enterprise Resource Planning platform** designed for the cleaning services industry. The system combines traditional ERP functionality with cutting-edge blockchain technology, providing a decentralized, transparent, and trustless business management solution.
 
-> 🎯 **Architecture Goals**: Scalable, maintainable, secure, and Web3-native ERP platform
+### **Core Architecture Principles**
 
-## 🏛️ System Architecture
-
-### 🎯 **High-Level Architecture**
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        TidyGen ERP Platform                      │
-├─────────────────────────────────────────────────────────────────┤
-│  Frontend (React SPA)    │    Backend (Django API)            │
-│  ┌─────────────────┐     │    ┌─────────────────┐              │
-│  │   Dashboard     │◄────┼────┤   Core Apps     │              │
-│  │   Inventory     │     │    │   Accounts      │              │
-│  │   Sales         │     │    │   Organizations │              │
-│  │   Finance       │     │    │   Web3          │              │
-│  │   Web3 Wallet   │     │    │   ERP Modules   │              │
-│  └─────────────────┘     │    └─────────────────┘              │
-├─────────────────────────────────────────────────────────────────┤
-│  Web3 Integration        │    Data Layer                       │
-│  ┌─────────────────┐     │    ┌─────────────────┐              │
-│  │   MetaMask      │     │    │   PostgreSQL    │              │
-│  │   Smart Contracts│    │    │   Redis Cache   │              │
-│  │   Blockchain    │     │    │   File Storage  │              │
-│  └─────────────────┘     │    └─────────────────┘              │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 🔗 **Monorepo Structure**
-
-The TidyGen platform follows a **monorepo architecture** that provides:
-
-- **Unified Development**: Single repository for all components
-- **Shared Dependencies**: Common libraries and utilities
-- **Consistent Tooling**: Unified build, test, and deployment processes
-- **Cross-Component Integration**: Seamless frontend-backend communication
-- **Simplified Maintenance**: Single source of truth for the entire platform
-
-## 🔧 Backend Architecture
-
-### 🐍 **Django REST Framework Structure**
-
-```
-backend/
-├── tidygen_erp/              # Main Django project configuration
-│   ├── settings.py         # Environment-specific settings
-│   ├── urls.py            # Main URL routing and API endpoints
-│   ├── wsgi.py            # WSGI configuration for production
-│   └── asgi.py            # ASGI configuration for async features
-├── apps/                  # Modular Django applications
-│   ├── core/              # Core functionality & audit logging
-│   ├── accounts/          # User management & authentication
-│   ├── organizations/     # Multi-tenant organization support
-│   ├── inventory/         # Inventory management system
-│   ├── sales/             # Sales & CRM functionality
-│   ├── purchasing/        # Purchasing & vendor management
-│   ├── finance/           # Financial management & accounting
-│   ├── hr/                # Human resources management
-│   └── web3/              # Blockchain & Web3 integration
-├── tests/                 # Comprehensive test suite
-│   ├── unit/              # Unit tests for models and utilities
-│   ├── integration/       # Integration tests for APIs
-│   └── e2e/               # End-to-end tests
-└── requirements/          # Python dependencies
-    ├── base.txt           # Core dependencies
-    ├── development.txt    # Development tools
-    └── production.txt     # Production dependencies
-```
-
-### 🏗️ **Modular App Architecture**
-
-Each Django app follows a consistent structure:
-
-```
-apps/{module_name}/
-├── models.py              # Database models and business logic
-├── serializers.py         # DRF serializers for API data
-├── views.py               # API viewsets and endpoints
-├── urls.py                # URL routing for the module
-├── admin.py               # Django admin configuration
-├── apps.py                # App configuration
-├── managers.py            # Custom model managers
-├── permissions.py         # Custom permissions and access control
-├── signals.py             # Django signals for event handling
-├── tasks.py               # Celery background tasks
-├── utils.py               # Utility functions and helpers
-├── migrations/            # Database migrations
-└── tests/                 # Module-specific tests
-```
-
-### 🎯 **Core Design Patterns**
-
-#### 1. **Multi-Tenant Architecture**
-- **Organization-based isolation**: Each organization has isolated data
-- **Shared database, separate schemas**: Efficient resource utilization
-- **Row-level security**: Additional data protection layer
-- **Tenant-aware middleware**: Automatic tenant context switching
-
-#### 2. **API-First Design**
-- **RESTful APIs**: Consistent API design patterns
-- **OpenAPI Documentation**: Auto-generated API documentation
-- **Versioning Strategy**: Backward-compatible API evolution
-- **Rate Limiting**: API protection and usage monitoring
-
-#### 3. **Web3 Integration Points**
-- **Wallet Connection**: MetaMask and other Web3 wallet integration
-- **Smart Contract Interaction**: Deploy and interact with blockchain contracts
-- **Transaction Management**: Send, receive, and track cryptocurrency transactions
-- **Cross-chain Support**: Multi-blockchain compatibility
-
-#### 4. **Modular App Structure**
-- **Domain-driven design**: Each app represents a business domain
-- **Loose coupling**: Apps communicate through well-defined APIs
-- **High cohesion**: Related functionality grouped together
-- **Plugin architecture**: Extensible module system for custom features
-
-#### 3. Base Model Pattern
-```python
-class BaseModel(TimeStampedModel, SoftDeleteModel):
-    """Base model combining timestamp and soft delete functionality."""
-    
-    class Meta:
-        abstract = True
-```
-
-#### 4. Repository Pattern
-- **Data access abstraction**: Clean separation of concerns
-- **Query optimization**: Centralized query logic
-- **Testing**: Easy mocking of data access layer
-
-### API Design
-
-#### RESTful API Principles
-- **Resource-based URLs**: `/api/v1/inventory/products/`
-- **HTTP methods**: GET, POST, PUT, PATCH, DELETE
-- **Status codes**: Proper HTTP status code usage
-- **Content negotiation**: JSON API format
-
-#### API Versioning
-- **URL versioning**: `/api/v1/`, `/api/v2/`
-- **Backward compatibility**: Maintained across versions
-- **Deprecation strategy**: Clear migration path
-
-#### Authentication & Authorization
-```python
-# JWT Authentication
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
-```
-
-## Frontend Architecture
-
-### React Application Structure
-
-```
-frontend/src/
-├── components/             # Reusable UI components
-│   ├── Layout/            # Layout components
-│   ├── Forms/             # Form components
-│   ├── Tables/            # Data table components
-│   └── Charts/            # Chart components
-├── pages/                 # Page components
-│   ├── Dashboard/         # Dashboard page
-│   ├── Inventory/         # Inventory pages
-│   ├── Sales/             # Sales pages
-│   └── Web3/              # Web3 integration pages
-├── stores/                # State management
-│   ├── authStore.ts       # Authentication state
-│   ├── web3Store.ts       # Web3 wallet state
-│   └── appStore.ts        # Application state
-├── lib/                   # Utility libraries
-│   ├── api.ts             # API client
-│   ├── utils.ts           # Utility functions
-│   └── constants.ts       # Application constants
-└── types/                 # TypeScript type definitions
-```
-
-### State Management Strategy
-
-#### Zustand Store Pattern
-```typescript
-interface AuthState {
-  user: User | null
-  token: string | null
-  isAuthenticated: boolean
-}
-
-interface AuthActions {
-  login: (email: string, password: string) => Promise<void>
-  logout: () => void
-  checkAuth: () => Promise<void>
-}
-```
-
-#### React Query Integration
-- **Server state management**: Automatic caching and synchronization
-- **Optimistic updates**: Immediate UI feedback
-- **Background refetching**: Keep data fresh
-- **Error handling**: Centralized error management
-
-### Component Architecture
-
-#### Atomic Design Principles
-- **Atoms**: Basic building blocks (buttons, inputs)
-- **Molecules**: Simple combinations (search forms)
-- **Organisms**: Complex components (navigation, tables)
-- **Templates**: Page layouts
-- **Pages**: Specific page instances
-
-#### Component Composition
-```typescript
-// Compound component pattern
-<Table>
-  <Table.Header>
-    <Table.Row>
-      <Table.Cell>Name</Table.Cell>
-      <Table.Cell>Email</Table.Cell>
-    </Table.Row>
-  </Table.Header>
-  <Table.Body>
-    {users.map(user => (
-      <Table.Row key={user.id}>
-        <Table.Cell>{user.name}</Table.Cell>
-        <Table.Cell>{user.email}</Table.Cell>
-      </Table.Row>
-    ))}
-  </Table.Body>
-</Table>
-```
-
-## ⛓️ Web3 Integration Architecture
-
-### 🔗 **Blockchain Integration Points**
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Web3 Integration Layer                      │
-├─────────────────────────────────────────────────────────────────┤
-│  Frontend Web3          │    Backend Web3                     │
-│  ┌─────────────────┐     │    ┌─────────────────┐              │
-│  │   MetaMask      │◄────┼────┤   Web3 Service  │              │
-│  │   WalletConnect │     │    │   Smart Contracts│             │
-│  │   Coinbase      │     │    │   Transaction   │              │
-│  │   Trust Wallet  │     │    │   Management    │              │
-│  └─────────────────┘     │    └─────────────────┘              │
-├─────────────────────────────────────────────────────────────────┤
-│  Blockchain Networks     │    Smart Contract Layer            │
-│  ┌─────────────────┐     │    ┌─────────────────┐              │
-│  │   Ethereum      │     │    │   ERC-20        │              │
-│  │   Polygon       │     │    │   ERC-721       │              │
-│  │   BSC           │     │    │   ERC-1155      │              │
-│  │   Testnets      │     │    │   Custom        │              │
-│  └─────────────────┘     │    └─────────────────┘              │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 🎯 **Web3 Integration Features**
-
-#### **Wallet Management**
-- **Multi-wallet Support**: MetaMask, WalletConnect, Coinbase Wallet, Trust Wallet
-- **Wallet Verification**: Cryptographic signature verification
-- **Account Management**: Multiple account support per wallet
-- **Network Switching**: Automatic network detection and switching
-
-#### **Smart Contract Integration**
-- **Contract Deployment**: Deploy custom business contracts
-- **Contract Interaction**: Read and write contract functions
-- **Event Monitoring**: Real-time blockchain event tracking
-- **Gas Optimization**: Smart gas estimation and optimization
-
-#### **Transaction Management**
-- **Send/Receive**: Cryptocurrency transaction handling
-- **Transaction History**: Complete transaction tracking
-- **Multi-signature**: Multi-sig wallet support for security
-- **Batch Transactions**: Efficient batch transaction processing
-
-### 🔧 **Backend Web3 Service**
-
-```
-apps/web3/
-├── models.py              # Web3-related database models
-├── services/              # Web3 service layer
-│   ├── wallet_service.py  # Wallet management
-│   ├── contract_service.py # Smart contract interactions
-│   ├── transaction_service.py # Transaction handling
-│   └── blockchain_service.py # Blockchain utilities
-├── serializers.py         # Web3 API serializers
-├── views.py               # Web3 API endpoints
-└── utils/                 # Web3 utility functions
-    ├── ethers.py          # Ethereum utilities
-    ├── web3_utils.py      # Web3.py utilities
-    └── validators.py      # Blockchain data validation
-```
-
-## Database Architecture
-
-### PostgreSQL Design
-
-#### Multi-Tenant Schema
-```sql
--- Organization-based partitioning
-CREATE TABLE organizations (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(200) NOT NULL,
-    slug VARCHAR(100) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Tenant-aware tables
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    organization_id INTEGER REFERENCES organizations(id),
-    name VARCHAR(200) NOT NULL,
-    sku VARCHAR(100) NOT NULL,
-    -- ... other fields
-    UNIQUE(organization_id, sku)
-);
-```
-
-#### Indexing Strategy
-- **Primary keys**: Clustered indexes
-- **Foreign keys**: Non-clustered indexes
-- **Search fields**: Full-text search indexes
-- **Composite indexes**: Multi-column queries
-
-#### Data Integrity
-- **Foreign key constraints**: Referential integrity
-- **Check constraints**: Data validation
-- **Unique constraints**: Uniqueness enforcement
-- **Triggers**: Complex business logic
-
-### Caching Strategy
-
-#### Redis Implementation
-```python
-# Session storage
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://localhost:6379/0',
-    }
-}
-
-# Query result caching
-@cache_page(60 * 15)  # 15 minutes
-def expensive_view(request):
-    # Expensive database operations
-    pass
-```
-
-## Security Architecture
-
-### Authentication Flow
-```
-1. User Login → JWT Token Generation
-2. Token Storage → Secure HTTP-only cookies
-3. API Requests → Bearer token authentication
-4. Token Refresh → Automatic renewal
-5. Logout → Token invalidation
-```
-
-### Authorization Model
-```python
-# Role-based access control
-class OrganizationMember(BaseModel):
-    user = models.ForeignKey(User)
-    organization = models.ForeignKey(Organization)
-    role = models.CharField(choices=ROLE_CHOICES)
-    
-    # Granular permissions
-    can_manage_users = models.BooleanField(default=False)
-    can_view_financials = models.BooleanField(default=False)
-    can_manage_inventory = models.BooleanField(default=False)
-```
-
-### Data Protection
-- **Encryption at rest**: Database-level encryption
-- **Encryption in transit**: TLS/SSL for all communications
-- **Input validation**: Server-side validation for all inputs
-- **SQL injection prevention**: Parameterized queries
-- **XSS protection**: Content Security Policy headers
-
-## Deployment Architecture
-
-### Container Strategy
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Nginx         │    │   Frontend      │    │   Backend       │
-│   (Reverse      │◄──►│   (React SPA)   │    │   (Django API)  │
-│    Proxy)       │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   SSL/TLS       │    │   Static Files  │    │   PostgreSQL    │
-│   Termination   │    │   (CDN)         │    │   Database      │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-### Docker Configuration
-- **Multi-stage builds**: Optimized image sizes
-- **Layer caching**: Faster build times
-- **Security scanning**: Vulnerability detection
-- **Health checks**: Container health monitoring
-
-### CI/CD Pipeline
-```
-1. Code Push → GitHub Actions Trigger
-2. Automated Testing → Unit, Integration, E2E
-3. Security Scanning → Dependency, SAST, DAST
-4. Docker Build → Multi-architecture images
-5. Deployment → Staging → Production
-6. Monitoring → Health checks, alerts
-```
-
-## Scalability Considerations
-
-### Horizontal Scaling
-- **Stateless services**: Easy horizontal scaling
-- **Load balancing**: Nginx load balancer
-- **Database sharding**: Organization-based sharding
-- **CDN integration**: Static asset delivery
-
-### Performance Optimization
-- **Database indexing**: Optimized query performance
-- **Caching layers**: Redis for session and query caching
-- **Connection pooling**: Efficient database connections
-- **Async processing**: Celery for background tasks
-
-### Monitoring and Observability
-- **Application metrics**: Performance monitoring
-- **Error tracking**: Centralized error logging
-- **Audit logging**: User action tracking
-- **Health checks**: Service availability monitoring
-
-## Future Architecture Considerations
-
-### Microservices Migration
-- **Service decomposition**: Break monolith into services
-- **API Gateway**: Centralized API management
-- **Service mesh**: Inter-service communication
-- **Event-driven architecture**: Asynchronous communication
-
-### Cloud-Native Features
-- **Kubernetes deployment**: Container orchestration
-- **Service discovery**: Dynamic service location
-- **Config management**: Centralized configuration
-- **Secrets management**: Secure credential storage
-
-### Advanced Web3 Features
-- **Cross-chain support**: Multi-blockchain integration
-- **DeFi protocols**: Decentralized finance integration
-- **NFT marketplace**: Non-fungible token support
-- **DAO governance**: Decentralized autonomous organization
+- **Modular Design**: Loosely coupled components for scalability and maintainability
+- **Web3-First**: Blockchain integration at the core of business operations
+- **API-First**: RESTful APIs for all system interactions
+- **Multi-Chain Support**: Cross-blockchain compatibility and interoperability
+- **Decentralized Storage**: IPFS for metadata and document storage
+- **Smart Contract Automation**: Automated business logic execution
 
 ---
 
-This architecture document provides a comprehensive overview of the TidyGen ERP platform's design and implementation. It serves as a guide for developers, architects, and stakeholders to understand the system's structure and make informed decisions about future development.
+## 🎯 System Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        WEB[Web Frontend<br/>React + TypeScript]
+        CLI[CLI Tools<br/>Node.js]
+        MOBILE[Mobile App<br/>React Native]
+    end
+    
+    subgraph "API Gateway Layer"
+        NGINX[Nginx<br/>Reverse Proxy]
+        AUTH[JWT Authentication<br/>DID Verification]
+        RATE[Rate Limiting<br/>Request Validation]
+    end
+    
+    subgraph "Core Engine"
+        API[Django REST API<br/>Business Logic]
+        CELERY[Celery Task Queue<br/>Background Jobs]
+        CACHE[Redis Cache<br/>Session Storage]
+    end
+    
+    subgraph "Web3 Layer"
+        LEDGER[Smart Contract Ledger<br/>Business Records]
+        DID[DID Management<br/>Identity System]
+        STORAGE[IPFS Storage<br/>Decentralized Files]
+        WALLET[Wallet Integration<br/>Multi-Chain Support]
+    end
+    
+    subgraph "Data Storage"
+        POSTGRES[(PostgreSQL<br/>Relational Data)]
+        REDIS[(Redis<br/>Cache & Sessions)]
+        IPFS[(IPFS Network<br/>File Storage)]
+        BLOCKCHAIN[(Blockchain<br/>Immutable Records)]
+    end
+    
+    subgraph "External Services"
+        METAMASK[MetaMask<br/>Wallet Provider]
+        POLKADOT[Polkadot<br/>Parachain Network]
+        ETHEREUM[Ethereum<br/>Smart Contracts]
+        POLYGON[Polygon<br/>Layer 2 Scaling]
+    end
+    
+    %% Client to API Gateway
+    WEB --> NGINX
+    CLI --> NGINX
+    MOBILE --> NGINX
+    
+    %% API Gateway to Core Engine
+    NGINX --> AUTH
+    AUTH --> RATE
+    RATE --> API
+    
+    %% Core Engine Internal
+    API --> CELERY
+    API --> CACHE
+    CELERY --> POSTGRES
+    
+    %% Core Engine to Web3 Layer
+    API --> LEDGER
+    API --> DID
+    API --> STORAGE
+    API --> WALLET
+    
+    %% Web3 Layer to Data Storage
+    LEDGER --> BLOCKCHAIN
+    DID --> BLOCKCHAIN
+    STORAGE --> IPFS
+    WALLET --> BLOCKCHAIN
+    
+    %% Core Engine to Data Storage
+    API --> POSTGRES
+    CACHE --> REDIS
+    
+    %% Web3 Layer to External Services
+    WALLET --> METAMASK
+    LEDGER --> ETHEREUM
+    LEDGER --> POLYGON
+    LEDGER --> POLKADOT
+```
+
+---
+
+## 🔧 Component Descriptions
+
+### **Client Layer**
+
+#### **Web Frontend (React + TypeScript)**
+- **Purpose**: Primary user interface for business operations
+- **Technology**: React 18, TypeScript, Tailwind CSS, Web3.js
+- **Features**:
+  - Dashboard with real-time analytics
+  - Service management interface
+  - Asset tokenization UI
+  - Web3 wallet integration
+  - Mobile-responsive design
+
+#### **CLI Tools (Node.js)**
+- **Purpose**: Command-line interface for developers and power users
+- **Technology**: Node.js, Commander.js, Web3.js
+- **Features**:
+  - Service deployment automation
+  - Smart contract interaction
+  - Batch operations
+  - System administration
+
+#### **Mobile App (React Native)**
+- **Purpose**: Field operations and mobile workforce management
+- **Technology**: React Native, Expo, Web3 integration
+- **Features**:
+  - Service completion tracking
+  - GPS location services
+  - Photo documentation
+  - Offline capability
+
+### **API Gateway Layer**
+
+#### **Nginx (Reverse Proxy)**
+- **Purpose**: Load balancing, SSL termination, and request routing
+- **Configuration**:
+  - SSL/TLS encryption
+  - Gzip compression
+  - Static file serving
+  - Health check endpoints
+
+#### **JWT Authentication & DID Verification**
+- **Purpose**: Multi-layered authentication system
+- **Features**:
+  - Traditional JWT tokens
+  - Decentralized Identity (DID) verification
+  - Multi-factor authentication
+  - Session management
+
+#### **Rate Limiting & Request Validation**
+- **Purpose**: API protection and abuse prevention
+- **Features**:
+  - Per-IP rate limiting
+  - Request size validation
+  - Input sanitization
+  - DDoS protection
+
+### **Core Engine**
+
+#### **Django REST API (Business Logic)**
+- **Purpose**: Core business logic and API endpoints
+- **Technology**: Django 4.2+, Django REST Framework, Python 3.12+
+- **Modules**:
+  - User Management & Authentication
+  - Service Management & Scheduling
+  - Inventory & Asset Management
+  - Financial Management & Payments
+  - Field Operations & Route Optimization
+  - Analytics & Reporting
+
+#### **Celery Task Queue (Background Jobs)**
+- **Purpose**: Asynchronous task processing
+- **Technology**: Celery, Redis, RabbitMQ
+- **Tasks**:
+  - Smart contract deployment
+  - Payment processing
+  - Email notifications
+  - Data synchronization
+  - Report generation
+
+#### **Redis Cache (Session Storage)**
+- **Purpose**: High-performance caching and session management
+- **Technology**: Redis 7+
+- **Features**:
+  - API response caching
+  - Session storage
+  - Real-time data
+  - Pub/Sub messaging
+
+### **Web3 Layer**
+
+#### **Smart Contract Ledger (Business Records)**
+- **Purpose**: Immutable business record storage
+- **Technology**: Solidity, Web3.py, ethers.js
+- **Contracts**:
+  - `TidyGenERP.sol`: Core business logic
+  - `ServiceVerification.sol`: Service completion tracking
+  - `PaymentEscrow.sol`: Trustless payment processing
+  - `AssetTokenization.sol`: NFT-based asset management
+  - `TidyGenDAO.sol`: Decentralized governance
+
+#### **DID Management (Identity System)**
+- **Purpose**: Decentralized identity and access control
+- **Technology**: DID specification, cryptographic signatures
+- **Features**:
+  - Self-sovereign identity
+  - Cross-platform compatibility
+  - Privacy-preserving authentication
+  - Verifiable credentials
+
+#### **IPFS Storage (Decentralized Files)**
+- **Purpose**: Decentralized file and metadata storage
+- **Technology**: IPFS, Pinata, Filecoin
+- **Features**:
+  - Document storage
+  - Image and media files
+  - Metadata storage
+  - Content addressing
+
+#### **Wallet Integration (Multi-Chain Support)**
+- **Purpose**: Multi-blockchain wallet connectivity
+- **Technology**: Web3.js, ethers.js, Polkadot.js
+- **Features**:
+  - MetaMask integration
+  - WalletConnect support
+  - Multi-chain transactions
+  - Cross-chain asset transfers
+
+### **Data Storage**
+
+#### **PostgreSQL (Relational Data)**
+- **Purpose**: Primary database for business data
+- **Technology**: PostgreSQL 15+
+- **Features**:
+  - ACID compliance
+  - JSON support
+  - Full-text search
+  - Multi-tenant architecture
+
+#### **Redis (Cache & Sessions)**
+- **Purpose**: High-performance caching and session storage
+- **Technology**: Redis 7+
+- **Features**:
+  - In-memory storage
+  - Pub/Sub messaging
+  - Data persistence
+  - Clustering support
+
+#### **IPFS Network (File Storage)**
+- **Purpose**: Decentralized file storage
+- **Technology**: IPFS, Pinata
+- **Features**:
+  - Content addressing
+  - Distributed storage
+  - Version control
+  - Access control
+
+#### **Blockchain (Immutable Records)**
+- **Purpose**: Immutable business record storage
+- **Networks**: Ethereum, Polygon, Polkadot
+- **Features**:
+  - Tamper-proof records
+  - Public verification
+  - Smart contract execution
+  - Cross-chain compatibility
+
+---
+
+## 🔄 Interaction Flow Between Modules
+
+### **Service Creation Flow**
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API Gateway
+    participant B as Backend
+    participant W as Web3 Layer
+    participant S as Smart Contract
+    participant BC as Blockchain
+    
+    U->>F: Create Service Request
+    F->>A: POST /api/services/
+    A->>A: Authenticate & Validate
+    A->>B: Process Request
+    B->>B: Validate Business Rules
+    B->>W: Deploy Smart Contract
+    W->>S: Deploy Contract
+    S->>BC: Store on Blockchain
+    BC-->>S: Contract Address
+    S-->>W: Deployment Success
+    W-->>B: Contract Details
+    B->>B: Store in Database
+    B-->>A: Service Created
+    A-->>F: Response with Contract
+    F-->>U: Service Created Successfully
+```
+
+### **Service Completion Flow**
+
+```mermaid
+sequenceDiagram
+    participant P as Provider
+    participant F as Frontend
+    participant A as API Gateway
+    participant B as Backend
+    participant W as Web3 Layer
+    participant S as Smart Contract
+    participant C as Client
+    
+    P->>F: Mark Service Complete
+    F->>A: POST /api/services/{id}/complete/
+    A->>A: Authenticate Provider
+    A->>B: Process Completion
+    B->>W: Call Smart Contract
+    W->>S: completeService()
+    S->>S: Verify Provider
+    S->>S: Update Status
+    S-->>W: Transaction Hash
+    W-->>B: Completion Recorded
+    B->>B: Update Database
+    B->>B: Notify Client
+    B-->>A: Service Completed
+    A-->>F: Success Response
+    F-->>P: Completion Confirmed
+    B->>C: Send Notification
+```
+
+### **Payment Processing Flow**
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant F as Frontend
+    participant A as API Gateway
+    participant B as Backend
+    participant W as Web3 Layer
+    participant E as Escrow Contract
+    participant P as Provider
+    
+    C->>F: Verify Service
+    F->>A: POST /api/services/{id}/verify/
+    A->>A: Authenticate Client
+    A->>B: Process Verification
+    B->>W: Call Escrow Contract
+    W->>E: releasePayment()
+    E->>E: Verify Service Status
+    E->>E: Transfer Funds
+    E-->>W: Payment Released
+    W-->>B: Payment Confirmed
+    B->>B: Update Records
+    B->>B: Notify Provider
+    B-->>A: Payment Processed
+    A-->>F: Success Response
+    F-->>C: Payment Released
+    B->>P: Send Notification
+```
+
+### **Asset Tokenization Flow**
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API Gateway
+    participant B as Backend
+    participant W as Web3 Layer
+    participant N as NFT Contract
+    participant I as IPFS
+    
+    U->>F: Tokenize Asset
+    F->>A: POST /api/assets/{id}/tokenize/
+    A->>A: Authenticate User
+    A->>B: Process Tokenization
+    B->>I: Upload Metadata
+    I-->>B: IPFS Hash
+    B->>W: Deploy NFT
+    W->>N: mintNFT()
+    N->>N: Create Token
+    N-->>W: Token ID
+    W-->>B: NFT Created
+    B->>B: Update Database
+    B-->>A: Asset Tokenized
+    A-->>F: NFT Details
+    F-->>U: Asset Tokenized
+```
+
+---
+
+## 🔗 Data Flow Architecture
+
+### **On-Chain Data**
+- **Service Records**: Immutable service completion records
+- **Payment Transactions**: Cryptocurrency payment history
+- **Asset Ownership**: NFT-based asset ownership records
+- **Governance Decisions**: DAO voting and proposal records
+- **Identity Verification**: DID-based identity records
+
+### **Off-Chain Data**
+- **User Profiles**: Personal and business information
+- **Service Details**: Detailed service descriptions and requirements
+- **Financial Records**: Traditional accounting and bookkeeping
+- **Analytics Data**: Performance metrics and business intelligence
+- **Document Storage**: Contracts, invoices, and legal documents
+
+### **Hybrid Data Storage**
+- **Metadata**: On-chain hashes pointing to off-chain data
+- **File Storage**: IPFS for documents with blockchain verification
+- **Caching**: Redis for frequently accessed data
+- **Synchronization**: Real-time sync between on-chain and off-chain data
+
+---
+
+## 🚀 Scalability Considerations
+
+### **Horizontal Scaling**
+- **Load Balancing**: Nginx load balancer for API requests
+- **Database Sharding**: Organization-based data partitioning
+- **Microservices**: Modular architecture for independent scaling
+- **CDN Integration**: Global content delivery for static assets
+
+### **Performance Optimization**
+- **Caching Strategy**: Multi-layer caching with Redis
+- **Database Indexing**: Optimized queries and indexes
+- **Connection Pooling**: Efficient database connections
+- **Async Processing**: Celery for background tasks
+
+### **Blockchain Optimization**
+- **Gas Optimization**: Efficient smart contract design
+- **Layer 2 Solutions**: Polygon for reduced transaction costs
+- **Batch Operations**: Multiple operations in single transaction
+- **Cross-Chain Efficiency**: Optimized bridge operations
+
+---
+
+## 🔒 Security Architecture
+
+### **Authentication & Authorization**
+- **Multi-Factor Authentication**: JWT + DID verification
+- **Role-Based Access Control**: Granular permissions
+- **Session Management**: Secure session handling
+- **API Security**: Rate limiting and input validation
+
+### **Data Protection**
+- **Encryption at Rest**: Database and file encryption
+- **Encryption in Transit**: TLS/SSL for all communications
+- **Privacy Controls**: User data privacy and GDPR compliance
+- **Audit Trails**: Comprehensive logging and monitoring
+
+### **Smart Contract Security**
+- **Formal Verification**: Mathematical proof of correctness
+- **Security Audits**: Professional third-party audits
+- **Access Controls**: Multi-signature and role-based controls
+- **Emergency Procedures**: Pause and upgrade mechanisms
+
+---
+
+## 📊 Monitoring & Observability
+
+### **Application Monitoring**
+- **Health Checks**: System health and availability monitoring
+- **Performance Metrics**: Response times and throughput
+- **Error Tracking**: Exception monitoring and alerting
+- **User Analytics**: Usage patterns and behavior analysis
+
+### **Blockchain Monitoring**
+- **Transaction Tracking**: Real-time transaction monitoring
+- **Smart Contract Events**: Event logging and analysis
+- **Gas Usage**: Transaction cost optimization
+- **Network Status**: Blockchain network health monitoring
+
+### **Infrastructure Monitoring**
+- **Server Metrics**: CPU, memory, and disk usage
+- **Database Performance**: Query performance and optimization
+- **Network Monitoring**: Bandwidth and latency tracking
+- **Security Monitoring**: Intrusion detection and prevention
+
+---
+
+This architecture provides a robust, scalable, and secure foundation for the TidyGen ERP platform, enabling seamless integration of traditional ERP functionality with cutting-edge Web3 technology.

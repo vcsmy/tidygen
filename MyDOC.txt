@@ -1,0 +1,123 @@
+## 🔹 Step 1: Benchmark – Web3 Foundation Grant Requirements
+
+The Web3 Foundation expects projects to meet these criteria:
+
+1. **Open Source Code**
+
+   * Code must be in a public GitHub repo (✅ you already have this).
+   * Include a permissive license (e.g., Apache 2.0, GPLv3, MIT).
+
+2. **Documentation**
+
+   * Clear README with:
+
+     * What the project does
+     * Why it’s useful in the Web3 ecosystem
+     * Install & usage guide
+     * Roadmap
+   * Contribution guide (`CONTRIBUTING.md`)
+   * Developer guide (`docs/` folder with architecture diagrams, flowcharts, API docs).
+
+3. **Technical Design**
+
+   * Architecture diagram (system components + interactions).
+   * Explain how it leverages **Web3 principles** (decentralization, interoperability, trustless execution).
+   * Describe modules, smart contracts, APIs.
+
+4. **Grant Proposal Fit**
+
+   * Problem statement (what you’re solving).
+   * Solution overview (how TidyGen solves it).
+   * Relevance to Polkadot/Substrate ecosystem.
+   * Roadmap with milestones & deliverables.
+
+5. **Community Value**
+
+   * How others can use or extend TidyGen.
+   * Real-world use cases.
+   * Impact on Web3 ecosystem.
+
+---
+
+## 🔹 Step 2: Current Gaps in TidyGen
+
+Looking at your repo (`vcsmy/tidygen`):
+
+* README is minimal → needs restructuring.
+* No license file → must add (MIT recommended).
+* No roadmap or milestones → required for grant.
+* No architecture diagrams → required for clarity.
+* No docs on how it fits into **Web3 ecosystem**.
+* No technical deep-dive (`docs/` folder missing).
+* No explicit Web3 / Polkadot link yet.
+
+---
+
+## 🔹 Step 3: Benchmark Instructions (for Cursor.AI)
+
+Here’s a **prompt set you can paste into Cursor.AI** to amend the repo step by step:
+
+```
+# Cursor.AI Prompt Set for TidyGen – Web3 Grant Benchmarking
+
+## 1. Documentation
+- Rewrite README.md with sections:
+  - Project Overview
+  - Problem Statement
+  - Why Web3 (decentralization, security, trustless)
+  - Features
+  - Installation Guide
+  - Usage Examples
+  - Roadmap & Milestones
+  - Contribution Guidelines
+- Add LICENSE file (MIT).
+- Create CONTRIBUTING.md with coding standards and PR process.
+- Create CODE_OF_CONDUCT.md.
+
+## 2. Architecture & Technical Design
+- Add /docs folder.
+- Inside /docs:
+  - Add system architecture diagram (Mermaid or PlantUML).
+  - Add module explanations.
+  - Add API documentation.
+  - Add "How TidyGen fits Web3" section, showing:
+    - Decentralized storage (IPFS/Arweave integration plan).
+    - Smart contract or blockchain-based registry.
+    - Trustless verification mechanism.
+
+## 3. Web3 Grant Alignment
+- Create GRANT_PROPOSAL.md with:
+  - Executive Summary
+  - Problem
+  - Solution (TidyGen)
+  - Technical Architecture
+  - Ecosystem Fit (why Polkadot/Substrate/Web3)
+  - Roadmap (3–4 milestones with deliverables, timelines)
+  - Team Background
+- Ensure proposal explains both short-term deliverables and long-term vision.
+
+## 4. Repository Quality
+- Add GitHub Actions for CI/CD (lint + tests).
+- Add Issues & Discussions templates.
+- Add SECURITY.md (disclosure policy).
+- Add FUNDING.yml (for GitHub Sponsors, optional).
+
+## 5. Community Engagement
+- Add examples/ folder with demo apps.
+- Add tutorials.md for first-time developers.
+- Plan open-source governance (contributors, maintainers).
+```
+
+---
+
+## 🔹 Step 4: After Cursor.AI Updates
+
+Once Cursor applies these:
+
+* You’ll have a **solid repo** aligned with Web3 Foundation guidelines.
+* Your GRANT\_PROPOSAL.md will be nearly submission-ready.
+* You’ll show both **technical rigor** and **ecosystem impact**.
+
+---
+
+👉 Vijay, do you want me to **write the first draft of README.md and GRANT\_PROPOSAL.md** for TidyGen so you can directly drop them into your repo and let Cursor.AI refine?
