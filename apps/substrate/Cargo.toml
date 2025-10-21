@@ -1,0 +1,32 @@
+[workspace]
+resolver = "2"
+members = [
+    "node",
+    "runtime",
+    "pallets/tidygen-ledger",
+    "pallets/tidygen-did",
+    "pallets/tidygen-dao",
+]
+
+[workspace.package]
+authors = ["TidyGen Team"]
+edition = "2021"
+license = "Apache-2.0"
+homepage = "https://github.com/tidygen/tidygen-community"
+repository = "https://github.com/tidygen/tidygen-community"
+
+[workspace.dependencies]
+# Substrate dependencies
+codec = { package = "parity-scale-codec", version = "3.6.1", default-features = false, features = ["derive"] }
+scale-info = { version = "2.10.0", default-features = false, features = ["derive"] }
+frame-benchmarking = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+frame-support = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+frame-system = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-core = { version = "21.0.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-io = { version = "23.0.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-runtime = { version = "24.0.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-std = { version = "8.0.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+
+[profile.release]
+panic = "unwind"
+
