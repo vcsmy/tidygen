@@ -1,0 +1,21 @@
+[package]
+name = "pallet-did-runtime-api"
+version = "1.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Runtime API for pallet-did"
+
+[dependencies]
+codec = { workspace = true }
+sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-std = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+    "codec/std",
+    "sp-api/std",
+    "sp-std/std",
+]
+

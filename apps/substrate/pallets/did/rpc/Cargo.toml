@@ -1,0 +1,18 @@
+[package]
+name = "pallet-did-rpc"
+version = "1.0.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "RPC interface for pallet-did"
+
+[dependencies]
+codec = { workspace = true }
+jsonrpsee = { version = "0.16.2", features = ["client-core", "server", "macros"] }
+sp-api = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-blockchain = { version = "4.0.0-dev", git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.6.0" }
+sp-runtime = { workspace = true }
+sp-core = { workspace = true }
+
+[dev-dependencies]
+
