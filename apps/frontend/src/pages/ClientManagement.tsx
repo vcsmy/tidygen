@@ -41,19 +41,19 @@ export default function ClientManagement() {
   });
 
   const clientSummary = clientSummaryResponse?.data;
-  const clients = clientsResponse?.data;
-  const serviceRequests = serviceRequestsResponse?.data;
+  const clients = clientsResponse?.results || clientsResponse?.data || [];
+  const serviceRequests = serviceRequestsResponse?.results || serviceRequestsResponse?.data || [];
 
   const isLoading = summaryLoading || clientsLoading || requestsLoading;
 
   // Client columns
   const clientColumns = [
     {
-      key: "name",
+      key: "display_name",
       header: "Client Name",
       render: (row: Client) => (
         <div>
-          <div className="font-medium">{row.name}</div>
+          <div className="font-medium">{row.display_name || row.name || 'N/A'}</div>
           <div className="text-sm text-muted-foreground">{row.client_type}</div>
         </div>
       ),
@@ -63,9 +63,9 @@ export default function ClientManagement() {
       header: "Contact",
       render: (row: Client) => (
         <div>
-          <div className="font-medium text-sm">{row.contact_person}</div>
-          <div className="text-xs text-muted-foreground">{row.email}</div>
-          <div className="text-xs text-muted-foreground">{row.phone}</div>
+          <div className="font-medium text-sm">{row.contact_person || row.display_name || 'N/A'}</div>
+          <div className="text-xs text-muted-foreground">{row.email || 'N/A'}</div>
+          <div className="text-xs text-muted-foreground">{row.phone || 'N/A'}</div>
         </div>
       ),
     },
@@ -74,8 +74,8 @@ export default function ClientManagement() {
       header: "Location",
       render: (row: Client) => (
         <div className="text-sm">
-          <div>{row.city}, {row.state}</div>
-          <div className="text-muted-foreground">{row.zip_code}</div>
+          <div>{row.city || 'N/A'}, {row.state || 'N/A'}</div>
+          <div className="text-muted-foreground">{row.postal_code || row.zip_code || 'N/A'}</div>
         </div>
       ),
     },
@@ -97,14 +97,14 @@ export default function ClientManagement() {
       header: "Frequency",
       render: (row: Client) => (
         <Badge variant="outline">
-          {row.service_frequency}
+          {row.service_frequency || 'N/A'}
         </Badge>
       ),
     },
     {
       key: "total_revenue",
       header: "Revenue",
-      render: (row: Client) => `$${row.total_revenue.toLocaleString()}`,
+      render: (row: Client) => row.total_revenue ? `$${row.total_revenue.toLocaleString()}` : '$0',
     },
     {
       key: "next_service_date",

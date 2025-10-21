@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Sum, Count, Q, F
 from django.utils import timezone
 from datetime import timedelta
+from drf_spectacular.utils import extend_schema
 
 from apps.core.permissions import IsOrganizationMember
 from apps.core.views import BaseModelViewSet
@@ -23,15 +24,16 @@ from .serializers import (
 )
 
 
+@extend_schema(tags=['Inventory'])
 class ProductCategoryViewSet(BaseModelViewSet):
     """Product category viewset."""
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['parent', 'organization']
+    filterset_fields = ['parent']
     search_fields = ['name', 'description']
-    ordering_fields = ['name', 'created', 'updated']
+    ordering_fields = ['name', 'created', 'modified']
     ordering = ['name']
 
     def get_queryset(self):
@@ -69,13 +71,14 @@ class ProductCategoryViewSet(BaseModelViewSet):
         }
 
 
+@extend_schema(tags=['Inventory'])
 class ProductViewSet(BaseModelViewSet):
     """Product viewset."""
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category', 'is_active', 'is_digital', 'organization']
+    filterset_fields = ['category', 'is_active', 'is_digital']
     search_fields = ['name', 'sku', 'description', 'barcode']
     ordering_fields = ['name', 'sku', 'current_stock', 'cost_price', 'selling_price', 'created']
     ordering = ['name']
@@ -181,13 +184,14 @@ class ProductViewSet(BaseModelViewSet):
         return int(product.current_stock / avg_daily_out)
 
 
+@extend_schema(tags=['Inventory'])
 class StockMovementViewSet(BaseModelViewSet):
     """Stock movement viewset."""
     queryset = StockMovement.objects.all()
     serializer_class = StockMovementSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['product', 'movement_type', 'product__organization']
+    filterset_fields = ['product', 'movement_type']
     search_fields = ['reference_number', 'notes', 'product__name']
     ordering_fields = ['created', 'quantity', 'movement_type']
     ordering = ['-created']
@@ -227,13 +231,14 @@ class StockMovementViewSet(BaseModelViewSet):
         return Response(summary)
 
 
+@extend_schema(tags=['Inventory'])
 class SupplierViewSet(BaseModelViewSet):
     """Supplier viewset."""
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['organization']
+    filterset_fields = []
     search_fields = ['name', 'contact_person', 'email', 'phone']
     ordering_fields = ['name', 'created']
     ordering = ['name']
@@ -279,13 +284,14 @@ class SupplierViewSet(BaseModelViewSet):
         return Response(performance)
 
 
+@extend_schema(tags=['Inventory'])
 class PurchaseOrderViewSet(BaseModelViewSet):
     """Purchase order viewset."""
     queryset = PurchaseOrder.objects.all()
     serializer_class = PurchaseOrderSerializer
     permission_classes = [IsAuthenticated, IsOrganizationMember]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['supplier', 'status', 'organization']
+    filterset_fields = ['supplier', 'status']
     search_fields = ['order_number', 'notes', 'supplier__name']
     ordering_fields = ['order_date', 'total_amount', 'created']
     ordering = ['-order_date']
@@ -361,6 +367,7 @@ class PurchaseOrderViewSet(BaseModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Inventory'])
 class PurchaseOrderItemViewSet(BaseModelViewSet):
     """Purchase order item viewset."""
     queryset = PurchaseOrderItem.objects.all()
@@ -378,6 +385,7 @@ class PurchaseOrderItemViewSet(BaseModelViewSet):
         )
 
 
+@extend_schema(tags=['Inventory'])
 class InventoryDashboardViewSet(viewsets.ViewSet):
     """Inventory dashboard viewset."""
     permission_classes = [IsAuthenticated, IsOrganizationMember]

@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.utils import timezone
 from django.db.models import Q
+from drf_spectacular.utils import extend_schema
 
 from .models import DIDDocument, DIDRole, DIDCredential, DIDSession, DIDPermission
 from .serializers import (
@@ -27,6 +28,7 @@ from .services import (
 logger = logging.getLogger(__name__)
 
 
+@extend_schema(tags=['DID Auth'])
 class DIDDocumentViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing DID documents.
@@ -175,6 +177,7 @@ class DIDDocumentViewSet(viewsets.ModelViewSet):
         return Response(info, status=status.HTTP_200_OK)
 
 
+@extend_schema(tags=['DID Auth'])
 class DIDRoleViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing DID roles.
@@ -236,6 +239,7 @@ class DIDRoleViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(tags=['DID Auth'])
 class DIDSessionViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for managing DID sessions (read-only).
@@ -309,6 +313,7 @@ class DIDSessionViewSet(viewsets.ReadOnlyModelViewSet):
         }, status=status.HTTP_404_NOT_FOUND)
 
 
+@extend_schema(tags=['DID Auth'])
 class DIDCredentialViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing DID credentials.
@@ -331,6 +336,7 @@ class DIDCredentialViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
+@extend_schema(tags=['DID Auth'])
 class DIDPermissionViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for managing DID permissions (read-only).

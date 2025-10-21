@@ -92,7 +92,6 @@ def log_did_creation(sender, instance, created, **kwargs):
     """Log DID creation in audit log."""
     if created:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='medium',
             event_name='did_created',
@@ -112,7 +111,6 @@ def log_did_verification(sender, instance, **kwargs):
     """Log DID verification in audit log."""
     if instance.is_verified and instance.verification_timestamp:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='medium',
             event_name='did_verified',
@@ -132,9 +130,13 @@ def log_did_verification(sender, instance, **kwargs):
 @receiver(post_save, sender=OnChainAnchor)
 def log_anchor_creation(sender, instance, created, **kwargs):
     """Log anchor creation in audit log."""
-    if created:
+    if created and not kwargs.get('raw', False):
+        # Prevent recursion by checking if this is an auto-generated anchor
+        if instance.metadata.get('auto_anchored', False):
+            # Skip logging for auto-anchored items to prevent recursion
+            return
+            
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='high',
             event_name='anchor_created',
@@ -153,9 +155,10 @@ def log_anchor_creation(sender, instance, created, **kwargs):
 @receiver(post_save, sender=OnChainAnchor)
 def log_anchor_status_change(sender, instance, **kwargs):
     """Log anchor status changes in audit log."""
-    if instance.status in ['anchored', 'confirmed']:
+    if (instance.status in ['anchored', 'confirmed'] and 
+        not kwargs.get('raw', False) and 
+        not instance.metadata.get('auto_anchored', False)):
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='high',
             event_name='anchor_status_changed',
@@ -178,7 +181,6 @@ def log_module_deployment(sender, instance, **kwargs):
     """Log smart contract module deployment."""
     if instance.status == 'deployed':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='high',
             event_name='smart_contract_deployed',
@@ -199,7 +201,6 @@ def log_module_activation(sender, instance, **kwargs):
     """Log smart contract module activation."""
     if instance.status == 'active':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='medium',
             event_name='smart_contract_activated',
@@ -221,7 +222,6 @@ def log_proposal_creation(sender, instance, created, **kwargs):
     """Log governance proposal creation."""
     if created:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='medium',
             event_name='governance_proposal_created',
@@ -241,7 +241,6 @@ def log_voting_start(sender, instance, **kwargs):
     """Log voting period start."""
     if instance.status == 'active' and instance.voting_start:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='medium',
             event_name='voting_started',
@@ -261,7 +260,6 @@ def log_proposal_execution(sender, instance, **kwargs):
     """Log proposal execution."""
     if instance.status == 'executed':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='high',
             event_name='proposal_executed',
@@ -305,7 +303,6 @@ def log_reward_creation(sender, instance, created, **kwargs):
     """Log tokenized reward creation."""
     if created:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='low',
             event_name='reward_created',
@@ -325,7 +322,6 @@ def log_reward_approval(sender, instance, **kwargs):
     """Log reward approval."""
     if instance.status == 'approved':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='medium',
             event_name='reward_approved',
@@ -345,7 +341,6 @@ def log_reward_payment(sender, instance, **kwargs):
     """Log reward payment."""
     if instance.status == 'paid':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='transaction',
             severity='medium',
             event_name='reward_paid',
@@ -367,7 +362,6 @@ def log_storage_upload(sender, instance, created, **kwargs):
     """Log file upload to decentralized storage."""
     if created:
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='user_action',
             severity='low',
             event_name='file_uploaded',
@@ -388,7 +382,6 @@ def log_storage_pin(sender, instance, **kwargs):
     """Log file pinning."""
     if instance.pin_status and instance.status == 'pinned':
         BlockchainAuditLog.objects.create(
-            organization=instance.organization,
             log_type='system_event',
             severity='low',
             event_name='file_pinned',
@@ -408,19 +401,21 @@ def log_storage_pin(sender, instance, **kwargs):
 @receiver(post_save, sender=BlockchainAuditLog)
 def auto_anchor_critical_logs(sender, instance, created, **kwargs):
     """Automatically anchor critical audit logs to blockchain."""
-    if created and instance.severity in ['high', 'critical']:
+    if (created and instance.severity in ['high', 'critical'] and 
+        instance.event_name != 'anchor_created' and not kwargs.get('raw', False)):
         # Create on-chain anchor for critical logs
+        original_data = {
+            'log_id': instance.id,
+            'event_name': instance.event_name,
+            'description': instance.description,
+            'severity': instance.severity,
+            'user': instance.user.username if instance.user else None,
+            'timestamp': instance.created.isoformat()
+        }
         anchor = OnChainAnchor.objects.create(
-            organization=instance.organization,
             anchor_type='audit_log',
-            original_data={
-                'log_id': instance.id,
-                'event_name': instance.event_name,
-                'description': instance.description,
-                'severity': instance.severity,
-                'user': instance.user.username if instance.user else None,
-                'timestamp': instance.created.isoformat()
-            },
+            data_hash=OnChainAnchor().generate_data_hash(original_data),
+            original_data=original_data,
             data_type='audit_log',
             description=f'Audit log anchor for {instance.event_name}',
             metadata={
@@ -443,17 +438,18 @@ def auto_anchor_invoice(sender, instance, created, **kwargs):
     """Automatically anchor invoices to blockchain."""
     if created:
         # Create on-chain anchor for invoice
+        original_data = {
+            'invoice_id': instance.id,
+            'invoice_number': instance.invoice_number,
+            'amount': str(instance.total_amount),
+            'customer': instance.customer.name if instance.customer else None,
+            'status': instance.status,
+            'created_at': instance.created.isoformat()
+        }
         anchor = OnChainAnchor.objects.create(
-            organization=instance.organization,
             anchor_type='invoice',
-            original_data={
-                'invoice_id': instance.id,
-                'invoice_number': instance.invoice_number,
-                'amount': str(instance.total_amount),
-                'customer': instance.customer.name if instance.customer else None,
-                'status': instance.status,
-                'created_at': instance.created.isoformat()
-            },
+            data_hash=OnChainAnchor().generate_data_hash(original_data),
+            original_data=original_data,
             data_type='invoice',
             description=f'Invoice {instance.invoice_number} anchor',
             related_invoice=instance,
@@ -469,16 +465,16 @@ def auto_anchor_payment(sender, instance, created, **kwargs):
     """Automatically anchor payments to blockchain."""
     if created:
         # Create on-chain anchor for payment
+        original_data = {
+            'payment_id': instance.id,
+            'amount': str(instance.amount),
+            'payment_method': instance.payment_method,
+            'created_at': instance.created.isoformat()
+        }
         anchor = OnChainAnchor.objects.create(
-            organization=instance.organization,
             anchor_type='payment',
-            original_data={
-                'payment_id': instance.id,
-                'amount': str(instance.amount),
-                'payment_method': instance.payment_method,
-                'status': instance.status,
-                'created_at': instance.created.isoformat()
-            },
+            data_hash=OnChainAnchor().generate_data_hash(original_data),
+            original_data=original_data,
             data_type='payment',
             description=f'Payment {instance.id} anchor',
             related_payment=instance,
@@ -494,17 +490,18 @@ def auto_anchor_employee_hire(sender, instance, created, **kwargs):
     """Automatically anchor employee hiring to blockchain."""
     if created:
         # Create on-chain anchor for employee hire
+        original_data = {
+            'employee_id': instance.id,
+            'employee_number': instance.employee_id,
+            'hire_date': instance.hire_date.isoformat() if instance.hire_date else None,
+            'position': instance.position.title if instance.position else None,
+            'department': instance.department.name if instance.department else None,
+            'salary': str(instance.salary) if instance.salary else None
+        }
         anchor = OnChainAnchor.objects.create(
-            organization=instance.organization,
             anchor_type='supply_chain',
-            original_data={
-                'employee_id': instance.id,
-                'employee_number': instance.employee_id,
-                'hire_date': instance.hire_date.isoformat(),
-                'position': instance.position.title if instance.position else None,
-                'department': instance.department.name if instance.department else None,
-                'salary': str(instance.salary) if instance.salary else None
-            },
+            data_hash=OnChainAnchor().generate_data_hash(original_data),
+            original_data=original_data,
             data_type='employee_hire',
             description=f'Employee {instance.employee_id} hire anchor',
             metadata={

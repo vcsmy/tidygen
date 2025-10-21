@@ -17,9 +17,9 @@ class ProductCategorySerializer(serializers.ModelSerializer):
         model = ProductCategory
         fields = [
             'id', 'name', 'description', 'parent', 'parent_name',
-            'products_count', 'created', 'updated'
+            'products_count', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created', 'updated']
+        read_only_fields = ['id', 'created', 'modified']
 
     def get_products_count(self, obj):
         return obj.products.count()
@@ -28,7 +28,6 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     """Product serializer."""
     category_name = serializers.CharField(source='category.name', read_only=True)
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     stock_status = serializers.SerializerMethodField()
     total_value = serializers.SerializerMethodField()
 
@@ -38,10 +37,9 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'name', 'sku', 'description', 'category', 'category_name',
             'cost_price', 'selling_price', 'current_stock', 'min_stock_level',
             'max_stock_level', 'weight', 'dimensions', 'barcode', 'image',
-            'is_active', 'is_digital', 'organization', 'organization_name',
-            'stock_status', 'total_value', 'created', 'updated'
+            'is_active', 'is_digital', 'stock_status', 'total_value', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created', 'updated']
+        read_only_fields = ['id', 'created', 'modified']
 
     def get_stock_status(self, obj):
         if obj.current_stock <= obj.min_stock_level:
@@ -66,14 +64,13 @@ class StockMovementSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'product', 'product_name', 'product_sku', 'movement_type',
             'movement_type_display', 'quantity', 'reference_number', 'notes',
-            'created', 'updated'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created', 'updated']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class SupplierSerializer(serializers.ModelSerializer):
     """Supplier serializer."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     purchase_orders_count = serializers.SerializerMethodField()
     total_spent = serializers.SerializerMethodField()
 
@@ -81,10 +78,9 @@ class SupplierSerializer(serializers.ModelSerializer):
         model = Supplier
         fields = [
             'id', 'name', 'contact_person', 'email', 'phone', 'address',
-            'payment_terms', 'organization', 'organization_name',
-            'purchase_orders_count', 'total_spent', 'created', 'updated'
+            'payment_terms', 'purchase_orders_count', 'total_spent', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created', 'updated']
+        read_only_fields = ['id', 'created', 'modified']
 
     def get_purchase_orders_count(self, obj):
         return obj.purchase_orders.count()
@@ -103,9 +99,9 @@ class PurchaseOrderItemSerializer(serializers.ModelSerializer):
         model = PurchaseOrderItem
         fields = [
             'id', 'purchase_order', 'product', 'product_name', 'product_sku',
-            'quantity', 'unit_price', 'total_price', 'created', 'updated'
+            'quantity', 'unit_price', 'total_price', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'total_price', 'created', 'updated']
+        read_only_fields = ['id', 'total_price', 'created', 'modified']
 
     def validate(self, data):
         """Validate and calculate total price."""
@@ -118,7 +114,6 @@ class PurchaseOrderItemSerializer(serializers.ModelSerializer):
 class PurchaseOrderSerializer(serializers.ModelSerializer):
     """Purchase order serializer."""
     supplier_name = serializers.CharField(source='supplier.name', read_only=True)
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     items = PurchaseOrderItemSerializer(many=True, read_only=True)
     items_count = serializers.SerializerMethodField()
@@ -126,12 +121,11 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseOrder
         fields = [
-            'id', 'supplier', 'supplier_name', 'organization', 'organization_name',
-            'order_number', 'status', 'status_display', 'order_date',
-            'expected_delivery', 'total_amount', 'notes', 'items', 'items_count',
-            'created', 'updated'
+            'id', 'supplier', 'supplier_name', 'order_number', 'status', 'status_display', 
+            'order_date', 'expected_delivery', 'total_amount', 'notes', 'items', 'items_count',
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'order_number', 'total_amount', 'created', 'updated']
+        read_only_fields = ['id', 'order_number', 'total_amount', 'created', 'modified']
 
     def get_items_count(self, obj):
         return obj.items.count()

@@ -78,10 +78,13 @@ export function useCurrentUser(options?: UseQueryOptions<User>) {
   return useQuery({
     queryKey: queryKeys.currentUser,
     queryFn: async () => {
+      if (!apiClient.isAuthenticated()) {
+        return null;
+      }
       const response = await apiClient.getCurrentUser();
       return response.data;
     },
-    enabled: apiClient.isAuthenticated(),
+    enabled: true, // Always enabled to resolve loading state
     ...defaultQueryOptions,
     ...options,
   });

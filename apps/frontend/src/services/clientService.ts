@@ -6,28 +6,36 @@ import { apiClient } from '@/services/api';
 
 export interface Client {
   id: number;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  country: string;
-  contact_person: string;
-  company_name?: string;
-  client_type: 'individual' | 'business' | 'residential' | 'commercial';
+  display_name?: string;
+  contact_person?: string;
+  email?: string;
+  phone?: string;
+  address_line1?: string;
+  address_line2?: string;
+  city?: string;
+  state?: string;
+  postal_code?: string;
+  country?: string;
+  client_type: 'individual' | 'corporate';
   status: 'active' | 'inactive' | 'prospect' | 'suspended';
-  service_frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'one-time' | 'custom';
-  preferred_contact_method: 'email' | 'phone' | 'sms';
-  notes: string;
+  priority?: string;
+  preferred_contact_method?: 'email' | 'phone' | 'sms' | 'whatsapp';
+  notes?: string;
   created: string;
-  updated: string;
+  modified: string;
+  full_address?: string;
+  // Legacy fields for backwards compatibility
+  name?: string;
+  address?: string;
+  zip_code?: string;
+  updated?: string;
+  company_name?: string;
+  service_frequency?: string;
   last_service_date?: string;
   next_service_date?: string;
-  total_services: number;
-  total_revenue: number;
-  organization: number;
+  total_services?: number;
+  total_revenue?: number;
+  organization?: number;
 }
 
 export interface ServiceRequest {
@@ -81,129 +89,28 @@ class ClientService {
     page?: number;
     page_size?: number;
   }) {
-    // Mock implementation - replace with real API call
-    const mockClients: Client[] = [
-      {
-        id: 1,
-        name: "John Smith",
-        email: "john.smith@email.com",
-        phone: "+1 (555) 123-4567",
-        address: "123 Main St",
-        city: "New York",
-        state: "NY",
-        zip_code: "10001",
-        country: "USA",
-        contact_person: "John Smith",
-        client_type: "residential",
-        status: "active",
-        service_frequency: "weekly",
-        preferred_contact_method: "email",
-        notes: "Prefers morning appointments",
-        created: "2024-01-15T10:00:00Z",
-        updated: "2024-01-20T14:30:00Z",
-        last_service_date: "2024-01-18T09:00:00Z",
-        next_service_date: "2024-01-25T09:00:00Z",
-        total_services: 12,
-        total_revenue: 2400.00,
-        organization: 1,
-      },
-      {
-        id: 2,
-        name: "ABC Corporation",
-        email: "contact@abccorp.com",
-        phone: "+1 (555) 987-6543",
-        address: "456 Business Ave",
-        city: "Los Angeles",
-        state: "CA",
-        zip_code: "90210",
-        country: "USA",
-        contact_person: "Jane Doe",
-        company_name: "ABC Corporation",
-        client_type: "commercial",
-        status: "active",
-        service_frequency: "bi-weekly",
-        preferred_contact_method: "phone",
-        notes: "Large office building, requires special equipment",
-        created: "2024-01-10T08:00:00Z",
-        updated: "2024-01-22T16:45:00Z",
-        last_service_date: "2024-01-20T08:00:00Z",
-        next_service_date: "2024-02-03T08:00:00Z",
-        total_services: 8,
-        total_revenue: 4800.00,
-        organization: 1,
-      },
-    ];
-
-    return { data: mockClients };
+    const response = await apiClient.get('/sales/clients/', { params });
+    return response.data;
   }
 
   async getClient(id: number) {
-    // Mock implementation
-    const mockClient: Client = {
-      id,
-      name: "John Smith",
-      email: "john.smith@email.com",
-      phone: "+1 (555) 123-4567",
-      address: "123 Main St",
-      city: "New York",
-      state: "NY",
-      zip_code: "10001",
-      country: "USA",
-      contact_person: "John Smith",
-      client_type: "residential",
-      status: "active",
-      service_frequency: "weekly",
-      preferred_contact_method: "email",
-      notes: "Prefers morning appointments",
-      created: "2024-01-15T10:00:00Z",
-      updated: "2024-01-20T14:30:00Z",
-      last_service_date: "2024-01-18T09:00:00Z",
-      next_service_date: "2024-01-25T09:00:00Z",
-      total_services: 12,
-      total_revenue: 2400.00,
-      organization: 1,
-    };
-
-    return { data: mockClient };
+    const response = await apiClient.get(`/sales/clients/${id}/`);
+    return response.data;
   }
 
   async createClient(data: Partial<Client>) {
-    // Mock implementation
-    const newClient: Client = {
-      id: Date.now(),
-      name: data.name || "",
-      email: data.email || "",
-      phone: data.phone || "",
-      address: data.address || "",
-      city: data.city || "",
-      state: data.state || "",
-      zip_code: data.zip_code || "",
-      country: data.country || "USA",
-      contact_person: data.contact_person || data.name || "",
-      company_name: data.company_name,
-      client_type: data.client_type || "individual",
-      status: data.status || "prospect",
-      service_frequency: data.service_frequency || "one-time",
-      preferred_contact_method: data.preferred_contact_method || "email",
-      notes: data.notes || "",
-      created: new Date().toISOString(),
-      updated: new Date().toISOString(),
-      total_services: 0,
-      total_revenue: 0,
-      organization: 1,
-    };
-
-    return { data: newClient };
+    const response = await apiClient.post('/sales/clients/', data);
+    return response.data;
   }
 
   async updateClient(id: number, data: Partial<Client>) {
-    // Mock implementation
-    return { data: { ...data, id, updated: new Date().toISOString() } };
+    const response = await apiClient.patch(`/sales/clients/${id}/`, data);
+    return response.data;
   }
 
   async deleteClient(id: number) {
-    // Mock implementation
-    return { data: { id } };
+    const response = await apiClient.delete(`/sales/clients/${id}/`);
+    return response.data;
   }
 
   // Service Requests
@@ -267,54 +174,25 @@ class ClientService {
 
   // Client Notes
   async getClientNotes(clientId: number) {
-    // Mock implementation
-    const mockNotes: ClientNote[] = [
-      {
-        id: 1,
-        client: clientId,
-        title: "Service Feedback",
-        content: "Client was very satisfied with the last cleaning service.",
-        note_type: "compliment",
-        created_by: 1,
-        created_by_name: "Jane Manager",
-        created: "2024-01-18T15:30:00Z",
-      },
-    ];
-
-    return { data: mockNotes };
+    const response = await apiClient.get(`/sales/clients/${clientId}/notes/`);
+    return response.data;
   }
 
   async createClientNote(data: Partial<ClientNote>) {
-    // Mock implementation
-    const newNote: ClientNote = {
-      id: Date.now(),
-      client: data.client || 0,
-      title: data.title || "",
-      content: data.content || "",
-      note_type: data.note_type || "general",
-      created_by: 1,
-      created_by_name: "Current User",
-      created: new Date().toISOString(),
-    };
-
-    return { data: newNote };
+    const response = await apiClient.post(`/sales/clients/${data.client}/notes/`, data);
+    return response.data;
   }
 
   // Dashboard/Summary
   async getClientSummary() {
-    // Mock implementation
+    // Return mock summary for now - can be connected to a real analytics endpoint later
     const summary: ClientSummary = {
-      total_clients: 156,
-      active_clients: 142,
-      new_clients_this_month: 8,
-      total_revenue: 45600.00,
-      average_service_frequency: "bi-weekly",
-      top_service_types: [
-        { service_type: "Regular Cleaning", count: 45 },
-        { service_type: "Deep Cleaning", count: 32 },
-        { service_type: "Carpet Cleaning", count: 18 },
-        { service_type: "Window Cleaning", count: 12 },
-      ],
+      total_clients: 0,
+      active_clients: 0,
+      new_clients_this_month: 0,
+      total_revenue: 0,
+      average_service_frequency: "monthly",
+      top_service_types: [],
     };
 
     return { data: summary };

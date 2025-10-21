@@ -8,7 +8,7 @@ from datetime import timedelta
 
 from apps.sales.models import (
     Client, IndividualClient, CorporateClient, ClientContact, ClientNote,
-    ClientDocument, ClientInteraction, ClientTagAssignment, ClientSegmentAssignment
+    ClientDocument, ClientInteraction, ClientTag, ClientTagAssignment, ClientSegmentAssignment
 )
 
 
@@ -204,12 +204,8 @@ def notify_important_notes(sender, instance, created, **kwargs):
 def assign_default_tags(sender, instance, created, **kwargs):
     """Assign default tags based on client type and status."""
     if created:
-        # Get organization's default tags
-        organization = instance.organization
-        
         # Assign client type tag
         type_tag, _ = ClientTag.objects.get_or_create(
-            organization=organization,
             name=f"{instance.client_type.title()} Client",
             defaults={
                 'color': '#007bff' if instance.client_type == 'individual' else '#28a745',
@@ -219,7 +215,6 @@ def assign_default_tags(sender, instance, created, **kwargs):
         
         # Assign status tag
         status_tag, _ = ClientTag.objects.get_or_create(
-            organization=organization,
             name=f"{instance.status.title()} Status",
             defaults={
                 'color': '#ffc107' if instance.status == 'prospect' else '#28a745',

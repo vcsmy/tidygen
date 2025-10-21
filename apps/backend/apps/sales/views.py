@@ -10,6 +10,7 @@ from django.db.models import Count, Q, F, Sum, Avg
 from django.utils import timezone
 from datetime import datetime, timedelta
 from decimal import Decimal
+from drf_spectacular.utils import extend_schema
 
 from apps.core.permissions import IsOrganizationMember
 from apps.sales.models import (
@@ -33,6 +34,7 @@ from apps.sales.filters import (
 )
 
 
+@extend_schema(tags=['Sales'])
 class ClientViewSet(viewsets.ModelViewSet):
     """ViewSet for Client model."""
     queryset = Client.objects.all()
@@ -46,7 +48,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         return Client.objects.all().select_related('assigned_to', 'created_by').prefetch_related(
-            'individual_client', 'corporate_client', 'contacts', 'notes',
+            'individual_client', 'corporate_client', 'contacts', 'client_notes',
             'documents', 'interactions', 'tag_assignments__tag',
             'segment_assignments__segment'
         )
@@ -103,7 +105,7 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response({'error': 'tag_id is required'}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
-            tag = ClientTag.objects.get(id=tag_id, organization=client.organization)
+            tag = ClientTag.objects.get(id=tag_id)
             assignment, created = ClientTagAssignment.objects.get_or_create(
                 client=client,
                 tag=tag,
@@ -140,7 +142,7 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response({'error': 'segment_id is required'}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
-            segment = ClientSegment.objects.get(id=segment_id, organization=client.organization)
+            segment = ClientSegment.objects.get(id=segment_id)
             assignment, created = ClientSegmentAssignment.objects.get_or_create(
                 client=client,
                 segment=segment,
@@ -295,6 +297,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Sales'])
 class IndividualClientViewSet(viewsets.ModelViewSet):
     """ViewSet for IndividualClient model."""
     queryset = IndividualClient.objects.all()
@@ -307,11 +310,10 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
     ordering = ['last_name', 'first_name']
     
     def get_queryset(self):
-        return IndividualClient.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client')
+        return IndividualClient.objects.all().select_related('client')
 
 
+@extend_schema(tags=['Sales'])
 class CorporateClientViewSet(viewsets.ModelViewSet):
     """ViewSet for CorporateClient model."""
     queryset = CorporateClient.objects.all()
@@ -324,11 +326,10 @@ class CorporateClientViewSet(viewsets.ModelViewSet):
     ordering = ['company_name']
     
     def get_queryset(self):
-        return CorporateClient.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client')
+        return CorporateClient.objects.all().select_related('client')
 
 
+@extend_schema(tags=['Sales'])
 class ClientContactViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientContact model."""
     queryset = ClientContact.objects.all()
@@ -341,11 +342,10 @@ class ClientContactViewSet(viewsets.ModelViewSet):
     ordering = ['-is_primary', 'last_name', 'first_name']
     
     def get_queryset(self):
-        return ClientContact.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client')
+        return ClientContact.objects.all().select_related('client')
 
 
+@extend_schema(tags=['Sales'])
 class ClientNoteViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientNote model."""
     queryset = ClientNote.objects.all()
@@ -358,11 +358,10 @@ class ClientNoteViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
     
     def get_queryset(self):
-        return ClientNote.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client', 'related_user')
+        return ClientNote.objects.all().select_related('client', 'related_user')
 
 
+@extend_schema(tags=['Sales'])
 class ClientDocumentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientDocument model."""
     queryset = ClientDocument.objects.all()
@@ -375,14 +374,13 @@ class ClientDocumentViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
     
     def get_queryset(self):
-        return ClientDocument.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client', 'uploaded_by')
+        return ClientDocument.objects.all().select_related('client', 'uploaded_by')
     
     def perform_create(self, serializer):
         serializer.save(uploaded_by=self.request.user)
 
 
+@extend_schema(tags=['Sales'])
 class ClientTagViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientTag model."""
     queryset = ClientTag.objects.all()
@@ -398,10 +396,10 @@ class ClientTagViewSet(viewsets.ModelViewSet):
         return ClientTag.objects.all()
     
     def perform_create(self, serializer):
-        organization = self.request.user.organization_memberships.first().organization
-        serializer.save(organization=organization)
+        serializer.save()
 
 
+@extend_schema(tags=['Sales'])
 class ClientTagAssignmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientTagAssignment model."""
     queryset = ClientTagAssignment.objects.all()
@@ -412,11 +410,10 @@ class ClientTagAssignmentViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
     
     def get_queryset(self):
-        return ClientTagAssignment.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client', 'tag', 'assigned_by')
+        return ClientTagAssignment.objects.all().select_related('client', 'tag', 'assigned_by')
 
 
+@extend_schema(tags=['Sales'])
 class ClientInteractionViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientInteraction model."""
     queryset = ClientInteraction.objects.all()
@@ -429,9 +426,7 @@ class ClientInteractionViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
     
     def get_queryset(self):
-        return ClientInteraction.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client', 'initiated_by')
+        return ClientInteraction.objects.all().select_related('client', 'initiated_by')
     
     def perform_create(self, serializer):
         serializer.save(initiated_by=self.request.user)
@@ -503,6 +498,7 @@ class ClientInteractionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Sales'])
 class ClientSegmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientSegment model."""
     queryset = ClientSegment.objects.all()
@@ -515,13 +511,13 @@ class ClientSegmentViewSet(viewsets.ModelViewSet):
     ordering = ['name']
     
     def get_queryset(self):
-        return ClientSegment.objects.filter(organization=self.request.user.organization_memberships.first().organization)
+        return ClientSegment.objects.all()
     
     def perform_create(self, serializer):
-        organization = self.request.user.organization_memberships.first().organization
-        serializer.save(organization=organization)
+        serializer.save()
 
 
+@extend_schema(tags=['Sales'])
 class ClientSegmentAssignmentViewSet(viewsets.ModelViewSet):
     """ViewSet for ClientSegmentAssignment model."""
     queryset = ClientSegmentAssignment.objects.all()
@@ -532,11 +528,10 @@ class ClientSegmentAssignmentViewSet(viewsets.ModelViewSet):
     ordering = ['-assigned_date']
     
     def get_queryset(self):
-        return ClientSegmentAssignment.objects.filter(
-            client__organization=self.request.user.organization_memberships.first().organization
-        ).select_related('client', 'segment', 'assigned_by')
+        return ClientSegmentAssignment.objects.all().select_related('client', 'segment', 'assigned_by')
 
 
+@extend_schema(tags=['Sales'])
 class ClientDashboardViewSet(viewsets.ViewSet):
     """ViewSet for client dashboard data."""
     permission_classes = [IsAuthenticated, IsOrganizationMember]
@@ -544,7 +539,6 @@ class ClientDashboardViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def overview(self, request):
         """Get client dashboard overview."""
-        organization = request.user.organization_memberships.first().organization
         clients = Client.objects
         
         # Basic counts

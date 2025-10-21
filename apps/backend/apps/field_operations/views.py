@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q, Count, Sum, F, Avg
 from django.utils import timezone
 from datetime import datetime, timedelta
+from drf_spectacular.utils import extend_schema
 
 from .models import (
     FieldTeam, TeamMember, ServiceRoute, RouteStop, 
@@ -22,6 +23,7 @@ from .serializers import (
 )
 
 
+@extend_schema(tags=['Field Operations'])
 class FieldTeamViewSet(viewsets.ModelViewSet):
     """ViewSet for FieldTeam model."""
     
@@ -93,6 +95,7 @@ class FieldTeamViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Field Operations'])
 class TeamMemberViewSet(viewsets.ModelViewSet):
     """ViewSet for TeamMember model."""
     
@@ -105,6 +108,7 @@ class TeamMemberViewSet(viewsets.ModelViewSet):
     ordering = ['team', 'role']
 
 
+@extend_schema(tags=['Field Operations'])
 class ServiceRouteViewSet(viewsets.ModelViewSet):
     """ViewSet for ServiceRoute model."""
     
@@ -219,6 +223,7 @@ class ServiceRouteViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Field Operations'])
 class RouteStopViewSet(viewsets.ModelViewSet):
     """ViewSet for RouteStop model."""
     
@@ -267,6 +272,7 @@ class RouteStopViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Field Operations'])
 class FieldJobViewSet(viewsets.ModelViewSet):
     """ViewSet for FieldJob model."""
     
@@ -411,6 +417,7 @@ class FieldJobViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Field Operations'])
 class JobEquipmentViewSet(viewsets.ModelViewSet):
     """ViewSet for JobEquipment model."""
     
@@ -423,6 +430,7 @@ class JobEquipmentViewSet(viewsets.ModelViewSet):
     ordering = ['-created']
 
 
+@extend_schema(tags=['Field Operations'])
 class DispatchLogViewSet(viewsets.ModelViewSet):
     """ViewSet for DispatchLog model."""
     

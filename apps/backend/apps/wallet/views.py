@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.utils import timezone
+from drf_spectacular.utils import extend_schema
 
 from .models import Wallet, WalletSignature, WalletPermission, WalletSession
 from .serializers import (
@@ -35,6 +36,7 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
+@extend_schema(tags=['Wallet'])
 class WalletViewSet(viewsets.ModelViewSet):
     """
     ViewSet for wallet management.
@@ -220,6 +222,7 @@ class WalletAuthenticationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(tags=['Wallet'])
 class WalletSignatureViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for wallet signatures.
@@ -238,6 +241,7 @@ class WalletSignatureViewSet(viewsets.ReadOnlyModelViewSet):
         ).order_by('-created_at')
 
 
+@extend_schema(tags=['Wallet'])
 class WalletPermissionViewSet(viewsets.ModelViewSet):
     """
     ViewSet for wallet permissions.
@@ -260,6 +264,7 @@ class WalletPermissionViewSet(viewsets.ModelViewSet):
         serializer.save(granted_by=self.request.user)
 
 
+@extend_schema(tags=['Wallet'])
 class WalletSessionViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for wallet sessions.

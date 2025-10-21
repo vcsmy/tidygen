@@ -162,15 +162,10 @@ def update_policy_acknowledgment(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=Employee)
 def validate_employee_data(sender, instance, **kwargs):
     """Validate employee data before saving."""
-    # Ensure employee ID is unique within organization
-    if instance.employee_id:
-        existing_employee = Employee.objects.filter(
-            organization=instance.organization,
-            employee_id=instance.employee_id
-        ).exclude(pk=instance.pk)
-        
-        if existing_employee.exists():
-            raise ValueError(f"Employee ID {instance.employee_id} already exists in this organization.")
+    # The employee_id field is already unique at the database level,
+    # so we don't need additional validation here since the model
+    # enforces uniqueness with unique=True
+    pass
 
 
 @receiver(pre_save, sender=LeaveRequest)

@@ -27,16 +27,18 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'date_joined', 'last_login', 'full_name']
     
     def get_organizations(self, obj):
-        """Get user's organizations."""
-        return [
-            {
-                'id': membership.organization.id,
-                'name': membership.organization.name,
-                'role': membership.role.name if membership.role else None,
-                'is_owner': membership.is_owner
-            }
-            for membership in obj.get_organizations()
-        ]
+        """Get user's organization (community edition has single organization)."""
+        organization = obj.get_organization()
+        if organization:
+            return [
+                {
+                    'id': organization.id,
+                    'name': organization.name,
+                    'role': 'member',  # Default role in community edition
+                    'is_owner': obj.is_staff  # Admin users are owners in community edition
+                }
+            ]
+        return []
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

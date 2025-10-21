@@ -12,6 +12,7 @@ from django.db.models import Sum, Count, Avg, Q
 from django.db import transaction
 from decimal import Decimal
 from datetime import date, timedelta
+from drf_spectacular.utils import extend_schema
 
 from .models import (
     PayrollConfiguration, PayrollComponent, EmployeePayrollProfile,
@@ -32,6 +33,7 @@ from apps.hr.models import Employee, PayrollPeriod, Payroll
 
 # ==================== PAYROLL CONFIGURATION VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class PayrollConfigurationViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollConfiguration management."""
     queryset = PayrollConfiguration.objects.all()
@@ -84,6 +86,7 @@ class PayrollConfigurationViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Payroll'])
 class PayrollComponentViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollComponent management."""
     queryset = PayrollComponent.objects.all()
@@ -144,6 +147,7 @@ class PayrollComponentViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Payroll'])
 class EmployeePayrollProfileViewSet(viewsets.ModelViewSet):
     """ViewSet for EmployeePayrollProfile management."""
     queryset = EmployeePayrollProfile.objects.all()
@@ -207,6 +211,7 @@ class EmployeePayrollProfileViewSet(viewsets.ModelViewSet):
 
 # ==================== ENHANCED PAYROLL VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class PayrollRunViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollRun management."""
     queryset = PayrollRun.objects.all()
@@ -380,6 +385,7 @@ class PayrollRunViewSet(viewsets.ModelViewSet):
         return Response(summary)
 
 
+@extend_schema(tags=['Payroll'])
 class PayrollItemViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollItem management."""
     queryset = PayrollItem.objects.all()
@@ -398,6 +404,7 @@ class PayrollItemViewSet(viewsets.ModelViewSet):
         )
 
 
+@extend_schema(tags=['Payroll'])
 class PayrollAdjustmentViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollAdjustment management."""
     queryset = PayrollAdjustment.objects.all()
@@ -443,6 +450,7 @@ class PayrollAdjustmentViewSet(viewsets.ModelViewSet):
 
 # ==================== TAX AND COMPLIANCE VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class TaxYearViewSet(viewsets.ModelViewSet):
     """ViewSet for TaxYear management."""
     queryset = TaxYear.objects.all()
@@ -459,6 +467,7 @@ class TaxYearViewSet(viewsets.ModelViewSet):
         return TaxYear.objects.filter(organization=self.request.user.organization_memberships.first().organization)
 
 
+@extend_schema(tags=['Payroll'])
 class EmployeeTaxInfoViewSet(viewsets.ModelViewSet):
     """ViewSet for EmployeeTaxInfo management."""
     queryset = EmployeeTaxInfo.objects.all()
@@ -477,6 +486,7 @@ class EmployeeTaxInfoViewSet(viewsets.ModelViewSet):
 
 # ==================== PAYROLL REPORTS AND ANALYTICS VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class PayrollReportViewSet(viewsets.ReadOnlyModelViewSet):
     """ViewSet for PayrollReport (read-only)."""
     queryset = PayrollReport.objects.all()
@@ -526,6 +536,7 @@ class PayrollReportViewSet(viewsets.ReadOnlyModelViewSet):
         }
 
 
+@extend_schema(tags=['Payroll'])
 class PayrollAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
     """ViewSet for PayrollAnalytics (read-only)."""
     queryset = PayrollAnalytics.objects.all()
@@ -571,6 +582,7 @@ class PayrollAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
 
 # ==================== PAYROLL INTEGRATION VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class PayrollIntegrationViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollIntegration management."""
     queryset = PayrollIntegration.objects.all()
@@ -611,6 +623,7 @@ class PayrollIntegrationViewSet(viewsets.ModelViewSet):
         return Response({'message': 'Data sync completed successfully.'})
 
 
+@extend_schema(tags=['Payroll'])
 class PayrollWebhookViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollWebhook management."""
     queryset = PayrollWebhook.objects.all()
@@ -629,6 +642,7 @@ class PayrollWebhookViewSet(viewsets.ModelViewSet):
 
 # ==================== PAYROLL NOTIFICATIONS VIEWS ====================
 
+@extend_schema(tags=['Payroll'])
 class PayrollNotificationViewSet(viewsets.ReadOnlyModelViewSet):
     """ViewSet for PayrollNotification (read-only)."""
     queryset = PayrollNotification.objects.all()

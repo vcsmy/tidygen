@@ -18,36 +18,34 @@ from apps.hr.models import Employee, PayrollPeriod, Payroll
 
 class PayrollConfigurationSerializer(serializers.ModelSerializer):
     """Serializer for PayrollConfiguration."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     
     class Meta:
         model = PayrollConfiguration
         fields = [
-            'id', 'organization', 'organization_name', 'currency', 'pay_frequency',
+            'id', 'currency', 'pay_frequency',
             'tax_year', 'federal_tax_rate', 'state_tax_rate', 'local_tax_rate',
             'social_security_rate', 'social_security_wage_base', 'medicare_rate',
             'medicare_additional_rate', 'medicare_additional_threshold',
             'overtime_multiplier', 'double_time_multiplier', 'overtime_threshold',
             'holiday_pay_multiplier', 'vacation_accrual_rate', 'sick_leave_accrual_rate',
             'auto_process_payroll', 'require_approval', 'allow_manual_adjustments',
-            'notify_employees', 'notify_managers', 'notify_hr', 'created_at', 'modified_at'
+            'notify_employees', 'notify_managers', 'notify_hr', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PayrollComponentSerializer(serializers.ModelSerializer):
     """Serializer for PayrollComponent."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     
     class Meta:
         model = PayrollComponent
         fields = [
-            'id', 'organization', 'organization_name', 'name', 'component_type',
+            'id', 'name', 'component_type',
             'calculation_type', 'amount', 'percentage', 'is_taxable', 'is_pretax',
             'is_active', 'is_mandatory', 'description', 'category', 'sort_order',
-            'created_at', 'modified_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class EmployeePayrollProfileSerializer(serializers.ModelSerializer):
@@ -64,16 +62,15 @@ class EmployeePayrollProfileSerializer(serializers.ModelSerializer):
             'bank_name', 'bank_routing_number', 'bank_account_number', 'account_type',
             'health_insurance_deduction', 'dental_insurance_deduction', 'vision_insurance_deduction',
             'retirement_contribution', 'retirement_match', 'custom_allowances',
-            'custom_deductions', 'is_active', 'effective_date', 'created_at', 'modified_at'
+            'custom_deductions', 'is_active', 'effective_date', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== ENHANCED PAYROLL SERIALIZERS ====================
 
 class PayrollRunSerializer(serializers.ModelSerializer):
     """Serializer for PayrollRun."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     payroll_period_name = serializers.CharField(source='payroll_period.name', read_only=True)
     processed_by_name = serializers.CharField(source='processed_by.get_full_name', read_only=True)
     approved_by_name = serializers.CharField(source='approved_by.get_full_name', read_only=True)
@@ -81,13 +78,13 @@ class PayrollRunSerializer(serializers.ModelSerializer):
     class Meta:
         model = PayrollRun
         fields = [
-            'id', 'organization', 'organization_name', 'payroll_period', 'payroll_period_name',
+            'id', 'payroll_period', 'payroll_period_name',
             'run_name', 'run_type', 'status', 'processed_by', 'processed_by_name',
             'processed_at', 'approved_by', 'approved_by_name', 'approved_at',
             'total_employees', 'total_gross_pay', 'total_deductions', 'total_net_pay',
-            'total_taxes', 'notes', 'error_log', 'created_at', 'modified_at'
+            'total_taxes', 'notes', 'error_log', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PayrollItemSerializer(serializers.ModelSerializer):
@@ -101,9 +98,9 @@ class PayrollItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'payroll', 'payroll_run', 'component', 'component_name', 'component_type',
             'item_type', 'quantity', 'rate', 'amount', 'is_taxable', 'is_pretax',
-            'description', 'reference', 'payroll_employee_name', 'created_at', 'modified_at'
+            'description', 'reference', 'payroll_employee_name', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PayrollAdjustmentSerializer(serializers.ModelSerializer):
@@ -116,27 +113,26 @@ class PayrollAdjustmentSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'payroll', 'payroll_run', 'adjustment_type', 'amount', 'is_positive',
             'is_taxable', 'is_pretax', 'approved_by', 'approved_by_name', 'approved_at',
-            'reason', 'reference_document', 'payroll_employee_name', 'created_at', 'modified_at'
+            'reason', 'reference_document', 'payroll_employee_name', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== TAX AND COMPLIANCE SERIALIZERS ====================
 
 class TaxYearSerializer(serializers.ModelSerializer):
     """Serializer for TaxYear."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     
     class Meta:
         model = TaxYear
         fields = [
-            'id', 'organization', 'organization_name', 'year', 'federal_tax_rate',
+            'id', 'year', 'federal_tax_rate',
             'state_tax_rate', 'local_tax_rate', 'social_security_rate', 'social_security_wage_base',
             'medicare_rate', 'medicare_additional_rate', 'medicare_additional_threshold',
             'standard_deduction_single', 'standard_deduction_married', 'is_active',
-            'created_at', 'modified_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class EmployeeTaxInfoSerializer(serializers.ModelSerializer):
@@ -151,59 +147,56 @@ class EmployeeTaxInfoSerializer(serializers.ModelSerializer):
             'federal_exemptions', 'state_exemptions', 'additional_federal_withholding',
             'additional_state_withholding', 'w4_form_date', 'state_tax_form_date',
             'ytd_gross_wages', 'ytd_federal_tax', 'ytd_state_tax', 'ytd_social_security',
-            'ytd_medicare', 'created_at', 'modified_at'
+            'ytd_medicare', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== PAYROLL REPORTS AND ANALYTICS SERIALIZERS ====================
 
 class PayrollReportSerializer(serializers.ModelSerializer):
     """Serializer for PayrollReport."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     generated_by_name = serializers.CharField(source='generated_by.get_full_name', read_only=True)
     
     class Meta:
         model = PayrollReport
         fields = [
-            'id', 'organization', 'organization_name', 'report_name', 'report_type',
+            'id', 'report_name', 'report_type',
             'start_date', 'end_date', 'departments', 'employees', 'payroll_periods',
             'report_data', 'totals', 'status', 'generated_by', 'generated_by_name',
-            'generated_at', 'created_at', 'modified_at'
+            'generated_at', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PayrollAnalyticsSerializer(serializers.ModelSerializer):
     """Serializer for PayrollAnalytics."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     
     class Meta:
         model = PayrollAnalytics
         fields = [
-            'id', 'organization', 'organization_name', 'period_start', 'period_end',
+            'id', 'period_start', 'period_end',
             'period_type', 'total_employees', 'total_gross_pay', 'total_net_pay',
             'total_taxes', 'total_benefits', 'total_overtime', 'average_gross_pay',
             'average_net_pay', 'average_hours_worked', 'gross_pay_trend',
-            'employee_count_trend', 'metrics', 'created_at', 'modified_at'
+            'employee_count_trend', 'metrics', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== PAYROLL INTEGRATION SERIALIZERS ====================
 
 class PayrollIntegrationSerializer(serializers.ModelSerializer):
     """Serializer for PayrollIntegration."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     
     class Meta:
         model = PayrollIntegration
         fields = [
-            'id', 'organization', 'organization_name', 'integration_name', 'integration_type',
+            'id', 'integration_name', 'integration_type',
             'provider_name', 'provider_url', 'is_active', 'configuration',
-            'last_sync', 'sync_status', 'error_message', 'created_at', 'modified_at'
+            'last_sync', 'sync_status', 'error_message', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
         extra_kwargs = {
             'api_key': {'write_only': True},
             'api_secret': {'write_only': True},
@@ -214,17 +207,16 @@ class PayrollIntegrationSerializer(serializers.ModelSerializer):
 
 class PayrollWebhookSerializer(serializers.ModelSerializer):
     """Serializer for PayrollWebhook."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     integration_name = serializers.CharField(source='integration.integration_name', read_only=True)
     
     class Meta:
         model = PayrollWebhook
         fields = [
-            'id', 'organization', 'organization_name', 'integration', 'integration_name',
+            'id', 'integration', 'integration_name',
             'event_type', 'webhook_url', 'is_active', 'total_calls', 'successful_calls',
-            'failed_calls', 'last_called', 'created_at', 'modified_at'
+            'failed_calls', 'last_called', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
         extra_kwargs = {
             'secret_key': {'write_only': True},
         }
@@ -234,18 +226,17 @@ class PayrollWebhookSerializer(serializers.ModelSerializer):
 
 class PayrollNotificationSerializer(serializers.ModelSerializer):
     """Serializer for PayrollNotification."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     related_payroll_employee = serializers.CharField(source='related_payroll.employee.full_name', read_only=True)
     
     class Meta:
         model = PayrollNotification
         fields = [
-            'id', 'organization', 'organization_name', 'notification_type', 'recipients',
+            'id', 'notification_type', 'recipients',
             'subject', 'message', 'delivery_method', 'status', 'scheduled_at', 'sent_at',
             'related_payroll', 'related_payroll_run', 'related_payroll_employee',
-            'created_at', 'modified_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== ENHANCED PAYROLL SERIALIZERS ====================
@@ -273,9 +264,9 @@ class EnhancedPayrollSerializer(serializers.ModelSerializer):
             'social_security', 'health_insurance', 'other_deductions', 'gross_pay',
             'total_deductions', 'net_pay', 'status', 'notes', 'payroll_items',
             'adjustments', 'total_earnings', 'total_taxes', 'net_pay_percentage',
-            'created_at', 'modified_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_total_earnings(self, obj):
         """Calculate total earnings from payroll items."""
@@ -301,7 +292,6 @@ class EnhancedPayrollSerializer(serializers.ModelSerializer):
 
 class PayrollRunDetailSerializer(serializers.ModelSerializer):
     """Detailed serializer for PayrollRun with payrolls."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     payroll_period_name = serializers.CharField(source='payroll_period.name', read_only=True)
     processed_by_name = serializers.CharField(source='processed_by.get_full_name', read_only=True)
     approved_by_name = serializers.CharField(source='approved_by.get_full_name', read_only=True)
@@ -319,14 +309,14 @@ class PayrollRunDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PayrollRun
         fields = [
-            'id', 'organization', 'organization_name', 'payroll_period', 'payroll_period_name',
+            'id', 'payroll_period', 'payroll_period_name',
             'run_name', 'run_type', 'status', 'processed_by', 'processed_by_name',
             'processed_at', 'approved_by', 'approved_by_name', 'approved_at',
             'total_employees', 'total_gross_pay', 'total_deductions', 'total_net_pay',
             'total_taxes', 'notes', 'error_log', 'payrolls', 'payroll_items', 'adjustments',
-            'payroll_count', 'average_gross_pay', 'average_net_pay', 'created_at', 'modified_at'
+            'payroll_count', 'average_gross_pay', 'average_net_pay', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_payroll_count(self, obj):
         """Get count of payrolls in this run."""

@@ -10,6 +10,7 @@ from django.db.models import Sum, Count, Avg, Q, F
 from django.utils import timezone
 from datetime import datetime, timedelta
 from decimal import Decimal
+from drf_spectacular.utils import extend_schema
 
 from apps.core.permissions import IsOrganizationMember
 from apps.finance.models import (
@@ -30,6 +31,7 @@ from apps.finance.filters import (
 )
 
 
+@extend_schema(tags=['Finance'])
 class AccountViewSet(viewsets.ModelViewSet):
     """ViewSet for Account model."""
     queryset = Account.objects.all()
@@ -49,6 +51,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['Finance'])
 class CustomerViewSet(viewsets.ModelViewSet):
     """ViewSet for Customer model."""
     queryset = Customer.objects.all()
@@ -84,6 +87,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Finance'])
 class VendorViewSet(viewsets.ModelViewSet):
     """ViewSet for Vendor model."""
     queryset = Vendor.objects.all()
@@ -111,6 +115,7 @@ class VendorViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Finance'])
 class InvoiceViewSet(viewsets.ModelViewSet):
     """ViewSet for Invoice model."""
     queryset = Invoice.objects.all()
@@ -227,6 +232,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Finance'])
 class InvoiceItemViewSet(viewsets.ModelViewSet):
     """ViewSet for InvoiceItem model."""
     queryset = InvoiceItem.objects.all()
@@ -243,6 +249,7 @@ class InvoiceItemViewSet(viewsets.ModelViewSet):
         return InvoiceItem.objects.none()
 
 
+@extend_schema(tags=['Finance'])
 class PaymentViewSet(viewsets.ModelViewSet):
     """ViewSet for Payment model."""
     queryset = Payment.objects.all()
@@ -262,6 +269,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization, received_by=self.request.user)
 
 
+@extend_schema(tags=['Finance'])
 class ExpenseViewSet(viewsets.ModelViewSet):
     """ViewSet for Expense model."""
     queryset = Expense.objects.all()
@@ -380,6 +388,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Finance'])
 class BudgetViewSet(viewsets.ModelViewSet):
     """ViewSet for Budget model."""
     queryset = Budget.objects.all()
@@ -399,6 +408,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['Finance'])
 class BudgetItemViewSet(viewsets.ModelViewSet):
     """ViewSet for BudgetItem model."""
     queryset = BudgetItem.objects.all()
@@ -415,6 +425,7 @@ class BudgetItemViewSet(viewsets.ModelViewSet):
         return BudgetItem.objects.none()
 
 
+@extend_schema(tags=['Finance'])
 class TaxRateViewSet(viewsets.ModelViewSet):
     """ViewSet for TaxRate model."""
     queryset = TaxRate.objects.all()
@@ -434,6 +445,7 @@ class TaxRateViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['Finance'])
 class RecurringInvoiceViewSet(viewsets.ModelViewSet):
     """ViewSet for RecurringInvoice model."""
     queryset = RecurringInvoice.objects.all()
@@ -488,6 +500,7 @@ class RecurringInvoiceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Finance'])
 class RecurringInvoiceItemViewSet(viewsets.ModelViewSet):
     """ViewSet for RecurringInvoiceItem model."""
     queryset = RecurringInvoiceItem.objects.all()
@@ -504,6 +517,7 @@ class RecurringInvoiceItemViewSet(viewsets.ModelViewSet):
         return RecurringInvoiceItem.objects.none()
 
 
+@extend_schema(tags=['Finance'])
 class FinancialReportViewSet(viewsets.ModelViewSet):
     """ViewSet for FinancialReport model."""
     queryset = FinancialReport.objects.all()
@@ -523,6 +537,7 @@ class FinancialReportViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization, generated_by=self.request.user)
 
 
+@extend_schema(tags=['Finance'])
 class FinanceDashboardViewSet(viewsets.ViewSet):
     """ViewSet for finance dashboard data."""
     permission_classes = [IsAuthenticated, IsOrganizationMember]

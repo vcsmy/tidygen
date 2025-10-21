@@ -109,16 +109,9 @@ def kpi_post_save(sender, instance, created, **kwargs):
     if created:
         logger.info(f"New KPI created: {instance.name}")
         
-        # Log analytics event
-        AnalyticsEvent.objects.create(
-            organization=instance.organization,
-            event_type='system_event',
-            event_name=f'KPI Created: {instance.name}',
-            context_data={
-                'kpi_id': str(instance.kpi_id),
-                'kpi_type': instance.kpi_type
-            }
-        )
+        # Note: KPI model doesn't have organization field, so we skip analytics event creation
+        # This could be enhanced in the future if organization context is needed
+        
     else:
         logger.info(f"KPI updated: {instance.name}")
         

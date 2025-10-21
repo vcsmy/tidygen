@@ -210,6 +210,7 @@ class ClientSerializer(serializers.ModelSerializer):
     # Computed fields
     display_name = serializers.ReadOnlyField()
     full_address = serializers.ReadOnlyField()
+    contact_person = serializers.SerializerMethodField()
     total_interactions = serializers.SerializerMethodField()
     last_interaction_date = serializers.SerializerMethodField()
     total_documents = serializers.SerializerMethodField()
@@ -229,10 +230,27 @@ class ClientSerializer(serializers.ModelSerializer):
             'last_activity_date', 'created_by', 'created_by_name',
             'individual_client', 'corporate_client', 'contacts', 'notes', 'documents',
             'interactions', 'tag_assignments', 'segment_assignments',
-            'display_name', 'full_address', 'total_interactions', 'last_interaction_date',
+            'display_name', 'full_address', 'contact_person', 'total_interactions', 'last_interaction_date',
             'total_documents', 'tags', 'segments', 'created', 'modified'
         ]
         read_only_fields = ['id', 'created', 'modified', 'last_contact_date', 'last_activity_date']
+    
+    def get_contact_person(self, obj):
+        """Get primary contact person name based on client type."""
+        if obj.client_type == 'individual':
+            individual = getattr(obj, 'individual_client', None)
+            if individual:
+                return individual.full_name
+        elif obj.client_type == 'corporate':
+            # Get first contact from contacts list
+            first_contact = obj.contacts.first()
+            if first_contact:
+                return f"{first_contact.first_name} {first_contact.last_name}".strip()
+            # Fall back to corporate client company name
+            corporate = getattr(obj, 'corporate_client', None)
+            if corporate:
+                return corporate.company_name or obj.display_name
+        return obj.display_name or obj.email or "N/A"
     
     def get_total_interactions(self, obj):
         return obj.interactions.count()
@@ -364,6 +382,7 @@ class ClientListSerializer(serializers.ModelSerializer):
     priority_display = serializers.CharField(source='get_priority_display', read_only=True)
     assigned_to_name = serializers.CharField(source='assigned_to.get_full_name', read_only=True)
     display_name = serializers.ReadOnlyField()
+    contact_person = serializers.SerializerMethodField()
     total_interactions = serializers.SerializerMethodField()
     last_interaction_date = serializers.SerializerMethodField()
     tags = serializers.SerializerMethodField()
@@ -374,9 +393,26 @@ class ClientListSerializer(serializers.ModelSerializer):
             'id', 'client_type', 'client_type_display', 'status', 'status_display',
             'priority', 'priority_display', 'email', 'phone', 'city', 'state',
             'country', 'assigned_to', 'assigned_to_name', 'display_name',
-            'total_interactions', 'last_interaction_date', 'tags',
+            'contact_person', 'total_interactions', 'last_interaction_date', 'tags',
             'last_contact_date', 'created', 'modified'
         ]
+    
+    def get_contact_person(self, obj):
+        """Get primary contact person name based on client type."""
+        if obj.client_type == 'individual':
+            individual = getattr(obj, 'individual_client', None)
+            if individual:
+                return individual.full_name
+        elif obj.client_type == 'corporate':
+            # Get first contact from contacts list
+            first_contact = obj.contacts.first()
+            if first_contact:
+                return f"{first_contact.first_name} {first_contact.last_name}".strip()
+            # Fall back to corporate client company name
+            corporate = getattr(obj, 'corporate_client', None)
+            if corporate:
+                return corporate.company_name or obj.display_name
+        return obj.display_name or obj.email or "N/A"
     
     def get_total_interactions(self, obj):
         return obj.interactions.count()

@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from decimal import Decimal
 import logging
+from drf_spectacular.utils import extend_schema
 
 from apps.core.permissions import IsOrganizationMember
 from .models import (
@@ -41,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 # ==================== SCHEDULE TEMPLATE VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleTemplateViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleTemplate."""
     queryset = ScheduleTemplate.objects.all()
@@ -60,15 +62,14 @@ class ScheduleTemplateViewSet(viewsets.ModelViewSet):
         return ScheduleTemplateSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the schedule template."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def duplicate(self, request, pk=None):
         """Duplicate a schedule template."""
         template = self.get_object()
         new_template = ScheduleTemplate.objects.create(
-            organization=template.organization,
             name=f"{template.name} (Copy)",
             description=template.description,
             schedule_type=template.schedule_type,
@@ -101,6 +102,7 @@ class ScheduleTemplateViewSet(viewsets.ModelViewSet):
 
 # ==================== RESOURCE VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ResourceViewSet(viewsets.ModelViewSet):
     """ViewSet for Resource."""
     queryset = Resource.objects.all()
@@ -120,8 +122,8 @@ class ResourceViewSet(viewsets.ModelViewSet):
         return ResourceSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the resource."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def set_availability(self, request, pk=None):
@@ -182,6 +184,7 @@ class ResourceViewSet(viewsets.ModelViewSet):
 
 # ==================== TEAM VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class TeamViewSet(viewsets.ModelViewSet):
     """ViewSet for Team."""
     queryset = Team.objects.all()
@@ -201,8 +204,8 @@ class TeamViewSet(viewsets.ModelViewSet):
         return TeamSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the team."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def add_member(self, request, pk=None):
@@ -257,6 +260,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         return Response({'availability': team.availability_schedule})
 
 
+@extend_schema(tags=['Scheduling'])
 class TeamMemberViewSet(viewsets.ModelViewSet):
     """ViewSet for TeamMember."""
     queryset = TeamMember.objects.all()
@@ -276,6 +280,7 @@ class TeamMemberViewSet(viewsets.ModelViewSet):
 
 # ==================== APPOINTMENT VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class AppointmentViewSet(viewsets.ModelViewSet):
     """ViewSet for Appointment."""
     queryset = Appointment.objects.all()
@@ -297,8 +302,8 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         return AppointmentSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the appointment."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def confirm(self, request, pk=None):
@@ -427,6 +432,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
 # ==================== SCHEDULE CONFLICT VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleConflictViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleConflict."""
     queryset = ScheduleConflict.objects.all()
@@ -448,8 +454,8 @@ class ScheduleConflictViewSet(viewsets.ModelViewSet):
         return ScheduleConflictSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the schedule conflict."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def resolve(self, request, pk=None):
@@ -486,6 +492,7 @@ class ScheduleConflictViewSet(viewsets.ModelViewSet):
 
 # ==================== SCHEDULE RULE VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleRuleViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleRule."""
     queryset = ScheduleRule.objects.all()
@@ -505,8 +512,8 @@ class ScheduleRuleViewSet(viewsets.ModelViewSet):
         return ScheduleRuleSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the schedule rule."""
+        serializer.save()
     
     @action(detail=False, methods=['get'])
     def active(self, request):
@@ -518,6 +525,7 @@ class ScheduleRuleViewSet(viewsets.ModelViewSet):
 
 # ==================== SCHEDULE NOTIFICATION VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleNotificationViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleNotification."""
     queryset = ScheduleNotification.objects.all()
@@ -537,8 +545,8 @@ class ScheduleNotificationViewSet(viewsets.ModelViewSet):
         return ScheduleNotificationSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the schedule notification."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def send(self, request, pk=None):
@@ -562,6 +570,7 @@ class ScheduleNotificationViewSet(viewsets.ModelViewSet):
 
 # ==================== SCHEDULE ANALYTICS VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleAnalyticsViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleAnalytics."""
     queryset = ScheduleAnalytics.objects.all()
@@ -581,12 +590,13 @@ class ScheduleAnalyticsViewSet(viewsets.ModelViewSet):
         return ScheduleAnalyticsSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the analytics record."""
+        serializer.save()
 
 
 # ==================== SCHEDULE INTEGRATION VIEWS ====================
 
+@extend_schema(tags=['Scheduling'])
 class ScheduleIntegrationViewSet(viewsets.ModelViewSet):
     """ViewSet for ScheduleIntegration."""
     queryset = ScheduleIntegration.objects.all()
@@ -608,8 +618,8 @@ class ScheduleIntegrationViewSet(viewsets.ModelViewSet):
         return ScheduleIntegrationSerializer
     
     def perform_create(self, serializer):
-        """Set organization on creation."""
-        serializer.save(organization=self.request.user.organization)
+        """Save the schedule integration."""
+        serializer.save()
     
     @action(detail=True, methods=['post'])
     def test_connection(self, request, pk=None):

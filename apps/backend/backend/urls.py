@@ -33,6 +33,10 @@ urlpatterns = [
     path('api/v1/field-operations/', include('apps.field_operations.urls')),
     path('api/v1/audit-trail/', include('apps.audit_trail.urls')),
     path('api/v1/did-auth/', include('apps.did_auth.urls')), # Added DID authentication
+    path('api/v1/freelancers/', include('apps.freelancers.urls')), # Community: Individual contractors
+    path('api/v1/gig-management/', include('apps.gig_management.urls')), # Community: Job posting & assignment
+    path('api/v1/contractor-payments/', include('apps.contractor_payments.urls')), # Community: Freelancer payments
+    path('api/v1/freelancer-web3/', include('apps.freelancer_web3.urls')), # Community: Advanced Web3 features
     path('api/v1/', include('apps.core.urls')),
 ]
 

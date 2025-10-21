@@ -6,8 +6,6 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
-from apps.organizations.models import Organization
-
 User = get_user_model()
 
 
@@ -42,12 +40,27 @@ def admin_user():
 
 
 @pytest.fixture
-def organization():
-    """Organization fixture."""
-    return Organization.objects.create(
-        name='Test Organization',
-        slug='test-org',
-        email='contact@testorg.com'
+def freelancer_user():
+    """User with freelancer profile fixture."""
+    user = User.objects.create_user(
+        username='freelancer',
+        email='freelancer@example.com',
+        password='testpass123',
+        first_name='John',
+        last_name='Freelancer'
+    )
+    return user
+
+
+@pytest.fixture
+def client_user():
+    """User who posts jobs fixture."""
+    return User.objects.create_user(
+        username='client',
+        email='client@example.com',
+        password='testpass123',
+        first_name='Jane',
+        last_name='Client'
     )
 
 
@@ -81,16 +94,22 @@ def sample_user_data():
 
 
 @pytest.fixture
-def sample_organization_data():
-    """Sample organization data for testing."""
+def sample_freelancer_data():
+    """Sample freelancer data for testing."""
     return {
-        'name': 'New Organization',
-        'slug': 'new-org',
-        'email': 'contact@neworg.com',
-        'phone': '+1234567890',
-        'website': 'https://neworg.com',
-        'industry': 'Technology',
-        'size': '11-50'
+        'first_name': 'John',
+        'last_name': 'Freelancer',
+        'date_of_birth': '1990-01-01',
+        'personal_email': 'john@example.com',
+        'personal_phone': '+1234567890',
+        'address_line1': '123 Main St',
+        'city': 'New York',
+        'state': 'NY',
+        'postal_code': '10001',
+        'country': 'US',
+        'cleaning_types': ['residential', 'commercial'],
+        'hourly_rate': 25.00,
+        'currency': 'USD'
     }
 
 
@@ -109,6 +128,66 @@ def mock_wallet_address():
     return '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'
 
 
+@pytest.fixture
+def freelancer_profile(freelancer_user, sample_freelancer_data):
+    """Freelancer profile fixture."""
+    from apps.freelancers.models import Freelancer
+    return Freelancer.objects.create(
+        user=freelancer_user,
+        **sample_freelancer_data
+    )
+
+
+@pytest.fixture
+def gig_category():
+    """Gig category fixture."""
+    from apps.gig_management.models import GigCategory
+    return GigCategory.objects.create(
+        name='Residential Cleaning',
+        description='Home cleaning services',
+        default_hourly_rate_min=20.00,
+        default_hourly_rate_max=50.00
+    )
+
+
+@pytest.fixture
+def gig_job(client_user, gig_category):
+    """Gig job fixture."""
+    from apps.gig_management.models import GigJob
+    return GigJob.objects.create(
+        title='House Cleaning Service',
+        description='Regular house cleaning for 2-bedroom apartment',
+        category=gig_category,
+        client=client_user,
+        client_type='individual',
+        service_address='456 Oak St',
+        city='New York',
+        state='NY',
+        postal_code='10002',
+        country='US',
+        service_type='regular_cleaning',
+        property_type='apartment',
+        payment_method='hourly',
+        hourly_rate=35.00,
+        currency='USD',
+        estimated_duration_hours=4.0
+    )
+
+
+@pytest.fixture
+def payment_method():
+    """Payment method fixture."""
+    from apps.contractor_payments.models import PaymentMethod
+    return PaymentMethod.objects.create(
+        name='Bank Transfer',
+        payment_type='bank_transfer',
+        processing_fee_percentage=1.5,
+        min_payment_amount=10.00,
+        max_payment_amount=10000.00,
+        supported_currencies=['USD', 'EUR']
+    )
+
+
 class BaseTestCase(TestCase):
     """Base test case with common setup."""
     
@@ -119,10 +198,7 @@ class BaseTestCase(TestCase):
             email='test@example.com',
             password='testpass123'
         )
-        self.organization = Organization.objects.create(
-            name='Test Organization',
-            slug='test-org'
-        )
+        # Organization setup removed for community version
         self.client = APIClient()
         
     def authenticate_user(self, user=None):

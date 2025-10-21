@@ -2,16 +2,38 @@
 
 <div align="center">
 
-![TidyGen ERP](https://img.shields.io/badge/TidyGen%20ERP-Web3%20Enabled-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![Build Status](https://github.com/tidygen-community/tidygen-community/workflows/Build/badge.svg)](.github/workflows/build.yml)
+[![Tests](https://github.com/tidygen-community/tidygen-community/workflows/Tests/badge.svg)](.github/workflows/tests.yml)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-blue.svg)](./SECURITY.md)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.12+-blue)
-![Django](https://img.shields.io/badge/Django-4.2+-green)
+![Django](https://img.shields.io/badge/Django-4.2.7-green)
+![React](https://img.shields.io/badge/React-18.3.1-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue)
 ![Web3](https://img.shields.io/badge/Web3-Ready-orange)
 ![Polkadot](https://img.shields.io/badge/Polkadot-Parachain-purple)
 
 **A revolutionary Web3-enabled ERP platform that transforms the cleaning services industry through blockchain technology, smart contracts, and decentralized architecture.**
 
-[🚀 Quick Start](#installation) • [📖 Documentation](docs/INDEX.md) • [🤝 Contributing](#contribution-guidelines) • [💬 Community](https://github.com/tidygen-community/tidygen-community/discussions)
+</div>
+
+## 🚀 Quick Links
+
+- 🌐 **Live Frontend (Community Portal)**: [https://community.tidygen.com](https://community.tidygen.com)
+- ⚙️ **Live Backend (Swagger UI)**: [https://api.tidygen.com](https://api.tidygen.com)
+- 📘 **Documentation**: [./docs/](./docs/)
+- 🔗 **Web3 Technical Implementation**: [./WEB3_TECHNICAL_IMPLEMENTATION.md](./WEB3_TECHNICAL_IMPLEMENTATION.md)
+- 📜 **Contracts**: [./contracts/](./contracts/)
+- 🛡️ **Security Policy**: [./SECURITY.md](./SECURITY.md)
+- 🤝 **Contributing Guide**: [./CONTRIBUTING.md](./CONTRIBUTING.md)
+- 📜 **Code of Conduct**: [./CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- ⚡ **CI/CD Workflows**: [./.github/workflows/](./.github/workflows/)
+- 📦 **Releases / Changelog**: *Coming Soon*
+
+<div align="center">
+
+[🚀 Quick Start](#quick-start-local-development) • [📖 Documentation](docs/INDEX.md) • [🤝 Contributing](#contribution-guidelines) • [💬 Community](https://github.com/tidygen-community/tidygen-community/discussions)
 
 </div>
 
@@ -116,21 +138,60 @@ TidyGen ERP leverages Web3 principles to create a truly decentralized and transp
 ## 🚀 Features
 
 ### **Core ERP Modules**
-- **👥 Human Resources Management** - Employee records, payroll, leave management
+- **👥 Human Resources Management** - Employee records, payroll, leave management, document management
 - **📦 Inventory Management** - Stock tracking, suppliers, purchase orders with NFT tokenization
 - **💼 Sales & CRM** - Customer management, sales tracking, smart contract invoicing
 - **💰 Financial Management** - Multi-currency accounting, DeFi integration, automated payments
 - **📅 Project Management** - Task scheduling, resource allocation, blockchain verification
 - **📊 Analytics & Reporting** - Real-time business intelligence and insights
+- **🏢 Facility Management** - Facility tracking and maintenance scheduling
+- **🛒 Purchasing** - Purchase order management and vendor relations
+- **⏰ Scheduling** - Service scheduling and resource allocation
 
 ### **Web3 Integration Features**
 - **🔗 Smart Contract Automation** - Automated service verification and payment processing
-- **🪙 Asset Tokenization** - Physical assets as tradeable NFTs
-- **💳 Multi-Currency Payments** - Support for 50+ cryptocurrencies
+- **🪙 Asset Tokenization** - Physical assets as tradeable NFTs (ERC-721, ERC-1155)
+- **💳 Multi-Currency Payments** - Support for 50+ cryptocurrencies and DeFi protocols
 - **🌐 Cross-Chain Interoperability** - Seamless operation across multiple blockchains
 - **🔐 Decentralized Identity** - DID-based authentication and access control
 - **🏦 DeFi Integration** - Yield farming, staking, and liquidity provision
-- **📱 Web3 Wallet Integration** - MetaMask, WalletConnect, and other wallet support
+- **📱 Web3 Wallet Integration** - MetaMask, WalletConnect, Coinbase Wallet, Trust Wallet
+- **🔍 Audit Trail** - Blockchain-based immutable audit logging
+- **🗳️ DAO Governance** - Decentralized community decision making
+
+### **Backend Django Modules**
+- **🔐 Accounts** - User authentication, profiles, session management
+- **🌐 Web3** - Blockchain integration, wallet management, smart contracts
+- **💼 Finance** - Multi-currency payments, invoicing, financial records
+- **👥 HR** - Employee management, payroll, document handling
+- **📦 Inventory** - Asset management, tokenization, supply chain
+- **💰 Payroll** - Payment processing, salary management
+- **🛒 Purchasing** - Vendor management, purchase orders
+- **📈 Sales** - Customer relationship management, sales tracking
+- **⏰ Scheduling** - Service scheduling, resource allocation
+- **🏢 Facility Management** - Facility tracking and maintenance
+- **🚛 Field Operations** - Field service management and tracking
+- **🔍 Audit Trail** - Comprehensive audit logging and blockchain anchoring
+- **🆔 DID Auth** - Decentralized identity authentication
+- **📊 Analytics** - Business intelligence and reporting
+- **⚡ Core** - Base models, permissions, common utilities
+- **💼 Ledger** - Financial ledger and accounting
+- **🔧 Freelancers** - *Community Exclusive* - Individual contractor management for domestic cleaners
+- **🎯 Gig Management** - *Community Exclusive* - Job posting, assignment, and tracking for freelancers
+- **💰 Contractor Payments** - *Community Exclusive* - Payment processing, escrow, and Web3 payments for freelancers
+- **🌐 Freelancer Web3** - *Community Exclusive* - Advanced Web3 features including NFT badges, smart contracts, and reputation tokens
+
+### **Frontend React Features**
+- **🎨 Modern UI** - Built with React 18, TypeScript, Tailwind CSS
+- **🧭 Navigation** - React Router for seamless navigation
+- **🎭 UI Components** - Radix UI components with custom styling
+- **📊 Data Visualization** - Recharts for analytics and reporting
+- **📝 Forms** - React Hook Form with Zod validation
+- **⏰ State Management** - TanStack Query for server state
+- **🌙 Theme Support** - Dark/light mode with customizable themes
+- **🔐 Authentication** - JWT-based authentication with Web3 wallet integration
+- **📱 Responsive Design** - Mobile-first responsive interface
+- **🎯 Protected Routes** - Role-based access control for different modules
 
 ### **Advanced Features**
 - **🤖 AI-Powered Route Optimization** - Machine learning for efficient service delivery
@@ -139,6 +200,20 @@ TidyGen ERP leverages Web3 principles to create a truly decentralized and transp
 - **🌍 Multi-Language Support** - Internationalization for global markets
 - **📈 Real-Time Analytics** - Live dashboards and performance metrics
 - **🔌 API-First Architecture** - Complete REST API with 50+ endpoints
+- **📁 IPFS Integration** - Decentralized file storage and management
+- **🔄 Background Tasks** - Celery-based asynchronous task processing
+
+### **Community Edition Exclusive Features** 🌟
+- **🔧 Individual Freelancer Management** - Complete platform for domestic cleaners and individual contractors
+- **📋 Freelancer Registration** - Comprehensive onboarding with document verification and background checks
+- **⏰ Availability Scheduling** - Flexible scheduling system for freelancer availability and job matching
+- **🎯 Skill-based Matching** - Advanced skill categorization and proficiency tracking for optimal job assignments
+- **📊 Performance Analytics** - Detailed ratings, reviews, and performance metrics for freelancers
+- **🔐 Web3 Identity Verification** - Blockchain-based freelancer verification and reputation system
+- **💰 Flexible Payment Options** - Support for traditional and crypto payments tailored for individual contractors
+- **📱 Gig Economy Ready** - Built-in support for on-demand service booking and assignment
+- **🎨 Frontend Components** - React components for freelancer profiles, job boards, and payment management
+- **🔄 Real-time Updates** - Live job matching, application tracking, and payment notifications
 
 ---
 
@@ -169,26 +244,161 @@ TidyGen ERP is built with a modern, scalable architecture that seamlessly integr
 ```
 
 ### **Technology Stack**
-- **🎨 Frontend**: React 18, TypeScript, Tailwind CSS, Web3.js
-- **⚙️ Backend**: Django 4.2+, Django REST Framework, Python 3.12+
+
+#### **Frontend Technologies**
+- **🎨 React Frontend**: React 18.3.1, TypeScript 5.8.3, Vite 5.4.19
+- **🎭 UI Components**: Radix UI components with custom styling
+- **🎨 Styling**: Tailwind CSS 3.4.17, CSS variables for theming
+- **📊 Data Visualization**: Recharts 2.15.4 for analytics
+- **📝 Forms**: React Hook Form 7.61.1 with Zod 3.25.76 validation
+- **⏰ State Management**: TanStack Query 5.83.0 for server state
+- **🧭 Routing**: React Router DOM 6.30.1
+- **🌙 Theming**: next-themes 0.4.6 for dark/light mode
+- **🔗 Web3**: Web3.js integration for blockchain connectivity
+
+#### **Backend Technologies**
+- **⚙️ Django Backend**: Django 4.2.7, Django REST Framework 3.14.0
+- **🐍 Python**: Python 3.12+ with modern async features
+- **🔐 Authentication**: JWT tokens (SimpleJWT 5.3.0), DID authentication
+- **🔄 Background Tasks**: Celery 5.3.4 with Redis for task queuing
 - **🗄️ Database**: PostgreSQL 15+ (primary), Redis 7+ (cache)
-- **⛓️ Blockchain**: Ethereum, Polygon, BSC, Polkadot (Substrate)
-- **🔗 Smart Contracts**: Solidity, Web3.py, ethers.js
-- **🐳 Deployment**: Docker, Docker Compose, Nginx
-- **🔐 Authentication**: JWT tokens, DID, Role-based access control
+- **📚 API Documentation**: DRF Spectacular 0.26.5 (OpenAPI/Swagger)
+- **🔒 Security**: django-axes 6.1.1, django-ratelimit 4.1.0
+- **⛓️ Blockchain Integration**: Web3.py 6.11.3, eth-account 0.9.0
+
+#### **Blockchain & Web3**
+- **⛓️ Supported Networks**: Ethereum, Polygon, BSC, Polkadot (Substrate)
+- **🔗 Smart Contracts**: Solidity for contract development
+- **🪙 Token Standards**: ERC-20, ERC-721, ERC-1155 compliance
+- **🔐 Wallet Support**: MetaMask, WalletConnect, Coinbase Wallet, Trust Wallet
+- **💾 Decentralized Storage**: IPFS integration for file storage
+
+#### **Mobile Development (Future)**
+- **📱 Flutter Mobile App**: *Coming Soon* - Cross-platform mobile application
+  - Flutter SDK for iOS and Android development
+  - Web3 wallet integration for mobile
+  - Offline capability with data synchronization
+  - GPS tracking for field operations
+  - Photo documentation features
+
+#### **Infrastructure & Deployment**
+- **🐳 Containerization**: Docker, Docker Compose for container orchestration
+- **🌐 Web Server**: Nginx for reverse proxy and static file serving
+- **📊 Monitoring**: Sentry SDK 1.38.0 for error tracking
+- **🚀 Production**: Gunicorn 21.2.0 WSGI server
+- **☁️ Deployment**: Vercel (frontend), traditional hosting (backend)
+
+#### **Development Tools**
+- **🔧 Code Quality**: Black, isort, mypy for Python code formatting and type checking
+- **🧪 Testing**: pytest for backend testing, Jest for frontend testing
+- **📝 Linting**: ESLint 9.32.0 for frontend, flake8 for backend
+- **📦 Package Management**: npm/yarn for frontend, pip for Python dependencies
 
 For detailed architecture information, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ---
 
-## 🚀 Installation
+## 📁 Project Structure
+
+The TidyGen ERP project follows a monorepo structure with clear separation of concerns:
+
+```
+tidygen-community/
+├── apps/
+│   ├── backend/                 # Django REST API Backend
+│   │   ├── apps/               # Django applications
+│   │   │   ├── accounts/       # User authentication & profiles
+│   │   │   ├── analytics/      # Business intelligence & reporting
+│   │   │   ├── audit_trail/    # Blockchain-based audit logging
+│   │   │   ├── core/           # Base models & utilities
+│   │   │   ├── did_auth/       # Decentralized identity authentication
+│   │   │   ├── facility_management/  # Facility tracking & maintenance
+│   │   │   ├── field_operations/     # Field service management
+│   │   │   ├── finance/        # Financial management & payments
+│   │   │   ├── hr/            # Human resources management
+│   │   │   ├── inventory/     # Asset management & tokenization
+│   │   │   ├── ledger/        # Financial ledger & accounting
+│   │   │   ├── payroll/       # Payroll processing
+│   │   │   ├── purchasing/    # Purchase order management
+│   │   │   ├── sales/         # Customer relationship management
+│   │   │   ├── scheduling/    # Service scheduling & allocation
+│   │   │   ├── wallet/        # Web3 wallet management
+│   │   │   └── web3/          # Blockchain integration
+│   │   ├── backend/           # Django project settings
+│   │   ├── smart_contracts/   # Solidity contracts & deployment
+│   │   └── requirements.txt   # Python dependencies
+│   └── frontend/              # React TypeScript Frontend
+│       ├── src/
+│       │   ├── components/    # Reusable UI components
+│       │   ├── pages/         # Application pages/views
+│       │   ├── services/      # API services & utilities
+│       │   ├── contexts/      # React contexts (auth, theme)
+│       │   ├── hooks/         # Custom React hooks
+│       │   └── types/         # TypeScript type definitions
+│       ├── public/            # Static assets
+│       └── package.json       # Node.js dependencies
+├── contracts/                 # Smart contract artifacts
+├── docs/                     # Project documentation
+├── infra/                    # Infrastructure & CI/CD
+└── scripts/                  # Deployment & utility scripts
+```
+
+### **Backend Django Applications**
+
+#### **Core Applications**
+- **`accounts`**: User authentication, profile management, session handling
+- **`core`**: Base models, permissions, common utilities, and shared functionality
+- **`audit_trail`**: Comprehensive audit logging with blockchain anchoring
+
+#### **ERP Modules**
+- **`hr`**: Human resources management, employee records, document handling
+- **`finance`**: Multi-currency financial management, invoicing, payment processing
+- **`inventory`**: Asset management, stock tracking, NFT tokenization
+- **`sales`**: Customer relationship management, sales tracking, CRM features
+- **`scheduling`**: Service scheduling, resource allocation, calendar management
+- **`purchasing`**: Purchase order management, vendor relations, procurement
+- **`payroll`**: Employee payroll processing, salary management
+
+#### **Web3 & Blockchain**
+- **`web3`**: Blockchain integration, smart contract management, token handling
+- **`wallet`**: Web3 wallet management, multi-chain support
+- **`did_auth`**: Decentralized identity authentication and verification
+- **`ledger`**: Financial ledger with blockchain integration
+
+#### **Operations**
+- **`facility_management`**: Facility tracking, maintenance scheduling
+- **`field_operations`**: Field service management, GPS tracking
+- **`analytics`**: Business intelligence, reporting, data visualization
+
+### **Frontend React Structure**
+
+#### **Core Pages**
+- **Dashboard**: Real-time business overview and analytics
+- **Client Management**: Customer relationship management interface
+- **Inventory Management**: Asset tracking and tokenization UI
+- **Finance Management**: Financial operations and payment processing
+- **HR Management**: Employee management and document handling
+- **Scheduling**: Service scheduling and calendar management
+- **Analytics**: Business intelligence and reporting dashboards
+
+#### **Key Components**
+- **Authentication**: Login, registration, and Web3 wallet integration
+- **Protected Routes**: Role-based access control for different modules
+- **Theme Management**: Dark/light mode with customizable theming
+- **IPFS Manager**: Decentralized file storage interface
+
+---
+
+## 💡 Quick Start (Local Development)
 
 ### **Prerequisites**
 - [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
 - [Git](https://git-scm.com/downloads)
 - 4GB RAM minimum (8GB recommended)
-- Node.js 18+ (for development)
-- Python 3.12+ (for development)
+- Node.js 18+ and npm/yarn (for frontend development)
+- Python 3.12+ and pip (for backend development)
+- PostgreSQL 15+ (if running without Docker)
+- Redis 7+ (if running without Docker)
 
 ### **Quick Start with Docker (Recommended)**
 
@@ -201,9 +411,8 @@ cd tidygen-community
 docker-compose up -d
 
 # Access the application
-# Web App: http://localhost:8000
-# Admin: http://localhost:8000/admin
-# API Docs: http://localhost:8000/api/docs
+# Frontend: http://localhost:3000
+# Backend (Swagger UI): http://localhost:8000
 ```
 
 ### **Development Setup**
@@ -240,8 +449,31 @@ cd apps/frontend
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp env.example .env
+# Edit .env with your configuration
+
 # Start development server
 npm run dev
+
+# For production build
+npm run build
+```
+
+#### **Available Frontend Scripts**
+```bash
+# Development
+npm run dev              # Start development server (Vite)
+npm run build            # Build for production
+npm run build:dev        # Build in development mode
+npm run build:prod       # Build in production mode
+
+# Code Quality
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix ESLint issues automatically
+
+# Preview
+npm run preview          # Preview production build
 ```
 
 ### **Environment Configuration**
@@ -433,29 +665,37 @@ def deploy_service_contract(service_data):
 
 TidyGen ERP has an ambitious roadmap to revolutionize the cleaning services industry through Web3 technology:
 
-### **Phase 1: Foundation (Months 1-3)**
-- ✅ Core ERP modules development
-- ✅ Smart contract implementation
-- ✅ Web3 wallet integration
-- ✅ Basic DeFi features
+### **Current Version: v1.0.0 (Foundation)**
 
-### **Phase 2: Polkadot Integration (Months 4-6)**
+#### **Phase 1: Foundation (Months 1-3) - ✅ COMPLETED**
+- ✅ Core ERP modules development (15+ Django apps)
+- ✅ React frontend with TypeScript and modern UI
+- ✅ Smart contract implementation (Solidity)
+- ✅ Web3 wallet integration (MetaMask, WalletConnect)
+- ✅ Basic DeFi features and multi-currency support
+- ✅ API-first architecture with 50+ endpoints
+- ✅ Docker containerization and deployment
+
+#### **Phase 2: Mobile & Advanced Web3 (Months 4-6) - 🔄 IN PROGRESS**
+- 🔄 Flutter mobile app development (iOS & Android)
+- 🔄 Advanced Web3 features and cross-chain support
 - 🔄 Substrate parachain development
 - 🔄 Cross-chain bridge implementation
-- 🔄 Parachain auction participation
-- 🔄 Advanced DeFi protocols
+- 🔄 Mobile-first field operations interface
 
-### **Phase 3: Enterprise Launch (Months 7-9)**
-- 📅 Mainnet deployment
+#### **Phase 3: Enterprise Launch (Months 7-9) - 📅 PLANNED**
+- 📅 Mainnet deployment with full Web3 integration
+- 📅 Flutter mobile app release
 - 📅 Enterprise customer onboarding
-- 📅 Partnership development
-- 📅 International expansion
+- 📅 Advanced analytics and AI features
+- 📅 Partnership development and integrations
 
-### **Phase 4: Ecosystem Growth (Months 10-12)**
-- 📅 Advanced AI features
-- 📅 Mobile applications
-- 📅 Developer ecosystem
-- 📅 Community governance
+#### **Phase 4: Ecosystem Growth (Months 10-12) - 📅 PLANNED**
+- 📅 Advanced AI-powered route optimization
+- 📅 Full mobile ecosystem (Flutter + React Native)
+- 📅 Developer ecosystem and SDK
+- 📅 Community governance (DAO implementation)
+- 📅 International expansion and localization
 
 For detailed roadmap information, see [docs/ROADMAP.md](docs/ROADMAP.md).
 

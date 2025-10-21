@@ -10,6 +10,7 @@ from django.db.models import Count, Q, F, Sum, Avg, Max, Min
 from django.utils import timezone
 from datetime import datetime, timedelta
 from decimal import Decimal
+from drf_spectacular.utils import extend_schema
 
 from apps.core.permissions import IsOrganizationMember
 from apps.hr.models import (
@@ -35,6 +36,7 @@ from apps.hr.filters import (
 )
 
 
+@extend_schema(tags=['HR'])
 class DepartmentViewSet(viewsets.ModelViewSet):
     """ViewSet for Department model."""
     queryset = Department.objects.all()
@@ -55,6 +57,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['HR'])
 class PositionViewSet(viewsets.ModelViewSet):
     """ViewSet for Position model."""
     queryset = Position.objects.all()
@@ -75,6 +78,7 @@ class PositionViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['HR'])
 class EmployeeViewSet(viewsets.ModelViewSet):
     """ViewSet for Employee model."""
     queryset = Employee.objects.all()
@@ -180,6 +184,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         return Response({'status': f'Employment status changed to {new_status}'})
 
 
+@extend_schema(tags=['HR'])
 class AttendanceViewSet(viewsets.ModelViewSet):
     """ViewSet for Attendance model."""
     queryset = Attendance.objects.all()
@@ -278,6 +283,7 @@ class AttendanceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['HR'])
 class LeaveTypeViewSet(viewsets.ModelViewSet):
     """ViewSet for LeaveType model."""
     queryset = LeaveType.objects.all()
@@ -298,6 +304,7 @@ class LeaveTypeViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['HR'])
 class LeaveRequestViewSet(viewsets.ModelViewSet):
     """ViewSet for LeaveRequest model."""
     queryset = LeaveRequest.objects.all()
@@ -417,6 +424,7 @@ class LeaveRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['HR'])
 class PayrollPeriodViewSet(viewsets.ModelViewSet):
     """ViewSet for PayrollPeriod model."""
     queryset = PayrollPeriod.objects.all()
@@ -453,6 +461,7 @@ class PayrollPeriodViewSet(viewsets.ModelViewSet):
         return Response({'status': 'Payroll processing started'})
 
 
+@extend_schema(tags=['HR'])
 class PayrollViewSet(viewsets.ModelViewSet):
     """ViewSet for Payroll model."""
     queryset = Payroll.objects.all()
@@ -548,6 +557,7 @@ class PayrollViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['HR'])
 class PerformanceReviewViewSet(viewsets.ModelViewSet):
     """ViewSet for PerformanceReview model."""
     queryset = PerformanceReview.objects.all()
@@ -654,6 +664,7 @@ class PerformanceReviewViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['HR'])
 class TrainingViewSet(viewsets.ModelViewSet):
     """ViewSet for Training model."""
     queryset = Training.objects.all()
@@ -674,6 +685,7 @@ class TrainingViewSet(viewsets.ModelViewSet):
         serializer.save(organization=organization)
 
 
+@extend_schema(tags=['HR'])
 class TrainingEnrollmentViewSet(viewsets.ModelViewSet):
     """ViewSet for TrainingEnrollment model."""
     queryset = TrainingEnrollment.objects.all()
@@ -694,6 +706,7 @@ class TrainingEnrollmentViewSet(viewsets.ModelViewSet):
         serializer.save(enrolled_by=self.request.user)
 
 
+@extend_schema(tags=['HR'])
 class DocumentViewSet(viewsets.ModelViewSet):
     """ViewSet for Document model."""
     queryset = Document.objects.all()
@@ -724,6 +737,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         return Response({'status': 'Document verified'})
 
 
+@extend_schema(tags=['HR'])
 class PolicyViewSet(viewsets.ModelViewSet):
     """ViewSet for Policy model."""
     queryset = Policy.objects.all()
@@ -760,6 +774,7 @@ class PolicyViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Policy already acknowledged'})
 
 
+@extend_schema(tags=['HR'])
 class PolicyAcknowledgmentViewSet(viewsets.ModelViewSet):
     """ViewSet for PolicyAcknowledgment model."""
     queryset = PolicyAcknowledgment.objects.all()
@@ -776,6 +791,7 @@ class PolicyAcknowledgmentViewSet(viewsets.ModelViewSet):
         ).select_related('policy', 'employee__user')
 
 
+@extend_schema(tags=['HR'])
 class HRDashboardViewSet(viewsets.ViewSet):
     """ViewSet for HR dashboard data."""
     permission_classes = [IsAuthenticated, IsOrganizationMember]

@@ -6,43 +6,46 @@ class AuditEventSerializer(serializers.ModelSerializer):
     """
     Serializer for AuditEvent model.
     """
-    actor_username = serializers.CharField(source='actor.username', read_only=True)
-    actor_email = serializers.CharField(source='actor.email', read_only=True)
+    user_username = serializers.CharField(source='user.username', read_only=True)
+    user_email = serializers.CharField(source='user.email', read_only=True)
     
     class Meta:
         model = AuditEvent
         fields = [
             'id',
             'event_type',
-            'actor',
-            'actor_username',
-            'actor_email',
-            'entity_type',
-            'entity_id',
-            'event_data',
-            'data_hash',
-            'on_chain_tx_hash',
-            'on_chain_block_number',
-            'ipfs_cid',
-            'merkle_root',
-            'merkle_proof',
-            'is_verified',
-            'verification_timestamp',
+            'module',
+            'object_id',
+            'object_type',
+            'data',
+            'metadata',
+            'user',
+            'user_username',
+            'user_email',
+            'session_id',
+            'ip_address',
+            'user_agent',
+            'timestamp',
             'created_at',
             'updated_at',
+            'hash',
+            'status',
+            'on_chain_hash',
+            'on_chain_tx_hash',
+            'on_chain_block_number',
+            'on_chain_timestamp',
+            'ipfs_hash',
         ]
         read_only_fields = [
             'id',
-            'data_hash',
-            'on_chain_tx_hash',
-            'on_chain_block_number',
-            'ipfs_cid',
-            'merkle_root',
-            'merkle_proof',
-            'is_verified',
-            'verification_timestamp',
             'created_at',
             'updated_at',
+            'hash',
+            'on_chain_hash',
+            'on_chain_tx_hash',
+            'on_chain_block_number',
+            'on_chain_timestamp',
+            'ipfs_hash',
         ]
 
 
@@ -55,10 +58,15 @@ class AuditEventCreateSerializer(serializers.ModelSerializer):
         model = AuditEvent
         fields = [
             'event_type',
-            'actor',
-            'entity_type',
-            'entity_id',
-            'event_data',
+            'module',
+            'object_id',
+            'object_type',
+            'data',
+            'metadata',
+            'user',
+            'session_id',
+            'ip_address',
+            'user_agent',
         ]
 
 

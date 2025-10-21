@@ -13,6 +13,7 @@ from django.db.models import Q, Sum, Count, Avg, F
 from django.utils import timezone
 from datetime import datetime, timedelta
 from decimal import Decimal
+from drf_spectacular.utils import extend_schema
 
 from apps.purchasing.models import (
     PurchaseOrder, PurchaseOrderItem, PurchaseReceipt, PurchaseReceiptItem,
@@ -34,6 +35,7 @@ from apps.purchasing.filters import (
 from apps.core.permissions import IsOrganizationMember
 
 
+@extend_schema(tags=['Purchasing'])
 class PurchaseOrderViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing purchase orders.
@@ -174,6 +176,7 @@ class PurchaseOrderViewSet(viewsets.ModelViewSet):
         ).order_by('-total_value')[:10])
 
 
+@extend_schema(tags=['Purchasing'])
 class PurchaseOrderItemViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing purchase order items.
@@ -190,6 +193,7 @@ class PurchaseOrderItemViewSet(viewsets.ModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Purchasing'])
 class PurchaseReceiptViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing purchase receipts.
@@ -228,6 +232,7 @@ class PurchaseReceiptViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Purchasing'])
 class PurchaseReceiptItemViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing purchase receipt items.
@@ -243,6 +248,7 @@ class PurchaseReceiptItemViewSet(viewsets.ModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Purchasing'])
 class ProcurementRequestViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing procurement requests.
@@ -349,6 +355,7 @@ class ProcurementRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+@extend_schema(tags=['Purchasing'])
 class ProcurementRequestItemViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing procurement request items.
@@ -364,6 +371,7 @@ class ProcurementRequestItemViewSet(viewsets.ModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Purchasing'])
 class SupplierPerformanceViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing supplier performance records.
@@ -387,8 +395,7 @@ class SupplierPerformanceViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(
-            evaluated_by=self.request.user,
-            organization=self.request.user.organization
+            evaluated_by=self.request.user
         )
     
     @action(detail=False, methods=['get'])
@@ -414,6 +421,7 @@ class SupplierPerformanceViewSet(viewsets.ModelViewSet):
         return Response(list(trends))
 
 
+@extend_schema(tags=['Purchasing'])
 class PurchaseAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for viewing purchase analytics.

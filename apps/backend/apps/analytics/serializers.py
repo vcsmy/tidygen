@@ -29,7 +29,7 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = [
-            'id', 'report_id', 'organization', 'name', 'description', 'report_type',
+            'id', 'report_id', 'name', 'description', 'report_type',
             'report_type_display', 'status', 'status_display', 'query_parameters',
             'filters', 'columns', 'format', 'format_display', 'is_scheduled',
             'schedule_frequency', 'schedule_time', 'next_run', 'last_run',
@@ -62,7 +62,7 @@ class ReportCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = [
-            'organization', 'name', 'description', 'report_type', 'query_parameters',
+            'name', 'description', 'report_type', 'query_parameters',
             'filters', 'columns', 'format', 'is_scheduled', 'schedule_frequency',
             'schedule_time', 'is_public', 'allowed_users'
         ]
@@ -85,12 +85,12 @@ class KPISerializer(serializers.ModelSerializer):
     class Meta:
         model = KPI
         fields = [
-            'id', 'kpi_id', 'organization', 'name', 'description', 'kpi_type',
+            'id', 'kpi_id', 'name', 'description', 'kpi_type',
             'kpi_type_display', 'calculation_method', 'data_source', 'frequency',
             'frequency_display', 'target_value', 'warning_threshold', 'critical_threshold',
             'current_value', 'previous_value', 'change_percentage', 'change_percentage_display',
             'trend', 'trend_display', 'is_active', 'last_calculated', 'next_calculation',
-            'chart_type', 'color', 'unit', 'status_display',             'created', 'modified'
+            'chart_type', 'color', 'unit', 'status_display', 'created', 'modified'
         ]
         read_only_fields = ['id', 'kpi_id', 'created', 'modified']
     
@@ -118,7 +118,7 @@ class KPICreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = KPI
         fields = [
-            'organization', 'name', 'description', 'kpi_type', 'calculation_method',
+            'name', 'description', 'kpi_type', 'calculation_method',
             'data_source', 'frequency', 'target_value', 'warning_threshold',
             'critical_threshold', 'chart_type', 'color', 'unit'
         ]
@@ -262,7 +262,7 @@ class ReportTemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportTemplate
         fields = [
-            'id', 'template_id', 'organization', 'name', 'description', 'template_type',
+            'id', 'template_id', 'name', 'description', 'template_type',
             'template_type_display', 'template_config', 'default_parameters',
             'required_parameters', 'usage_count', 'is_public', 'created_by',
             'created_by_name', 'created', 'modified'
@@ -276,7 +276,7 @@ class ReportTemplateCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportTemplate
         fields = [
-            'organization', 'name', 'description', 'template_type', 'template_config',
+            'name', 'description', 'template_type', 'template_config',
             'default_parameters', 'required_parameters', 'is_public'
         ]
 
@@ -370,7 +370,7 @@ class AnalyticsCacheSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnalyticsCache
         fields = [
-            'id', 'cache_key', 'organization', 'cache_type', 'cache_type_display',
+            'id', 'cache_key', 'cache_type', 'cache_type_display',
             'data', 'metadata', 'expires_at', 'hit_count', 'last_accessed',
             'related_kpi', 'related_kpi_name', 'related_report', 'related_report_name',
             'related_dashboard', 'related_dashboard_name', 'is_expired',

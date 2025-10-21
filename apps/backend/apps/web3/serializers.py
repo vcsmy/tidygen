@@ -19,9 +19,9 @@ class WalletSerializer(serializers.ModelSerializer):
         model = Wallet
         fields = [
             'id', 'user', 'user_name', 'address', 'wallet_type',
-            'is_primary', 'is_verified', 'last_used', 'created_at'
+            'is_primary', 'is_verified', 'last_used', 'created'
         ]
-        read_only_fields = ['id', 'created_at', 'last_used']
+        read_only_fields = ['id', 'created', 'last_used']
 
 
 class WalletCreateSerializer(serializers.ModelSerializer):
@@ -56,9 +56,9 @@ class BlockchainTransactionSerializer(serializers.ModelSerializer):
             'from_address', 'to_address', 'value', 'gas_used', 'gas_price',
             'block_number', 'block_hash', 'contract_address',
             'token_address', 'token_symbol', 'token_decimals',
-            'description', 'metadata', 'created_at'
+            'description', 'metadata', 'created'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created']
 
 
 class SmartContractSerializer(serializers.ModelSerializer):
@@ -71,9 +71,9 @@ class SmartContractSerializer(serializers.ModelSerializer):
             'id', 'name', 'contract_type', 'address', 'abi', 'bytecode',
             'source_code', 'deployer', 'deployer_name', 'deployment_transaction',
             'deployment_block', 'is_verified', 'is_active', 'total_supply',
-            'description', 'website', 'documentation', 'created_at'
+            'description', 'website', 'documentation', 'created'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created']
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -87,9 +87,9 @@ class TokenSerializer(serializers.ModelSerializer):
             'id', 'contract', 'contract_name', 'contract_address',
             'token_id', 'symbol', 'name', 'decimals', 'total_supply',
             'description', 'image_url', 'external_url', 'attributes',
-            'price_usd', 'market_cap', 'created_at'
+            'price_usd', 'market_cap', 'created'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created']
 
 
 class WalletBalanceSerializer(serializers.ModelSerializer):
@@ -118,9 +118,9 @@ class DeFiProtocolSerializer(serializers.ModelSerializer):
             'id', 'name', 'protocol_type', 'contract_address',
             'website', 'documentation', 'is_active', 'supported_tokens',
             'supported_tokens_count', 'apy', 'description', 'risk_level',
-            'created_at'
+            'created'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created']
     
     def get_supported_tokens_count(self, obj):
         """Get count of supported tokens."""
@@ -223,19 +223,18 @@ class SignatureVerificationSerializer(serializers.Serializer):
 class DecentralizedIdentitySerializer(serializers.ModelSerializer):
     """Serializer for Decentralized Identity."""
     user_name = serializers.CharField(source='user.get_full_name', read_only=True)
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     is_expired = serializers.SerializerMethodField()
     
     class Meta:
         model = DecentralizedIdentity
         fields = [
-            'id', 'user', 'user_name', 'organization', 'organization_name',
+            'id', 'user', 'user_name',
             'did_identifier', 'did_method', 'status', 'did_document',
             'public_keys', 'service_endpoints', 'is_verified',
             'verification_method', 'verification_timestamp', 'metadata',
-            'expires_at', 'is_expired', 'created_at', 'modified_at'
+            'expires_at', 'is_expired', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_is_expired(self, obj):
         """Check if DID is expired."""
@@ -247,7 +246,6 @@ class DecentralizedIdentitySerializer(serializers.ModelSerializer):
 
 class OnChainAnchorSerializer(serializers.ModelSerializer):
     """Serializer for On-Chain Anchor."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     related_invoice_number = serializers.CharField(source='related_invoice.invoice_number', read_only=True)
     related_contract_name = serializers.CharField(source='related_contract.name', read_only=True)
     related_payment_amount = serializers.DecimalField(source='related_payment.amount', max_digits=20, decimal_places=8, read_only=True)
@@ -255,37 +253,34 @@ class OnChainAnchorSerializer(serializers.ModelSerializer):
     class Meta:
         model = OnChainAnchor
         fields = [
-            'id', 'organization', 'organization_name', 'anchor_type', 'status',
+            'id', 'anchor_type', 'status',
             'data_hash', 'original_data', 'data_type', 'blockchain_network',
             'transaction_hash', 'block_number', 'block_hash', 'gas_used',
             'related_invoice', 'related_invoice_number', 'related_contract',
             'related_contract_name', 'related_payment', 'related_payment_amount',
-            'description', 'metadata', 'created_at', 'modified_at'
+            'description', 'metadata', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class SmartContractModuleSerializer(serializers.ModelSerializer):
     """Serializer for Smart Contract Module."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     contract_name = serializers.CharField(source='contract.name', read_only=True)
     contract_address = serializers.CharField(source='contract.address', read_only=True)
     
     class Meta:
         model = SmartContractModule
         fields = [
-            'id', 'organization', 'organization_name', 'name', 'module_type',
-            'status', 'contract', 'contract_name', 'contract_address', 'abi',
-            'configuration', 'triggers', 'conditions', 'integrated_modules',
-            'webhook_endpoints', 'description', 'version', 'documentation',
-            'created_at', 'modified_at'
+            'id', 'name', 'module_type', 'status', 'contract', 
+            'contract_name', 'contract_address', 'abi', 'configuration', 
+            'triggers', 'conditions', 'integrated_modules', 'webhook_endpoints', 
+            'description', 'version', 'documentation', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class DAOGovernanceSerializer(serializers.ModelSerializer):
     """Serializer for DAO Governance."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     proposer_name = serializers.CharField(source='proposer.get_full_name', read_only=True)
     executed_by_name = serializers.CharField(source='executed_by.get_full_name', read_only=True)
     votes_count = serializers.SerializerMethodField()
@@ -295,14 +290,14 @@ class DAOGovernanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = DAOGovernance
         fields = [
-            'id', 'organization', 'organization_name', 'governance_type', 'status',
-            'title', 'description', 'proposer', 'proposer_name', 'voting_power_required',
-            'voting_duration', 'voting_start', 'voting_end', 'votes_for', 'votes_against',
-            'total_votes', 'execution_data', 'executed_at', 'executed_by', 'executed_by_name',
-            'on_chain_proposal_id', 'transaction_hash', 'votes_count', 'is_voting_active',
-            'can_vote', 'created_at', 'modified_at'
+            'id', 'governance_type', 'status', 'title', 'description', 'proposer', 
+            'proposer_name', 'voting_power_required', 'voting_duration', 'voting_start', 
+            'voting_end', 'votes_for', 'votes_against', 'total_votes', 'execution_data', 
+            'executed_at', 'executed_by', 'executed_by_name', 'on_chain_proposal_id', 
+            'transaction_hash', 'votes_count', 'is_voting_active', 'can_vote', 
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_votes_count(self, obj):
         """Get total number of votes."""
@@ -340,14 +335,13 @@ class GovernanceVoteSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'governance', 'governance_title', 'voter', 'voter_name',
             'vote_choice', 'voting_power', 'transaction_hash', 'block_number',
-            'reason', 'metadata', 'created_at', 'modified_at'
+            'reason', 'metadata', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class TokenizedRewardSerializer(serializers.ModelSerializer):
     """Serializer for Tokenized Reward."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     recipient_name = serializers.CharField(source='recipient.get_full_name', read_only=True)
     evaluator_name = serializers.CharField(source='evaluator.get_full_name', read_only=True)
     token_symbol = serializers.CharField(source='token_contract.name', read_only=True)
@@ -356,19 +350,18 @@ class TokenizedRewardSerializer(serializers.ModelSerializer):
     class Meta:
         model = TokenizedReward
         fields = [
-            'id', 'organization', 'organization_name', 'reward_type', 'status',
-            'recipient', 'recipient_name', 'recipient_wallet', 'wallet_address',
-            'title', 'description', 'token_amount', 'token_contract', 'token_symbol',
-            'evaluator', 'evaluator_name', 'evaluation_notes', 'evaluation_score',
+            'id', 'reward_type', 'status', 'recipient', 'recipient_name', 
+            'recipient_wallet', 'wallet_address', 'title', 'description', 
+            'token_amount', 'token_contract', 'token_symbol', 'evaluator', 
+            'evaluator_name', 'evaluation_notes', 'evaluation_score', 
             'payment_transaction', 'paid_at', 'contribution_url', 'metadata',
-            'created_at', 'modified_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class DecentralizedStorageSerializer(serializers.ModelSerializer):
     """Serializer for Decentralized Storage."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     file_size_mb = serializers.SerializerMethodField()
     related_invoice_number = serializers.CharField(source='related_invoice.invoice_number', read_only=True)
     related_contract_name = serializers.CharField(source='related_contract.name', read_only=True)
@@ -377,14 +370,14 @@ class DecentralizedStorageSerializer(serializers.ModelSerializer):
     class Meta:
         model = DecentralizedStorage
         fields = [
-            'id', 'organization', 'organization_name', 'storage_type', 'status',
-            'original_filename', 'file_size', 'file_size_mb', 'content_type',
-            'file_hash', 'storage_hash', 'storage_url', 'pin_status',
-            'related_invoice', 'related_invoice_number', 'related_contract',
-            'related_contract_name', 'related_document', 'related_document_name',
-            'description', 'tags', 'metadata', 'created_at', 'modified_at'
+            'id', 'storage_type', 'status', 'original_filename', 'file_size', 
+            'file_size_mb', 'content_type', 'file_hash', 'storage_hash', 
+            'storage_url', 'pin_status', 'related_invoice', 'related_invoice_number', 
+            'related_contract', 'related_contract_name', 'related_document', 
+            'related_document_name', 'description', 'tags', 'metadata', 
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
     
     def get_file_size_mb(self, obj):
         """Get file size in MB."""
@@ -393,20 +386,19 @@ class DecentralizedStorageSerializer(serializers.ModelSerializer):
 
 class BlockchainAuditLogSerializer(serializers.ModelSerializer):
     """Serializer for Blockchain Audit Log."""
-    organization_name = serializers.CharField(source='organization.name', read_only=True)
     user_name = serializers.CharField(source='user.get_full_name', read_only=True)
     anchor_status = serializers.CharField(source='anchor.status', read_only=True)
     
     class Meta:
         model = BlockchainAuditLog
         fields = [
-            'id', 'organization', 'organization_name', 'log_type', 'severity',
+            'id', 'log_type', 'severity',
             'event_name', 'description', 'user', 'user_name', 'old_data',
             'new_data', 'affected_models', 'is_anchored', 'anchor', 'anchor_status',
             'transaction_hash', 'block_number', 'ip_address', 'user_agent',
-            'session_id', 'metadata', 'created_at', 'modified_at'
+            'session_id', 'metadata', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'modified_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 # ==================== SPECIALIZED SERIALIZERS ====================
@@ -421,7 +413,6 @@ class DIDCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """Create DID with auto-generated identifier."""
         user = self.context['request'].user
-        organization = self.context['request'].user.organization_memberships.first().organization
         
         # Generate DID identifier based on method
         did_method = validated_data['did_method']
@@ -433,13 +424,12 @@ class DIDCreateSerializer(serializers.ModelSerializer):
             did_identifier = f"did:ethr:{wallet.address}"
         elif did_method == 'did:key':
             # Use key-based DID (simplified)
-            did_identifier = f"did:key:{hashlib.sha256(f'{user.id}{organization.id}'.encode()).hexdigest()[:32]}"
+            did_identifier = f"did:key:{hashlib.sha256(f'{user.id}'.encode()).hexdigest()[:32]}"
         else:
             # Default to web DID
-            did_identifier = f"did:web:{organization.slug}.tidygen.com:{user.username}"
+            did_identifier = f"did:web:tidygen.com:{user.username}"
         
         validated_data['user'] = user
-        validated_data['organization'] = organization
         validated_data['did_identifier'] = did_identifier
         
         return super().create(validated_data)
@@ -454,9 +444,6 @@ class AnchorCreateSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         """Create anchor with auto-generated hash."""
-        organization = self.context['request'].user.organization_memberships.first().organization
-        validated_data['organization'] = organization
-        
         # Generate data hash
         data_hash = OnChainAnchor().generate_data_hash(validated_data['original_data'])
         validated_data['data_hash'] = data_hash
@@ -474,9 +461,7 @@ class GovernanceProposalSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """Create governance proposal."""
         user = self.context['request'].user
-        organization = user.organization_memberships.first().organization
         
-        validated_data['organization'] = organization
         validated_data['proposer'] = user
         validated_data['status'] = 'draft'
         
@@ -493,9 +478,7 @@ class RewardCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """Create tokenized reward."""
         user = self.context['request'].user
-        organization = user.organization_memberships.first().organization
         
-        validated_data['organization'] = organization
         validated_data['recipient'] = user
         validated_data['recipient_wallet'] = user.wallets.filter(is_primary=True).first()
         

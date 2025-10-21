@@ -66,6 +66,10 @@ LOCAL_APPS = [
     'apps.analytics',
     'apps.facility_management',
     'apps.field_operations',
+    'apps.freelancers', # Community edition: Individual contractor management
+    'apps.gig_management', # Community edition: Job posting and assignment
+    'apps.contractor_payments', # Community edition: Payment processing for freelancers
+    'apps.freelancer_web3', # Community edition: Advanced Web3 features for freelancers
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -408,6 +412,20 @@ SPECTACULAR_SETTINGS = {
         {'name': 'Sales', 'description': 'Sales and CRM'},
         {'name': 'Finance', 'description': 'Financial management'},
         {'name': 'HR', 'description': 'Human resources'},
+        {'name': 'Analytics', 'description': 'Analytics and reporting'},
+        {'name': 'Audit Trail', 'description': 'Audit trail and logging'},
+        {'name': 'Contractor Payments', 'description': 'Contractor and freelancer payments'},
+        {'name': 'Payroll', 'description': 'Payroll management'},
+        {'name': 'Purchasing', 'description': 'Procurement and purchasing'},
+        {'name': 'Scheduling', 'description': 'Resource and appointment scheduling'},
+        {'name': 'Facility Management', 'description': 'Facility and asset management'},
+        {'name': 'Field Operations', 'description': 'Field operations and dispatch'},
+        {'name': 'Freelancers', 'description': 'Freelancer and contractor management'},
+        {'name': 'Gig Management', 'description': 'Job posting and gig management'},
+        {'name': 'Freelancer Web3', 'description': 'Web3 features for freelancers'},
+        {'name': 'Ledger', 'description': 'Blockchain ledger management'},
+        {'name': 'Wallet', 'description': 'Web3 wallet management'},
+        {'name': 'DID Auth', 'description': 'Decentralized identity authentication'},
     ],
     'SWAGGER_UI_SETTINGS': {
         'deepLinking': True,

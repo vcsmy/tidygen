@@ -36,47 +36,30 @@ class IsSystemAdmin(permissions.BasePermission):
 class IsOrganizationAdmin(permissions.BasePermission):
     """
     Custom permission to only allow organization administrators.
+    In community edition, staff users are considered admins.
     """
     
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
         
-        # Check if user is organization admin
-        organization = getattr(request, 'organization', None)
-        if not organization:
-            return False
-        
-        # Check if user is owner or admin of the organization
-        membership = request.user.organization_memberships.filter(
-            organization=organization,
-            is_active=True
-        ).first()
-        
-        return membership and (membership.is_owner or membership.role.name == 'Admin')
+        # In community edition, staff users are considered organization admins
+        return request.user.is_staff
 
 
 class IsOrganizationMember(permissions.BasePermission):
     """
     Custom permission to only allow organization members.
+    In community edition, all authenticated users are implicitly members.
     """
     
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
         
-        # Check if user is organization member
-        organization = getattr(request, 'organization', None)
-        if not organization:
-            return False
-        
-        # Check if user is member of the organization
-        membership = request.user.organization_memberships.filter(
-            organization=organization,
-            is_active=True
-        ).exists()
-        
-        return membership
+        # In community edition, all authenticated users are implicitly members
+        # of the single organization, so we just check if user is authenticated
+        return True
 
 
 class HasPermission(permissions.BasePermission):

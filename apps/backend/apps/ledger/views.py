@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from drf_spectacular.utils import extend_schema
 
 from .models import LedgerTransaction, LedgerEvent, LedgerBatch, LedgerConfiguration
 from .serializers import (
@@ -37,6 +38,7 @@ from .services import TransactionService
 logger = logging.getLogger(__name__)
 
 
+@extend_schema(tags=['Ledger'])
 class LedgerTransactionViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing ledger transactions.
@@ -49,7 +51,7 @@ class LedgerTransactionViewSet(viewsets.ModelViewSet):
     serializer_class = LedgerTransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['transaction_type', 'status', 'source_module', 'organization']
+    filterset_fields = ['transaction_type', 'status', 'source_module']
     search_fields = ['source_id', 'hash', 'blockchain_hash']
     ordering_fields = ['created_at', 'confirmed_at', 'amount']
     ordering = ['-created_at']
@@ -474,6 +476,7 @@ class LedgerAuditTrailView(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@extend_schema(tags=['Ledger'])
 class LedgerBatchViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing ledger batches.
@@ -485,7 +488,7 @@ class LedgerBatchViewSet(viewsets.ModelViewSet):
     serializer_class = LedgerBatchSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['status', 'organization']
+    filterset_fields = ['status']
     search_fields = ['batch_hash', 'blockchain_hash']
     ordering_fields = ['created_at', 'submitted_at', 'confirmed_at']
     ordering = ['-created_at']
@@ -564,6 +567,7 @@ class LedgerBatchViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@extend_schema(tags=['Ledger'])
 class LedgerEventViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Read-only ViewSet for ledger events.
@@ -593,6 +597,7 @@ class LedgerEventViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+@extend_schema(tags=['Ledger'])
 class LedgerConfigurationViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing ledger configuration.

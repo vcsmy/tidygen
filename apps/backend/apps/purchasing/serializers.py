@@ -30,9 +30,9 @@ class PurchaseOrderItemSerializer(serializers.ModelSerializer):
             'id', 'product', 'product_name', 'product_sku', 'product_description',
             'quantity_ordered', 'quantity_received', 'quantity_pending',
             'unit_price', 'total_price', 'notes', 'expected_delivery_date',
-            'created_at', 'updated_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PurchaseOrderSerializer(serializers.ModelSerializer):
@@ -48,15 +48,15 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseOrder
         fields = [
-            'id', 'po_number', 'organization', 'supplier', 'supplier_name',
+            'id', 'po_number', 'supplier', 'supplier_name',
             'requested_by', 'requested_by_name', 'approved_by', 'approved_by_name',
             'status', 'status_display', 'priority', 'priority_display',
             'order_date', 'expected_delivery_date', 'actual_delivery_date', 'approval_date',
             'subtotal', 'tax_amount', 'shipping_cost', 'discount_amount', 'total_amount',
             'notes', 'supplier_notes', 'terms_conditions', 'reference_number',
-            'tracking_number', 'items', 'created_at', 'updated_at'
+            'tracking_number', 'items', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'po_number', 'order_date', 'total_amount', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'po_number', 'order_date', 'total_amount', 'created', 'modified']
 
 
 class PurchaseOrderCreateSerializer(serializers.ModelSerializer):
@@ -66,7 +66,7 @@ class PurchaseOrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseOrder
         fields = [
-            'organization', 'supplier', 'requested_by', 'status', 'priority',
+            'supplier', 'requested_by', 'status', 'priority',
             'expected_delivery_date', 'subtotal', 'tax_amount', 'shipping_cost',
             'discount_amount', 'notes', 'supplier_notes', 'terms_conditions',
             'reference_number', 'items'
@@ -94,9 +94,9 @@ class PurchaseReceiptItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'purchase_order_item', 'purchase_order_item_name', 'purchase_order_item_sku',
             'quantity_received', 'condition', 'notes', 'batch_number', 'expiry_date',
-            'created_at', 'updated_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PurchaseReceiptSerializer(serializers.ModelSerializer):
@@ -112,9 +112,9 @@ class PurchaseReceiptSerializer(serializers.ModelSerializer):
             'id', 'receipt_number', 'purchase_order', 'purchase_order_number',
             'received_by', 'received_by_name', 'status', 'status_display',
             'receipt_date', 'notes', 'condition_notes', 'items',
-            'created_at', 'updated_at'
+            'created', 'modified'
         ]
-        read_only_fields = ['id', 'receipt_number', 'receipt_date', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'receipt_number', 'receipt_date', 'created', 'modified']
 
 
 class PurchaseReceiptCreateSerializer(serializers.ModelSerializer):
@@ -150,9 +150,9 @@ class ProcurementRequestItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'product', 'product_name', 'product_sku', 'product_description',
             'quantity', 'estimated_unit_price', 'estimated_total_price',
-            'notes', 'specifications', 'created_at', 'updated_at'
+            'notes', 'specifications', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class ProcurementRequestSerializer(serializers.ModelSerializer):
@@ -166,14 +166,14 @@ class ProcurementRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcurementRequest
         fields = [
-            'id', 'request_number', 'organization', 'requested_by', 'requested_by_name',
+            'id', 'request_number', 'requested_by', 'requested_by_name',
             'reviewed_by', 'reviewed_by_name', 'status', 'status_display',
             'priority', 'priority_display', 'request_date', 'required_date',
             'review_date', 'title', 'description', 'justification',
             'estimated_cost', 'budget_code', 'notes', 'rejection_reason',
-            'items', 'created_at', 'updated_at'
+            'items', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'request_number', 'request_date', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'request_number', 'request_date', 'created', 'modified']
 
 
 class ProcurementRequestCreateSerializer(serializers.ModelSerializer):
@@ -183,7 +183,7 @@ class ProcurementRequestCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcurementRequest
         fields = [
-            'organization', 'requested_by', 'status', 'priority', 'required_date',
+            'requested_by', 'status', 'priority', 'required_date',
             'title', 'description', 'justification', 'estimated_cost',
             'budget_code', 'notes', 'items'
         ]
@@ -209,12 +209,12 @@ class SupplierPerformanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = SupplierPerformance
         fields = [
-            'id', 'supplier', 'supplier_name', 'organization', 'evaluated_by',
+            'id', 'supplier', 'supplier_name', 'evaluated_by',
             'evaluated_by_name', 'on_time_delivery_rate', 'quality_rating',
             'communication_rating', 'price_competitiveness', 'overall_rating',
-            'notes', 'evaluation_date', 'created_at', 'updated_at'
+            'notes', 'evaluation_date', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'overall_rating', 'evaluation_date', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'overall_rating', 'evaluation_date', 'created', 'modified']
 
 
 class PurchaseAnalyticsSerializer(serializers.ModelSerializer):
@@ -224,13 +224,13 @@ class PurchaseAnalyticsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseAnalytics
         fields = [
-            'id', 'organization', 'period_start', 'period_end', 'total_orders',
+            'id', 'period_start', 'period_end', 'total_orders',
             'total_value', 'average_order_value', 'active_suppliers',
             'top_supplier', 'top_supplier_name', 'top_supplier_value',
             'on_time_delivery_rate', 'average_processing_time',
-            'total_savings', 'cost_reduction_percentage', 'created_at', 'updated_at'
+            'total_savings', 'cost_reduction_percentage', 'created', 'modified'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created', 'modified']
 
 
 class PurchaseOrderSummarySerializer(serializers.ModelSerializer):

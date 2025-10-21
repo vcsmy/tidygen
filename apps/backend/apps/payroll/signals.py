@@ -28,24 +28,27 @@ logger = logging.getLogger(__name__)
 def payroll_configuration_created(sender, instance, created, **kwargs):
     """Handle payroll configuration creation."""
     if created:
-        logger.info(f"New payroll configuration created for {instance.organization.name}")
+        logger.info(f"New payroll configuration created")
+        
+        # Note: PayrollConfiguration doesn't have organization field
+        # Skip organization-dependent operations
         
         # Create default payroll components
-        create_default_payroll_components(instance)
+        # create_default_payroll_components(instance)
         
-        # Create tax year if it doesn't exist
-        current_year = timezone.now().year
-        TaxYear.objects.get_or_create(
-            organization=instance.organization,
-            year=current_year,
-            defaults={
-                'federal_tax_rate': instance.federal_tax_rate,
-                'state_tax_rate': instance.state_tax_rate,
-                'social_security_rate': instance.social_security_rate,
-                'medicare_rate': instance.medicare_rate,
-                'is_active': True
-            }
-        )
+        # Note: TaxYear creation requires organization context, skipping for now
+        # current_year = timezone.now().year
+        # TaxYear.objects.get_or_create(
+        #     organization=instance.organization,
+        #     year=current_year,
+        #     defaults={
+        #         'federal_tax_rate': instance.federal_tax_rate,
+        #         'state_tax_rate': instance.state_tax_rate,
+        #         'social_security_rate': instance.social_security_rate,
+        #         'medicare_rate': instance.medicare_rate,
+        #         'is_active': True
+        #     }
+        # )
 
 
 def create_default_payroll_components(config):

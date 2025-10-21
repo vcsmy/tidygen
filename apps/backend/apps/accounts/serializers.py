@@ -183,6 +183,6 @@ class UserSessionSerializer(serializers.ModelSerializer):
         model = UserSession
         fields = [
             'id', 'ip_address', 'user_agent', 'user_agent_short',
-            'is_active', 'last_activity', 'expires_at', 'created_at'
+            'is_active', 'last_activity', 'expires_at', 'created'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created']

@@ -38,6 +38,11 @@ warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 strict_equality = true
+plugins = ["mypy_django_plugin.main"]
+exclude = ["venv", "migrations"]
+
+[tool.django-stubs]
+django_settings_module = "backend.settings"
 
 [[tool.mypy.overrides]]
 module = [

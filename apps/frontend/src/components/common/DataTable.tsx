@@ -68,11 +68,12 @@ export function DataTable({
   } | null>(null);
 
   // Filter data based on search term
-  const filteredData = data.filter((row) =>
-    Object.values(row).some((value) =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  const filteredData = (data || []).filter((row) => {
+    if (!row) return false;
+    return Object.values(row).some((value) =>
+      String(value || '').toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   // Sort data
   const sortedData = sortConfig
@@ -108,6 +109,8 @@ export function DataTable({
   };
 
   const renderCellValue = (column: Column, row: any) => {
+    if (!row) return null;
+    
     const value = row[column.key];
     
     if (column.render) {
@@ -127,7 +130,7 @@ export function DataTable({
       return value.toLocaleDateString();
     }
     
-    return value;
+    return value || '';
   };
 
   return (

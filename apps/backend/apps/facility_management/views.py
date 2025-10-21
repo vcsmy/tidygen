@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q, Count, Sum, F
 from django.utils import timezone
 from datetime import datetime, timedelta
+from drf_spectacular.utils import extend_schema
 
 from .models import Facility, Vehicle, Equipment, MaintenanceRecord, Asset
 from .serializers import (
@@ -18,6 +19,7 @@ from .serializers import (
 )
 
 
+@extend_schema(tags=['Facility Management'])
 class FacilityViewSet(viewsets.ModelViewSet):
     """ViewSet for Facility model."""
     
@@ -72,6 +74,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Facility Management'])
 class VehicleViewSet(viewsets.ModelViewSet):
     """ViewSet for Vehicle model."""
     
@@ -137,6 +140,7 @@ class VehicleViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Facility Management'])
 class EquipmentViewSet(viewsets.ModelViewSet):
     """ViewSet for Equipment model."""
     
@@ -202,6 +206,7 @@ class EquipmentViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Facility Management'])
 class MaintenanceRecordViewSet(viewsets.ModelViewSet):
     """ViewSet for MaintenanceRecord model."""
     
@@ -258,6 +263,7 @@ class MaintenanceRecordViewSet(viewsets.ModelViewSet):
         })
 
 
+@extend_schema(tags=['Facility Management'])
 class AssetViewSet(viewsets.ModelViewSet):
     """ViewSet for Asset model."""
     

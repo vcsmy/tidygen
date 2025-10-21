@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 import json
 import logging
+from drf_spectacular.utils import extend_schema
 
 from apps.analytics.models import (
     Report, KPI, KPIMeasurement, Dashboard, DashboardWidget,
@@ -43,6 +44,7 @@ from apps.core.permissions import IsOrganizationMember
 logger = logging.getLogger(__name__)
 
 
+@extend_schema(tags=['Analytics'])
 class ReportViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing reports.
@@ -183,6 +185,7 @@ class ReportViewSet(viewsets.ModelViewSet):
         return next_run
 
 
+@extend_schema(tags=['Analytics'])
 class KPIViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing KPIs.
@@ -343,6 +346,7 @@ class KPIViewSet(viewsets.ModelViewSet):
             )
 
 
+@extend_schema(tags=['Analytics'])
 class KPIMeasurementViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing KPI measurements.
@@ -363,6 +367,7 @@ class KPIMeasurementViewSet(viewsets.ModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Analytics'])
 class DashboardViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing dashboards.
@@ -507,6 +512,7 @@ class DashboardViewSet(viewsets.ModelViewSet):
             return {'data': 'Sample data'}
 
 
+@extend_schema(tags=['Analytics'])
 class DashboardWidgetViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing dashboard widgets.
@@ -527,6 +533,7 @@ class DashboardWidgetViewSet(viewsets.ModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Analytics'])
 class DataSourceViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing data sources.
@@ -582,6 +589,7 @@ class DataSourceViewSet(viewsets.ModelViewSet):
             )
 
 
+@extend_schema(tags=['Analytics'])
 class ReportTemplateViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing report templates.
@@ -635,6 +643,7 @@ class ReportTemplateViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(tags=['Analytics'])
 class AnalyticsEventViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for viewing analytics events.
@@ -652,6 +661,7 @@ class AnalyticsEventViewSet(viewsets.ReadOnlyModelViewSet):
         return self.queryset.none()
 
 
+@extend_schema(tags=['Analytics'])
 class AlertViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing alerts.
