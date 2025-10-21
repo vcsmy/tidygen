@@ -6,6 +6,7 @@ members = [
     "pallets/tidygen-ledger",
     "pallets/tidygen-did",
     "pallets/tidygen-dao",
+    "pallets/ledger",
 ]
 
 [workspace.package]
