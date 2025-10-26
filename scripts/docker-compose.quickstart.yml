@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  substrate-node:
+    image: paritytech/ink-playground:latest
+    container_name: tidygen-substrate-node
+    ports:
+      - "9944:9944"  # WebSocket RPC
+      - "9933:9933"  # HTTP RPC
+      - "30333:30333"  # P2P
+    environment:
+      - RUST_LOG=info
+    command: [
+      "--dev",
+      "--tmp",
+      "--rpc-external",
+      "--rpc-cors=all",
+      "--rpc-methods=Unsafe",
+      "--ws-external",
+      "--ws-max-connections=100",
+      "--unsafe-ws-external",
+      "--unsafe-rpc-external",
+      "--enable-offchain-indexing=true"
+    ]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9933/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - tidygen-network
+
+networks:
+  tidygen-network:
+    driver: bridge

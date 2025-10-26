@@ -1,238 +1,238 @@
-# Tests Directory
+# TidyGen Community Tests
 
-This directory contains end-to-end tests, integration tests, and performance testing suites for the TidyGen ERP platform.
+This directory contains all test files for the TidyGen Community project.
 
-## 📁 Structure
+## Directory Structure
 
 ```
 tests/
-├── e2e/           # End-to-end tests
-├── integration/   # Integration tests
-├── performance/   # Performance testing
-└── fixtures/      # Test data and fixtures
+├── integration/          # Integration tests
+│   ├── test_substrate_poc_quickstart.py
+│   └── __init__.py
+├── unit/                 # Unit tests
+├── conftest.py          # Pytest configuration and fixtures
+└── README.md            # This file
 ```
 
-## 🧪 Test Categories
+## Running Tests
 
-### End-to-End Tests (`e2e/`)
-- **Cypress**: Browser-based E2E testing
-- **Playwright**: Cross-browser E2E testing
-- **Scenarios**: User journey and business flow tests
-
-### Integration Tests (`integration/`)
-- **API Tests**: Backend API integration testing
-- **Database Tests**: Database integration testing
-- **Web3 Tests**: Blockchain integration testing
-- **Third-party Tests**: External service integration
-
-### Performance Tests (`performance/`)
-- **Load Testing**: Normal load conditions
-- **Stress Testing**: High load conditions
-- **K6 Tests**: Performance testing with K6
-- **Reports**: Performance test results
-
-## 🚀 Quick Start
-
-### Running Tests
+### All Tests
 ```bash
 # Run all tests
-npm run test
+pytest
 
-# Run E2E tests
-npm run test:e2e
+# Run with verbose output
+pytest -v
 
-# Run integration tests
-npm run test:integration
-
-# Run performance tests
-npm run test:performance
+# Run specific test file
+pytest tests/integration/test_substrate_poc_quickstart.py
 ```
-
-### Individual Test Suites
-```bash
-# Cypress E2E tests
-cd tests/e2e/cypress
-npm run cypress:open
-npm run cypress:run
-
-# Playwright E2E tests
-cd tests/e2e/playwright
-npm run playwright:test
-
-# K6 performance tests
-cd tests/performance/k6
-k6 run load-test.js
-```
-
-## 📋 Test Configuration
-
-### Cypress Configuration
-```javascript
-// tests/e2e/cypress/cypress.config.js
-module.exports = {
-  e2e: {
-    baseUrl: 'http://localhost:3000',
-    supportFile: 'cypress/support/e2e.js',
-    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
-    viewportWidth: 1280,
-    viewportHeight: 720,
-  },
-}
-```
-
-### Playwright Configuration
-```javascript
-// tests/e2e/playwright/playwright.config.js
-module.exports = {
-  testDir: './tests',
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  use: {
-    baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
-  },
-}
-```
-
-### K6 Configuration
-```javascript
-// tests/performance/k6/load-test.js
-import http from 'k6/http';
-import { check } from 'k6';
-
-export let options = {
-  stages: [
-    { duration: '2m', target: 100 },
-    { duration: '5m', target: 100 },
-    { duration: '2m', target: 200 },
-    { duration: '5m', target: 200 },
-    { duration: '2m', target: 0 },
-  ],
-};
-```
-
-## 🎯 Test Scenarios
-
-### User Journey Tests
-- **User Registration**: Complete user onboarding flow
-- **Login Process**: Authentication and authorization
-- **ERP Module Navigation**: Accessing different ERP modules
-- **Web3 Integration**: Wallet connection and transactions
-- **Data Management**: CRUD operations across modules
-
-### Business Flow Tests
-- **Sales Process**: Quote → Order → Invoice → Payment
-- **Inventory Management**: Stock → Purchase → Receipt
-- **Financial Process**: Transaction → Journal → Report
-- **HR Process**: Employee → Payroll → Benefits
 
 ### Integration Tests
-- **API Integration**: Backend API endpoints
-- **Database Integration**: Data persistence and retrieval
-- **Web3 Integration**: Blockchain interactions
-- **Third-party Integration**: External service connections
-
-## 📊 Test Data Management
-
-### Fixtures (`fixtures/`)
-- **Users**: Test user accounts and profiles
-- **Organizations**: Test organization data
-- **Transactions**: Sample transaction data
-- **Products**: Test product catalog
-- **Customers**: Test customer data
-
-### Test Data Setup
 ```bash
-# Load test fixtures
-./scripts/setup/load-fixtures.sh
+# Run integration tests only
+pytest -m integration
 
-# Reset test database
-./scripts/setup/reset-test-db.sh
+# Run integration tests with verbose output
+pytest -m integration -v
 
-# Generate test data
-./scripts/development/generate-test-data.sh
+# Run specific integration test
+pytest tests/integration/test_substrate_poc_quickstart.py -v
 ```
 
-## 🔧 Test Automation
+### Unit Tests
+```bash
+# Run unit tests only
+pytest -m unit
 
-### CI/CD Integration
-- **GitHub Actions**: Automated test execution
-- **Test Reports**: JUnit and coverage reports
-- **Quality Gates**: Test failure prevention
-- **Parallel Execution**: Faster test execution
+# Run unit tests with verbose output
+pytest -m unit -v
+```
 
-### Test Reporting
-- **Coverage Reports**: Code coverage analysis
-- **Test Results**: Detailed test execution reports
-- **Performance Metrics**: Performance test results
-- **Screenshots**: Visual test failure documentation
+### Slow Tests
+```bash
+# Run all tests including slow ones
+pytest
 
-## 🛡️ Test Security
+# Skip slow tests
+pytest -m "not slow"
 
-### Security Testing
-- **Authentication Tests**: Login and session management
-- **Authorization Tests**: Role-based access control
-- **Input Validation**: Malicious input handling
-- **Web3 Security**: Wallet and transaction security
+# Run only slow tests
+pytest -m slow
+```
 
-### Data Privacy
-- **Test Data**: Anonymized test data only
-- **Environment Isolation**: Separate test environments
-- **Data Cleanup**: Automatic test data cleanup
-- **Access Control**: Restricted test environment access
+### Docker-Dependent Tests
+```bash
+# Run tests that require Docker
+pytest -m docker
 
-## 📈 Performance Testing
+# Skip Docker-dependent tests
+pytest -m "not docker"
+```
 
-### Load Testing Scenarios
-- **Normal Load**: Typical user traffic
-- **Peak Load**: High traffic periods
-- **Stress Testing**: System breaking points
-- **Endurance Testing**: Long-running stability
+## Test Categories
 
-### Performance Metrics
-- **Response Time**: API and page load times
-- **Throughput**: Requests per second
-- **Error Rate**: Failed request percentage
-- **Resource Usage**: CPU, memory, and disk usage
+### Integration Tests (`integration/`)
 
-## 🔄 Test Maintenance
+Integration tests verify that different components work together correctly.
 
-### Test Updates
-- **Regular Updates**: Keep tests current with application changes
-- **Test Refactoring**: Improve test maintainability
-- **Coverage Analysis**: Ensure adequate test coverage
-- **Performance Optimization**: Optimize slow tests
+#### Substrate POC Quickstart Test
+- **File**: `test_substrate_poc_quickstart.py`
+- **Purpose**: Validates the complete quickstart flow
+- **Requirements**: Docker, Substrate node
+- **Markers**: `@pytest.mark.slow`, `@pytest.mark.integration`, `@pytest.mark.docker`
 
-### Test Documentation
-- **Test Cases**: Documented test scenarios
-- **Test Data**: Test data documentation
-- **Test Environment**: Environment setup documentation
-- **Troubleshooting**: Common test issues and solutions
+**What it tests:**
+1. Quickstart script exists and is executable
+2. Docker Compose file is valid
+3. Contract directory and files exist
+4. Django management command exists
+5. Quickstart produces a valid transaction hash
+6. Retry logic works for robustness
 
-## 🆘 Troubleshooting
+**Running the test:**
+```bash
+# Run the specific test
+pytest tests/integration/test_substrate_poc_quickstart.py -v
+
+# Run with retries and detailed output
+pytest tests/integration/test_substrate_poc_quickstart.py -v -s
+
+# Run only if Docker is available
+pytest tests/integration/test_substrate_poc_quickstart.py -v --tb=short
+```
+
+### Unit Tests (`unit/`)
+
+Unit tests verify individual components in isolation.
+
+## Test Configuration
+
+### Pytest Configuration
+- **File**: `pytest.ini` (root directory)
+- **Markers**: Defined for different test categories
+- **Timeouts**: 600 seconds for slow tests
+- **Output**: Verbose by default
+
+### Fixtures
+- **File**: `conftest.py`
+- **Fixtures**: `project_root`, `docker_available`, `docker_compose_available`
+- **Auto-markers**: Automatically adds markers based on test names
+
+## Prerequisites
+
+### For All Tests
+- Python 3.7+
+- pytest
+- Required Python packages (see requirements.txt)
+
+### For Integration Tests
+- Docker installed and running
+- Docker Compose available
+- Internet connection (for pulling Docker images)
+
+### For Substrate Tests
+- Docker (required for Substrate node)
+- Sufficient disk space for Docker images
+- Available ports: 9944, 9933, 30333
+
+## Test Markers
+
+| Marker | Description | Usage |
+|--------|-------------|-------|
+| `slow` | Tests that take a long time to run | `pytest -m "not slow"` |
+| `integration` | Integration tests | `pytest -m integration` |
+| `unit` | Unit tests | `pytest -m unit` |
+| `docker` | Tests requiring Docker | `pytest -m docker` |
+| `substrate` | Tests requiring Substrate | `pytest -m substrate` |
+| `web3` | Tests requiring Web3 | `pytest -m web3` |
+
+## Troubleshooting
 
 ### Common Issues
-1. **Test Timeouts**: Increase timeout values or optimize tests
-2. **Flaky Tests**: Add proper waits and retries
-3. **Environment Issues**: Check test environment setup
-4. **Data Issues**: Verify test data and fixtures
+
+1. **Docker not available**
+   ```
+   pytest.skip("Docker is not available or not running")
+   ```
+   - Solution: Install Docker and ensure it's running
+
+2. **Test timeouts**
+   ```
+   pytest.TimeoutExpired: Quickstart script timed out
+   ```
+   - Solution: Increase timeout or check system resources
+
+3. **Permission errors**
+   ```
+   PermissionError: [Errno 13] Permission denied
+   ```
+   - Solution: Ensure test files are executable and have proper permissions
+
+4. **Missing dependencies**
+   ```
+   ModuleNotFoundError: No module named 'substrateinterface'
+   ```
+   - Solution: Install required packages: `pip install -r requirements.txt`
 
 ### Debug Mode
+
+Run tests with debug output:
 ```bash
-# Run tests in debug mode
-DEBUG=1 npm run test:e2e
+# Verbose output with print statements
+pytest tests/integration/test_substrate_poc_quickstart.py -v -s
 
-# Verbose test output
-npm run test -- --verbose
+# Show local variables on failure
+pytest tests/integration/test_substrate_poc_quickstart.py -v --tb=long
 
-# Test specific scenarios
-npm run test -- --grep "user registration"
+# Run with debug logging
+pytest tests/integration/test_substrate_poc_quickstart.py -v --log-cli-level=DEBUG
 ```
 
-### Support
-- **Test Failures**: Check test logs and screenshots
-- **Environment Issues**: Verify test environment setup
-- **Performance Issues**: Review performance test results
-- **Data Issues**: Check test fixtures and data setup
+### CI/CD Integration
+
+For CI/CD pipelines, use:
+```bash
+# Skip slow tests in CI
+pytest -m "not slow" --tb=short
+
+# Run only fast tests
+pytest -m "not slow and not docker"
+
+# Generate coverage report
+pytest --cov=. --cov-report=html
+```
+
+## Contributing
+
+When adding new tests:
+
+1. **Choose the right directory**: `integration/` for integration tests, `unit/` for unit tests
+2. **Add appropriate markers**: Use `@pytest.mark.slow`, `@pytest.mark.docker`, etc.
+3. **Write descriptive test names**: Use `test_` prefix and descriptive names
+4. **Add docstrings**: Document what each test does
+5. **Handle cleanup**: Use fixtures for setup/teardown
+6. **Make tests robust**: Add retry logic and proper error handling
+
+## Examples
+
+### Running Specific Tests
+```bash
+# Run only the quickstart test
+pytest tests/integration/test_substrate_poc_quickstart.py::TestSubstratePOCQuickstart::test_quickstart_produces_transaction_hash -v
+
+# Run all quickstart tests
+pytest tests/integration/test_substrate_poc_quickstart.py -v
+
+# Run with specific markers
+pytest -m "slow and integration" -v
+```
+
+### Test Output
+```
+tests/integration/test_substrate_poc_quickstart.py::TestSubstratePOCQuickstart::test_quickstart_produces_transaction_hash PASSED [100%]
+
+✅ Quickstart test passed!
+📝 Transaction hash: 0x1234567890abcdef...
+📊 Output length: 1234 characters
+```

@@ -2,8 +2,8 @@
 
 <div align="center">
 
-[![Build Status](https://github.com/tidygen-community/tidygen-community/workflows/Build/badge.svg)](.github/workflows/build.yml)
-[![Tests](https://github.com/tidygen-community/tidygen-community/workflows/Tests/badge.svg)](.github/workflows/tests.yml)
+[![CI/CD Pipeline](https://github.com/tidygen-community/tidygen-community/workflows/CI%2FCD%20Pipeline/badge.svg)](.github/workflows/ci.yml)
+[![Unit Tests](https://github.com/tidygen-community/tidygen-community/workflows/CI%2FCD%20Pipeline/badge.svg?event=push)](.github/workflows/ci.yml)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue.svg)](./SECURITY.md)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 ![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)
@@ -502,6 +502,43 @@ REDIS_URL=redis://localhost:6379/0
 - **Username**: `admin`
 - **Password**: `admin123`
 - ⚠️ **Important**: Change the default password after first login!
+
+---
+
+## 🔄 CI/CD Pipeline
+
+Our GitHub Actions workflow provides automated testing and validation:
+
+### **Automated Jobs**
+- **Unit Tests**: Runs on every push and pull request
+  - Python 3.11 environment
+  - Installs dependencies from `apps/backend/requirements-dev.txt`
+  - Runs unit tests with `pytest -q -m "unit"`
+  - Includes linting checks (flake8, black)
+
+- **Integration Tests**: Available on-demand via workflow dispatch
+  - Requires Docker and Docker Compose
+  - Runs the complete Substrate quickstart flow
+  - Validates transaction hash generation
+  - Includes automatic cleanup
+
+### **Running Tests Locally**
+```bash
+# Run unit tests
+cd apps/backend
+pytest -q -m "unit"
+
+# Run integration tests (requires Docker)
+pytest tests/integration/test_substrate_poc_quickstart.py -v
+
+# Run all tests except slow ones
+pytest -m "not slow"
+```
+
+### **Workflow Triggers**
+- **Push/PR**: Unit tests only
+- **Manual Dispatch**: Optional integration tests
+- **Scheduled**: Currently disabled (can be enabled for nightly builds)
 
 ---
 

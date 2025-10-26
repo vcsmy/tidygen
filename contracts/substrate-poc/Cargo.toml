@@ -1,0 +1,27 @@
+[package]
+name = "service-verification-poc"
+version = "0.1.0"
+authors = ["TidyGen Community"]
+edition = "2021"
+
+[dependencies]
+ink = { version = "4.3", default-features = false }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
+scale-info = { version = "2", default-features = false, features = ["derive"] }
+
+[dev-dependencies]
+ink_e2e = "4.3"
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+]
+ink-as-dependency = []
+
+[lib]
+name = "service_verification_poc"
+path = "lib.rs"
+crate-type = ["cdylib", "rlib"]

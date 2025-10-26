@@ -15,6 +15,24 @@ scripts/
 
 ## 🚀 Quick Start
 
+### Substrate Demo Quickstart
+```bash
+# Run the complete Substrate demo (one command!)
+bash scripts/quickstart.sh
+```
+
+This will:
+1. Start a local Substrate node using Docker
+2. Build the ink! smart contract
+3. Deploy the contract to the local node
+4. Run the Django demo script to submit a service verification record
+5. Display the transaction hash
+
+**Prerequisites:**
+- Docker installed and running
+- Python 3.7+ installed
+- Internet connection for downloading Docker images
+
 ### Setup Scripts
 ```bash
 # Setup development environment
@@ -65,6 +83,10 @@ scripts/
 - **`run-tests.sh`**: Run all test suites
 - **`lint-code.sh`**: Code linting and formatting
 - **`format-code.sh`**: Code formatting
+
+### Quickstart Scripts
+- **`quickstart.sh`**: Complete Substrate demo setup and execution
+- **`docker-compose.quickstart.yml`**: Docker Compose configuration for local Substrate node
 
 ### Monitoring Scripts (`monitoring/`)
 - **`check-health.sh`**: Application health monitoring

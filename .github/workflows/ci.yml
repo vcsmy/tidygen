@@ -1,0 +1,137 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      run_integration_tests:
+        description: 'Run integration tests (requires Docker)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl
+        
+    - name: Install Python dependencies
+      run: |
+        cd apps/backend
+        pip install --upgrade pip
+        pip install -r requirements-dev.txt
+        
+    - name: Run unit tests
+      run: |
+        cd apps/backend
+        pytest -q -m "unit" --tb=short
+        
+    - name: Run linting
+      run: |
+        cd apps/backend
+        # Run flake8 if available
+        if command -v flake8 >/dev/null 2>&1; then
+          flake8 --count --statistics .
+        fi
+        # Run black check if available
+        if command -v black >/dev/null 2>&1; then
+          black --check .
+        fi
+
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.run_integration_tests == 'true'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl docker.io docker-compose
+        
+    - name: Start Docker service
+      run: |
+        sudo systemctl start docker
+        sudo systemctl enable docker
+        sudo usermod -aG docker $USER
+        
+    - name: Verify Docker installation
+      run: |
+        docker --version
+        docker-compose --version
+        
+    - name: Install Python dependencies
+      run: |
+        cd apps/backend
+        pip install --upgrade pip
+        pip install -r requirements-dev.txt
+        pip install substrate-interface
+        
+    - name: Run quickstart script
+      run: |
+        bash scripts/quickstart.sh --headless
+      timeout-minutes: 15
+      
+    - name: Run integration tests
+      run: |
+        pytest tests/integration/test_substrate_poc_quickstart.py -v --tb=short
+      timeout-minutes: 10
+      
+    - name: Cleanup Docker services
+      if: always()
+      run: |
+        docker-compose -f scripts/docker-compose.quickstart.yml down || true
+        docker system prune -f || true
+
+  build-status:
+    name: Build Status
+    runs-on: ubuntu-latest
+    needs: [unit]
+    if: always()
+    
+    steps:
+    - name: Check test results
+      run: |
+        if [ "${{ needs.unit.result }}" == "success" ]; then
+          echo "✅ Unit tests passed"
+        else
+          echo "❌ Unit tests failed"
+          exit 1
+        fi
+        
+    - name: Integration test status
+      if: github.event_name == 'workflow_dispatch'
+      run: |
+        if [ "${{ github.event.inputs.run_integration_tests }}" == "true" ]; then
+          echo "🔧 Integration tests were requested"
+        else
+          echo "ℹ️  Integration tests not requested (use workflow_dispatch to run them)"
+        fi
