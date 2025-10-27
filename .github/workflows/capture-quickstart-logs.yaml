@@ -1,0 +1,50 @@
+# Runs quickstart headless on an x86 runner and uploads logs as workflow artifacts.
+# Trigger: workflow_dispatch (manual run)
+on:
+  workflow_dispatch:
+    inputs:
+      run_integration:
+        description: 'Run quickstart and capture logs'
+        required: true
+        default: 'true'
+
+name: Capture Quickstart Logs
+
+jobs:
+  quickstart-logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Start Docker (ensure available)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io docker-compose netcat
+
+      - name: Install python deps
+        run: |
+          cd apps/backend || true
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt || true
+          cd -
+
+      - name: Run quickstart headless and capture logs
+        run: |
+          mkdir -p logs
+          TS=$(date -u +%Y%m%d-%H%M%S)
+          LOGFILE=logs/quickstart-${TS}.log
+          set -o pipefail
+          bash scripts/quickstart.sh --headless 2>&1 | tee "$LOGFILE"
+        timeout-minutes: 20
+
+      - name: Upload logs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quickstart-logs
+          path: logs/**

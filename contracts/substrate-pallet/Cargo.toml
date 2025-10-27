@@ -1,0 +1,19 @@
+[package]
+name = "pallet-service-verification"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+frame-support = { version = "4.0.0", default-features = false, features = ["std"] }
+frame-system = { version = "4.0.0", default-features = false, features = ["std"] }
+sp-std = { version = "4.0.0", default-features = false }
+sp-runtime = { version = "4.0.0", default-features = false }
+codec = { package = "parity-scale-codec", version = "3.0", default-features = false }
+scale-info = { version = "2.0", default-features = false }
+
+[features]
+default = ["std"]
+std = ["frame-support/std", "frame-system/std", "sp-std/std"]
+
+[lib]
+path = "src/lib.rs"
