@@ -1,0 +1,65 @@
+openapi: "3.0.3"
+info:
+  title: TidyGen KYC & Provider Credentials API
+  version: "0.1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /providers/{provider_id}/kyc:
+    post:
+      summary: Upload KYC proof (off-chain)
+      parameters:
+        - name: provider_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  format: binary
+                doc_type:
+                  type: string
+                  example: "background_check"
+                issued_by:
+                  type: string
+              required:
+                - document
+      responses:
+        '200':
+          description: Uploaded and hashed; returns proof reference
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  proof_hash:
+                    type: string
+                  proof_uri:
+                    type: string
+  /providers/{provider_id}/kyc/status:
+    get:
+      summary: Get provider KYC verification status
+      parameters:
+        - name: provider_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Provider KYC info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  provider_id: { type: string }
+                  kyc_verified: { type: boolean }
+                  proof_hash: { type: string }
+                  updated_at: { type: string, format: date-time }
+components: {}

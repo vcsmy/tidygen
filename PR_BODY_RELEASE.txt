@@ -1,0 +1,15 @@
+Summary:
+- Add CI workflow to build ink! contracts and publish compiled artifacts (.wasm/.contract/metadata.json) as GitHub Release assets with SHA256 checksums.
+- Add downloader script to fetch release artifacts into contracts/*/target/ink for quickstart use (avoids local build).
+- Add audit request, e2e test scaffold, and KYC OpenAPI spec to support Level‑2/Level‑3 review.
+
+How to verify (reviewer steps):
+1) Trigger workflow Build Contracts & Publish Release from the Actions tab: specify a tag (e.g., v0.1.0).
+2) Wait for workflow to complete and view the created Release — there should be artifacts for substrate-poc and escrow-sla and a sha256sum.txt.
+3) On a clean machine (WSL/Windows), run:
+   GITHUB_TOKEN=<token> bash scripts/download_release_artifacts.sh v0.1.0
+   bash scripts/quickstart.sh --no-build
+4) Confirm quickstart deploys and demo_submit prints an extrinsic hash.
+
+Notes:
+- If artifacts are large or you prefer not to publish signed artifacts, we can alternatively configure the Action to upload to GitHub Packages or a private S3 and use environment secrets to download.

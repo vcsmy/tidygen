@@ -1,0 +1,93 @@
+name: Build Contracts & Publish Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to create (e.g. v0.1.0)'
+        required: true
+        default: 'v0.1.0'
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    name: Build ink! Contracts and Publish Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Install wasm target
+        run: rustup target add wasm32-unknown-unknown --toolchain nightly
+
+      - name: Install cargo-contract (pinned)
+        run: cargo install cargo-contract --version 0.16.0 --force
+
+      - name: Install dependencies for contract build
+        run: sudo apt-get update -y && sudo apt-get install -y build-essential pkg-config libclang-dev clang curl
+
+      - name: Build substrate-poc contract
+        working-directory: contracts/substrate-poc
+        run: |
+          set -euo pipefail
+          cargo +nightly contract build --release
+
+      - name: Build escrow-sla contract
+        working-directory: contracts/escrow-sla
+        run: |
+          set -euo pipefail
+          cargo +nightly contract build --release
+
+      - name: Prepare artifacts
+        run: |
+          mkdir -p artifacts/substrate-poc artifacts/escrow-sla
+          cp contracts/substrate-poc/target/ink/*.contract artifacts/substrate-poc/ || true
+          cp contracts/substrate-poc/target/ink/*.wasm artifacts/substrate-poc/ || true
+          cp contracts/substrate-poc/target/ink/metadata.json artifacts/substrate-poc/ || true
+          cp contracts/escrow-sla/target/ink/*.contract artifacts/escrow-sla/ || true
+          cp contracts/escrow-sla/target/ink/*.wasm artifacts/escrow-sla/ || true
+          cp contracts/escrow-sla/target/ink/metadata.json artifacts/escrow-sla/ || true
+
+      - name: Compute checksums
+        run: |
+          mkdir -p artifacts/checksums
+          for f in artifacts/*/*; do
+            if [ -f "$f" ]; then
+              sha256sum "$f" >> artifacts/checksums/sha256sum.txt
+            fi
+          done
+          cat artifacts/checksums/sha256sum.txt
+
+      - name: Create GitHub release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload checksums as release asset
+        run: gh release upload ${{ github.event.inputs.tag || github.ref_name }} artifacts/checksums/sha256sum.txt --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
