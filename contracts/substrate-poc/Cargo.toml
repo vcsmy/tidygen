@@ -15,7 +15,7 @@ scale-info = { version = "2", default-features = false, features = ["derive"] }
 getrandom = { version = "0.2", default-features = false, features = ["js"] }
 
 [dev-dependencies]
-ink_e2e = "6.0.0-alpha"
+ink_e2e = "4.0.0-alpha.1"
 
 [features]
 default = ["std"]

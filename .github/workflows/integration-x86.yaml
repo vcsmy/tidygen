@@ -1,0 +1,70 @@
+name: Integration (x86 runner)
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_integration:
+        description: 'Run full integration (Docker required on runner)'
+        required: true
+        default: 'true'
+
+jobs:
+  integration-x86:
+    name: Integration Tests (x86 GitHub runner)
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.run_integration == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl docker.io docker-compose
+
+      - name: Start Docker (ensure service running)
+        run: |
+          sudo systemctl start docker
+          sudo systemctl enable docker
+          docker --version
+          docker-compose --version
+
+      - name: Install Python deps
+        run: |
+          cd apps/backend || exit 1
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install substrate-interface
+          cd -
+
+      - name: Build contract (optional)
+        run: |
+          # Try to build contract locally (if cargo-contract available)
+          if command -v cargo-contract >/dev/null 2>&1; then
+            cd contracts/substrate-poc
+            cargo +nightly contract build || true
+            cd -
+          else
+            echo "cargo-contract not found on runner — relying on docker builder in quickstart"
+          fi
+
+      - name: Run quickstart (headless)
+        run: |
+          bash scripts/quickstart.sh --headless
+        timeout-minutes: 20
+
+      - name: Run integration pytest
+        run: |
+          pytest tests/integration/test_substrate_poc_quickstart.py -q -k quickstart || true
+        timeout-minutes: 15
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker-compose -f scripts/docker-compose.quickstart.yml down || true
+          docker system prune -f || true

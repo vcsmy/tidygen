@@ -1,0 +1,9 @@
+/Users/vijayababubollavarapu/dev/tidygen-community/contracts/escrow-sla/target/ink/wasm32-unknown-unknown/release/deps/ink_primitives-f9e6ec9eed7f4270.d: /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/lib.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/key.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/types.rs
+
+/Users/vijayababubollavarapu/dev/tidygen-community/contracts/escrow-sla/target/ink/wasm32-unknown-unknown/release/deps/libink_primitives-f9e6ec9eed7f4270.rlib: /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/lib.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/key.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/types.rs
+
+/Users/vijayababubollavarapu/dev/tidygen-community/contracts/escrow-sla/target/ink/wasm32-unknown-unknown/release/deps/libink_primitives-f9e6ec9eed7f4270.rmeta: /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/lib.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/key.rs /Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/types.rs
+
+/Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/lib.rs:
+/Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/key.rs:
+/Users/vijayababubollavarapu/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ink_primitives-4.3.0/src/types.rs:

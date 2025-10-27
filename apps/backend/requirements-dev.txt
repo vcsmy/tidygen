@@ -52,3 +52,10 @@ sphinx==7.2.6
 sphinx-rtd-theme==1.3.0
 sphinx-autodoc-typehints==1.25.0
 sphinxcontrib-django==2.4.0
+
+# Development / testing requirements (additions for quickstart & integration)
+pytest
+pytest-playwright
+httpx
+substrate-interface
+# add other dev dependencies as required by your test suite

@@ -1,0 +1,22 @@
+Summary:
+Adds a focused Substrate POC for TidyGen:
+- ink! contract: contracts/substrate-poc (store/get/update/exists + tests)
+- backend integration: apps/backend/substrate_poc (deploy_contract.py, submit_service.py, management command)
+- one-command quickstart: scripts/quickstart.sh + docker-compose.quickstart.yml
+- integration tests: tests/integration/test_substrate_poc_quickstart.py
+- CI workflow: .github/workflows/ci.yml (unit + integration via workflow_dispatch)
+- docs: contracts/README.md, docs/BENCHMARKS.md, docs/PILOT_PLAN.md, TEAM.md, SECURITY.md
+
+Quick verification (for reviewers):
+1) Clone and checkout:
+   git clone https://github.com/vjbollavarapu/tidygen.git
+   git checkout feat/substrate-poc
+2) Run quickstart (Docker required):
+   bash scripts/quickstart.sh --headless
+   Expected: prints an extrinsic hash (0x...) and "Demo completed successfully!"
+3) Run integration tests (if Docker available):
+   pytest tests/integration/test_substrate_poc_quickstart.py -q
+
+Notes:
+- All grant-scoped code is MIT licensed.
+- I'm available for Office Hours demo/walkthrough; prepared to complete KYC/CLA as requested.

@@ -1,0 +1,72 @@
+name: Integration Tests (x86)
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_full_tests:
+        description: 'Run full integration test suite'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl build-essential
+        
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        components: rustfmt, clippy
+        override: true
+        
+    - name: Install cargo-contract
+      run: |
+        cargo install cargo-contract --force
+        
+    - name: Install Python dependencies
+      run: |
+        pip install -r apps/backend/requirements-dev.txt
+        pip install substrate-interface python-dotenv
+        
+    - name: Build ink! contract
+      run: |
+        cd contracts/substrate-poc
+        cargo +nightly contract build
+        
+    - name: Start Substrate node
+      run: |
+        docker-compose -f scripts/docker-compose.quickstart.yml up -d
+        
+    - name: Wait for node to be ready
+      run: |
+        timeout 120 bash -c 'until curl -s http://127.0.0.1:9933/health >/dev/null; do sleep 5; done'
+        
+    - name: Deploy contract
+      run: |
+        python apps/backend/substrate_poc/deploy_contract.py
+        
+    - name: Run integration tests
+      run: |
+        pytest tests/integration/test_substrate_poc_quickstart.py -v
+        
+    - name: Cleanup
+      if: always()
+      run: |
+        docker-compose -f scripts/docker-compose.quickstart.yml down

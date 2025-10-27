@@ -1,0 +1,11 @@
+*** Begin Patch
+*** Update File: scripts/quickstart.sh
+@@
+ print_status "Building contract..."
+-bash scripts/build_contract.sh
++if [ -f "contracts/substrate-poc/target/ink/metadata.json" ] && [ -f "contracts/substrate-poc/target/ink/service_verification_poc.contract" ]; then
++  print_status "Found pre-built contract artifacts; skipping build."
++else
++  bash scripts/build_contract.sh
++fi
+*** End Patch

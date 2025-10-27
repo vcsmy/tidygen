@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   substrate-node:
+    # NOTE: If the upstream image is not available for arm64, we force linux/amd64 emulation.
+    # On Apple Silicon this will run under QEMU/emulation and can be slower. Replace with a multi-arch image if you have one.
     image: paritytech/ink-playground:latest
+    platform: "linux/amd64"
     container_name: tidygen-substrate-node
     ports:
       - "9944:9944"  # WebSocket RPC
@@ -10,26 +13,37 @@ services:
       - "30333:30333"  # P2P
     environment:
       - RUST_LOG=info
-    command: [
-      "--dev",
-      "--tmp",
-      "--rpc-external",
-      "--rpc-cors=all",
-      "--rpc-methods=Unsafe",
-      "--ws-external",
-      "--ws-max-connections=100",
-      "--unsafe-ws-external",
-      "--unsafe-rpc-external",
-      "--enable-offchain-indexing=true"
-    ]
+    command:
+      - "--dev"
+      - "--tmp"
+      - "--rpc-external"
+      - "--rpc-cors=all"
+      - "--rpc-methods=Unsafe"
+      - "--ws-external"
+      - "--ws-max-connections=100"
+      - "--enable-offchain-indexing=true"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9933/health"]
+      test: ["CMD", "bash", "-lc", "curl -f http://localhost:9933/health || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 30s
     networks:
       - tidygen-network
+
+# Optional helper service for building contracts in a reproducible docker container.
+# You can create and use your own builder image that matches your host architecture
+# or pin builder platform similar to substrate-node.
+contract-builder:
+  image: paritytech/ink-ci-linux:latest
+  platform: "linux/amd64"
+  container_name: tidygen-contract-builder
+  volumes:
+    - ../contracts/substrate-poc:/code
+  entrypoint: ["/bin/sh", "-c"]
+  command: ["cd /code && cargo +nightly contract build"]
+  networks:
+    - tidygen-network
 
 networks:
   tidygen-network:
